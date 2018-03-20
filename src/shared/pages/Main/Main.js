@@ -22,7 +22,6 @@ class Main extends React.Component {
         }
     }
     render(){
-        console.log(this.props.books);
         var books = filter(this.props.books,(book)=>book.title.toLowerCase().indexOf(this.state.term)>-1);
         return (
         <div>

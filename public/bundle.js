@@ -261,7 +261,7 @@ process.umask = function() { return 0; };
 "use strict";
 
 
-module.exports = __webpack_require__(33);
+module.exports = __webpack_require__(34);
 
 
 /***/ }),
@@ -946,7 +946,7 @@ module.exports = invariant;
 
 
 
-var _prodInvariant = __webpack_require__(34);
+var _prodInvariant = __webpack_require__(35);
 
 var ReactCurrentOwner = __webpack_require__(16);
 
@@ -1761,6 +1761,29 @@ module.exports = ReactCurrentOwner;
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+exports.__esModule = true;
+exports.connect = exports.Provider = undefined;
+
+var _Provider = __webpack_require__(270);
+
+var _Provider2 = _interopRequireDefault(_Provider);
+
+var _connect = __webpack_require__(271);
+
+var _connect2 = _interopRequireDefault(_connect);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+exports.Provider = _Provider2["default"];
+exports.connect = _connect2["default"];
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var freeGlobal = __webpack_require__(142);
 
 /** Detect free variable `self`. */
@@ -1773,7 +1796,7 @@ module.exports = root;
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1783,7 +1806,7 @@ module.exports = __webpack_require__(357);
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1803,7 +1826,7 @@ var _prodInvariant = __webpack_require__(5),
 var CallbackQueue = __webpack_require__(158);
 var PooledClass = __webpack_require__(32);
 var ReactFeatureFlags = __webpack_require__(159);
-var ReactReconciler = __webpack_require__(35);
+var ReactReconciler = __webpack_require__(36);
 var Transaction = __webpack_require__(61);
 
 var invariant = __webpack_require__(2);
@@ -2036,29 +2059,6 @@ var ReactUpdates = {
 
 module.exports = ReactUpdates;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.connect = exports.Provider = undefined;
-
-var _Provider = __webpack_require__(270);
-
-var _Provider2 = _interopRequireDefault(_Provider);
-
-var _connect = __webpack_require__(271);
-
-var _connect2 = _interopRequireDefault(_connect);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-exports.Provider = _Provider2["default"];
-exports.connect = _connect2["default"];
 
 /***/ }),
 /* 21 */
@@ -3385,6 +3385,184 @@ module.exports = PooledClass;
 
 /***/ }),
 /* 33 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["g"] = searchBooks;
+/* harmony export (immutable) */ __webpack_exports__["h"] = viewBook;
+/* harmony export (immutable) */ __webpack_exports__["e"] = closeBook;
+/* harmony export (immutable) */ __webpack_exports__["a"] = addBook;
+/* harmony export (immutable) */ __webpack_exports__["c"] = addUser;
+/* harmony export (immutable) */ __webpack_exports__["i"] = viewRequest;
+/* harmony export (immutable) */ __webpack_exports__["b"] = addExchange;
+/* harmony export (immutable) */ __webpack_exports__["f"] = confirmTrade;
+/* harmony export (immutable) */ __webpack_exports__["d"] = changePage;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mainAction__ = __webpack_require__(52);
+
+
+
+function searchBooks(bookname) {
+
+    return function (dispatch) {
+        dispatch({ type: "START_SEARCH" });
+
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/search/' + bookname).then(function (response) {
+            dispatch({
+                type: "NEW_SEARCH",
+                payload: response.data
+            });
+        }).catch(function (error) {
+            dispatch({
+                type: "SEARCH_ERROR",
+                payload: error
+            });
+        });
+    };
+}
+
+function viewBook(bookinfo) {
+    return function (dispatch) {
+        dispatch({
+            type: "VIEW_BOOK",
+            payload: bookinfo
+        });
+    };
+}
+
+function closeBook(bookinfo) {
+    return function (dispatch) {
+        dispatch({
+            type: "CLOSE_BOOK"
+        });
+    };
+}
+
+function addBook(bookinfo, username) {
+    bookinfo.username = username;
+    return function (dispatch) {
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/book', bookinfo).then(function (response) {
+            if (response.data.success) {
+                dispatch({
+                    type: "NEW_BOOK_ADDED",
+                    payload: bookinfo.bookId
+                });
+            } else {
+                dispatch({
+                    type: "LOG_IN_REQUIRED"
+                });
+            }
+        }).catch(function (error) {
+            console.log(error);
+            dispatch({
+                type: "ADD_BOOK_ERROR"
+            });
+        });
+    };
+}
+
+function addUser(userinfo) {
+    return function (dispatch) {
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/newuser', userinfo).then(function (response) {
+            if (response.data.success) {
+                dispatch({
+                    type: "NEW_USER_ADDED"
+                });
+                dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__mainAction__["d" /* logIn */])({
+                    username: userinfo.username,
+                    password: userinfo.password
+                }));
+                setTimeout(function () {
+                    dispatch({
+                        type: "REDIRECT",
+                        payload: '/'
+                    });
+                }, 2000);
+            } else {
+                dispatch({
+                    type: "USERNAME_DUPLICATED"
+                });
+                setTimeout(function () {
+                    dispatch({
+                        type: "REFRESH"
+                    });
+                }, 2000);
+            }
+        }).catch(function (error) {
+            console.log(error);
+            dispatch({
+                type: "ADD_USER_ERROR"
+            });
+            setTimeout(function () {
+                dispatch({
+                    type: "REFRESH"
+                });
+            }, 2000);
+        });
+    };
+}
+
+function viewRequest(requestinfo) {
+    return function (dispatch) {
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/userbooks/' + requestinfo.sender.username).then(function (response) {
+            var rtn = {};
+            rtn.tradeinfo = requestinfo;
+            rtn.senderbooks = response.data;
+            dispatch({
+                type: "VIEW_REQUEST",
+                payload: rtn
+            });
+        });
+    };
+}
+
+function addExchange(bookid, bookname, tradeid) {
+    return function (dispatch) {
+        var param = {
+            action: "exchange",
+            tradeid: tradeid,
+            bookid: bookid,
+            bookname: bookname
+        };
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/request', param).then(function (response) {
+            dispatch({
+                type: "NEW_EXCHANGE_ADDED",
+                payload: { bookid: bookid, bookname: bookname }
+            });
+        }).catch(function (error) {
+            return console.log(error);
+        });
+    };
+}
+
+function confirmTrade(tradeid) {
+    return function (dispatch) {
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/request', {
+            tradeid: tradeid,
+            action: "confirm"
+        }).then(function (response) {
+            console.log(response.data);
+            dispatch({
+                type: "TRADE_CONFIRMED"
+            });
+        }).catch(function (error) {
+            return console.log(error);
+        });
+    };
+}
+
+function changePage(target) {
+    return function (dispatch) {
+        dispatch({
+            type: "CHANGE_PAGE",
+            payload: target
+        });
+    };
+}
+
+/***/ }),
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3520,7 +3698,7 @@ module.exports = React;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3562,7 +3740,7 @@ function reactProdInvariant(code) {
 module.exports = reactProdInvariant;
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3732,7 +3910,7 @@ module.exports = ReactReconciler;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3851,199 +4029,6 @@ DOMLazyTree.queueHTML = queueHTML;
 DOMLazyTree.queueText = queueText;
 
 module.exports = DOMLazyTree;
-
-/***/ }),
-/* 37 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["h"] = searchBooks;
-/* harmony export (immutable) */ __webpack_exports__["i"] = viewBook;
-/* harmony export (immutable) */ __webpack_exports__["e"] = closeBook;
-/* harmony export (immutable) */ __webpack_exports__["a"] = addBook;
-/* harmony export (immutable) */ __webpack_exports__["c"] = addUser;
-/* harmony export (immutable) */ __webpack_exports__["g"] = getRequests;
-/* harmony export (immutable) */ __webpack_exports__["j"] = viewRequest;
-/* harmony export (immutable) */ __webpack_exports__["b"] = addExchange;
-/* harmony export (immutable) */ __webpack_exports__["f"] = confirmTrade;
-/* harmony export (immutable) */ __webpack_exports__["d"] = changePage;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mainAction__ = __webpack_require__(52);
-
-
-
-function searchBooks(bookname) {
-
-    return function (dispatch) {
-        dispatch({ type: "START_SEARCH" });
-
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/search/' + bookname).then(function (response) {
-            dispatch({
-                type: "NEW_SEARCH",
-                payload: response.data
-            });
-        }).catch(function (error) {
-            dispatch({
-                type: "SEARCH_ERROR",
-                payload: error
-            });
-        });
-    };
-}
-
-function viewBook(bookinfo) {
-    return function (dispatch) {
-        dispatch({
-            type: "VIEW_BOOK",
-            payload: bookinfo
-        });
-    };
-}
-
-function closeBook(bookinfo) {
-    return function (dispatch) {
-        dispatch({
-            type: "CLOSE_BOOK"
-        });
-    };
-}
-
-function addBook(bookinfo, username) {
-    bookinfo.username = username;
-    return function (dispatch) {
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/book', bookinfo).then(function (response) {
-            if (response.data.success) {
-                dispatch({
-                    type: "NEW_BOOK_ADDED",
-                    payload: bookinfo.bookId
-                });
-            } else {
-                dispatch({
-                    type: "LOG_IN_REQUIRED"
-                });
-            }
-        }).catch(function (error) {
-            console.log(error);
-            dispatch({
-                type: "ADD_BOOK_ERROR"
-            });
-        });
-    };
-}
-
-function addUser(userinfo) {
-    return function (dispatch) {
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/newuser', userinfo).then(function (response) {
-            if (response.data.success) {
-                dispatch({
-                    type: "NEW_USER_ADDED"
-                });
-                dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__mainAction__["d" /* logIn */])({
-                    username: userinfo.username,
-                    password: userinfo.password
-                }));
-                setTimeout(function () {
-                    dispatch({
-                        type: "REDIRECT",
-                        payload: '/'
-                    });
-                }, 2000);
-            } else {
-                dispatch({
-                    type: "USERNAME_DUPLICATED"
-                });
-                setTimeout(function () {
-                    dispatch({
-                        type: "REFRESH"
-                    });
-                }, 2000);
-            }
-        }).catch(function (error) {
-            console.log(error);
-            dispatch({
-                type: "ADD_USER_ERROR"
-            });
-            setTimeout(function () {
-                dispatch({
-                    type: "REFRESH"
-                });
-            }, 2000);
-        });
-    };
-}
-
-function getRequests(username) {
-    return function (dispatch) {
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/request/' + username).then(function (response) {
-            dispatch({
-                type: "GET_ALL_REQUESTS",
-                payload: response.data
-            });
-        }).catch(function (err) {
-            return console.log(err);
-        });
-    };
-}
-
-function viewRequest(requestinfo) {
-    return function (dispatch) {
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/userbooks/' + requestinfo.sender.username).then(function (response) {
-            var rtn = {};
-            rtn.tradeinfo = requestinfo;
-            rtn.senderbooks = response.data;
-            dispatch({
-                type: "VIEW_REQUEST",
-                payload: rtn
-            });
-        });
-    };
-}
-
-function addExchange(bookid, bookname, tradeid) {
-    console.log(tradeid);
-    return function (dispatch) {
-        var param = {
-            action: "exchange",
-            tradeid: tradeid,
-            bookid: bookid,
-            bookname: bookname
-        };
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/request', param).then(function (response) {
-            dispatch({
-                type: "NEW_EXCHANGE_ADDED",
-                payload: { bookid: bookid, bookname: bookname }
-            });
-        }).catch(function (error) {
-            return console.log(error);
-        });
-    };
-}
-
-function confirmTrade(tradeid) {
-    return function (dispatch) {
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/request', {
-            tradeid: tradeid,
-            action: "confirm"
-        }).then(function (response) {
-            console.log(response.data);
-            dispatch({
-                type: "TRADE_CONFIRMED"
-            });
-        }).catch(function (error) {
-            return console.log(error);
-        });
-    };
-}
-
-function changePage(target) {
-    return function (dispatch) {
-        dispatch({
-            type: "CHANGE_PAGE",
-            payload: target
-        });
-    };
-}
 
 /***/ }),
 /* 38 */
@@ -4214,7 +4199,7 @@ module.exports = g;
 /* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(17);
+var root = __webpack_require__(18);
 
 /** Built-in value references. */
 var Symbol = root.Symbol;
@@ -4983,7 +4968,9 @@ function logIn(userinfo) {
                     payload: {
                         username: response.data.username,
                         email: response.data.email,
-                        books: response.data.books }
+                        books: response.data.books,
+                        requests: response.data.requests
+                    }
                 });
             } else {
                 dispatch({
@@ -5049,7 +5036,8 @@ function addRequest(sender, receiver, bookid, bookname) {
             };
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/request', param).then(function (response) {
                 dispatch({
-                    type: "NEW_REQUEST_ADDED"
+                    type: "NEW_REQUEST_ADDED",
+                    payload: response.data.data
                 });
             }).catch(function (error) {
                 return console.log(error);
@@ -7334,7 +7322,7 @@ module.exports = baseIsEqual;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(31),
-    root = __webpack_require__(17);
+    root = __webpack_require__(18);
 
 /* Built-in method references that are verified to be native. */
 var Map = getNative(root, 'Map');
@@ -8090,7 +8078,7 @@ module.exports = getEventModifierState;
 
 
 
-var DOMLazyTree = __webpack_require__(36);
+var DOMLazyTree = __webpack_require__(37);
 var Danger = __webpack_require__(376);
 var ReactDOMComponentTree = __webpack_require__(7);
 var ReactInstrumentation = __webpack_require__(15);
@@ -8383,7 +8371,7 @@ var _prodInvariant = __webpack_require__(5);
 var ReactPropTypesSecret = __webpack_require__(167);
 var propTypesFactory = __webpack_require__(121);
 
-var React = __webpack_require__(33);
+var React = __webpack_require__(34);
 var PropTypes = propTypesFactory(React.isValidElement);
 
 var invariant = __webpack_require__(2);
@@ -8751,7 +8739,7 @@ var _prodInvariant = __webpack_require__(5);
 var ReactCurrentOwner = __webpack_require__(16);
 var ReactInstanceMap = __webpack_require__(45);
 var ReactInstrumentation = __webpack_require__(15);
-var ReactUpdates = __webpack_require__(19);
+var ReactUpdates = __webpack_require__(20);
 
 var invariant = __webpack_require__(2);
 var warning = __webpack_require__(3);
@@ -9771,8 +9759,8 @@ module.exports = LazyWrapper;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions_profileAction__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions_profileAction__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_redux__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_mainAction__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(1);
@@ -9845,6 +9833,12 @@ var Modal = function (_React$Component) {
                     __self: this
                 });
             } else {
+                var outrequests = this.props.outrequests.filter(function (request) {
+                    return request.receiver.bookId == _this2.props.info.bookId;
+                });
+                var outrequser = outrequests.map(function (request) {
+                    return request.receiver.username;
+                });
                 return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
                     __WEBPACK_IMPORTED_MODULE_4_react_modal___default.a,
                     { style: modalStyles,
@@ -9852,7 +9846,7 @@ var Modal = function (_React$Component) {
                         ariaHideApp: false,
                         contentLabel: "Review Modal", __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 36
+                            lineNumber: 38
                         },
                         __self: this
                     },
@@ -9860,13 +9854,13 @@ var Modal = function (_React$Component) {
                         "a",
                         { style: { float: "right", cursor: "pointer" }, __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 40
+                                lineNumber: 42
                             },
                             __self: this
                         },
                         __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement("i", { className: "fas fa-times", onClick: this.closeBook.bind(this), __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 40
+                                lineNumber: 42
                             },
                             __self: this
                         })
@@ -9876,7 +9870,7 @@ var Modal = function (_React$Component) {
                         {
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 41
+                                lineNumber: 43
                             },
                             __self: this
                         },
@@ -9886,7 +9880,7 @@ var Modal = function (_React$Component) {
                         "ul",
                         { className: "list-unstyled", __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 42
+                                lineNumber: 44
                             },
                             __self: this
                         },
@@ -9895,13 +9889,13 @@ var Modal = function (_React$Component) {
                             {
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 43
+                                    lineNumber: 45
                                 },
                                 __self: this
                             },
                             __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement("img", { src: this.props.info.imageUrl, alt: this.props.info.title, className: "img-thumbnail", __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 43
+                                    lineNumber: 45
                                 },
                                 __self: this
                             })
@@ -9911,7 +9905,7 @@ var Modal = function (_React$Component) {
                             {
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 45
+                                    lineNumber: 47
                                 },
                                 __self: this
                             },
@@ -9925,7 +9919,7 @@ var Modal = function (_React$Component) {
                             {
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 46
+                                    lineNumber: 48
                                 },
                                 __self: this
                             },
@@ -9937,7 +9931,7 @@ var Modal = function (_React$Component) {
                             {
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 47
+                                    lineNumber: 49
                                 },
                                 __self: this
                             },
@@ -9949,7 +9943,7 @@ var Modal = function (_React$Component) {
                             {
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 49
+                                    lineNumber: 51
                                 },
                                 __self: this
                             },
@@ -9963,7 +9957,7 @@ var Modal = function (_React$Component) {
                             {
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 50
+                                    lineNumber: 52
                                 },
                                 __self: this
                             },
@@ -9975,7 +9969,7 @@ var Modal = function (_React$Component) {
                         {
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 54
+                                lineNumber: 56
                             },
                             __self: this
                         },
@@ -9983,7 +9977,7 @@ var Modal = function (_React$Component) {
                             "table",
                             { className: "table", __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 55
+                                    lineNumber: 57
                                 },
                                 __self: this
                             },
@@ -9992,7 +9986,7 @@ var Modal = function (_React$Component) {
                                 {
                                     __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 56
+                                        lineNumber: 58
                                     },
                                     __self: this
                                 },
@@ -10001,7 +9995,7 @@ var Modal = function (_React$Component) {
                                     {
                                         __source: {
                                             fileName: _jsxFileName,
-                                            lineNumber: 57
+                                            lineNumber: 59
                                         },
                                         __self: this
                                     },
@@ -10009,7 +10003,7 @@ var Modal = function (_React$Component) {
                                         "th",
                                         { scope: "col", __source: {
                                                 fileName: _jsxFileName,
-                                                lineNumber: 58
+                                                lineNumber: 60
                                             },
                                             __self: this
                                         },
@@ -10019,7 +10013,7 @@ var Modal = function (_React$Component) {
                                         "th",
                                         { scope: "col", __source: {
                                                 fileName: _jsxFileName,
-                                                lineNumber: 59
+                                                lineNumber: 61
                                             },
                                             __self: this
                                         },
@@ -10027,7 +10021,7 @@ var Modal = function (_React$Component) {
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement("th", { scope: "col", __source: {
                                             fileName: _jsxFileName,
-                                            lineNumber: 60
+                                            lineNumber: 62
                                         },
                                         __self: this
                                     })
@@ -10038,7 +10032,7 @@ var Modal = function (_React$Component) {
                                 {
                                     __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 63
+                                        lineNumber: 65
                                     },
                                     __self: this
                                 },
@@ -10047,7 +10041,7 @@ var Modal = function (_React$Component) {
                                         "tr",
                                         { key: i, __source: {
                                                 fileName: _jsxFileName,
-                                                lineNumber: 65
+                                                lineNumber: 67
                                             },
                                             __self: _this2
                                         },
@@ -10056,7 +10050,7 @@ var Modal = function (_React$Component) {
                                             {
                                                 __source: {
                                                     fileName: _jsxFileName,
-                                                    lineNumber: 66
+                                                    lineNumber: 68
                                                 },
                                                 __self: _this2
                                             },
@@ -10067,32 +10061,41 @@ var Modal = function (_React$Component) {
                                             {
                                                 __source: {
                                                     fileName: _jsxFileName,
-                                                    lineNumber: 67
+                                                    lineNumber: 69
                                                 },
                                                 __self: _this2
                                             },
                                             _this2.props.ownerslocation[i]
                                         ),
-                                        __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+                                        user !== _this2.props.username && __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
                                             "td",
                                             {
                                                 __source: {
                                                     fileName: _jsxFileName,
-                                                    lineNumber: 68
+                                                    lineNumber: 71
                                                 },
                                                 __self: _this2
                                             },
-                                            __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+                                            outrequser.indexOf(user) == -1 ? __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
                                                 "button",
                                                 { className: "btn", onClick: function onClick() {
                                                         _this2.addRequest(i);
                                                     }, __source: {
                                                         fileName: _jsxFileName,
-                                                        lineNumber: 68
+                                                        lineNumber: 73
                                                     },
                                                     __self: _this2
                                                 },
                                                 "Request"
+                                            ) : __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+                                                "button",
+                                                { className: "btn", disabled: true, __source: {
+                                                        fileName: _jsxFileName,
+                                                        lineNumber: 74
+                                                    },
+                                                    __self: _this2
+                                                },
+                                                "Already requested"
                                             )
                                         )
                                     );
@@ -10104,7 +10107,7 @@ var Modal = function (_React$Component) {
                         "button",
                         { className: "btn", onClick: this.addBook.bind(this), __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 75
+                                lineNumber: 84
                             },
                             __self: this
                         },
@@ -10113,7 +10116,7 @@ var Modal = function (_React$Component) {
                         "button",
                         { className: "btn", disabled: true, __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 76
+                                lineNumber: 85
                             },
                             __self: this
                         },
@@ -10125,7 +10128,7 @@ var Modal = function (_React$Component) {
                                 return _this2.props.addexchange(_this2.props.info.bookId, _this2.props.info.title);
                             }, __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 80
+                                lineNumber: 89
                             },
                             __self: this
                         },
@@ -10146,7 +10149,7 @@ var propsMap = function propsMap(store) {
         info: store.viewbook.info,
         username: store.userinfo.username,
         ownedbooks: store.userinfo.ownedbooks,
-        warning: store.viewbook.warning,
+        outrequests: store.userinfo.outrequests,
         ownerslocation: store.viewbook.ownerslocation
     };
 };
@@ -10168,7 +10171,7 @@ var propsMap = function propsMap(store) {
 
 
 
-var _prodInvariant = __webpack_require__(34),
+var _prodInvariant = __webpack_require__(35),
     _assign = __webpack_require__(6);
 
 var ReactNoopUpdateQueue = __webpack_require__(117);
@@ -13205,7 +13208,7 @@ module.exports = arrayPush;
 /* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(17),
+/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(18),
     stubFalse = __webpack_require__(346);
 
 /** Detect free variable `exports`. */
@@ -13284,7 +13287,7 @@ module.exports = isTypedArray;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(31),
-    root = __webpack_require__(17);
+    root = __webpack_require__(18);
 
 /* Built-in method references that are verified to be native. */
 var WeakMap = getNative(root, 'WeakMap');
@@ -14322,7 +14325,7 @@ var _assign = __webpack_require__(6);
 
 var LinkedValueUtils = __webpack_require__(98);
 var ReactDOMComponentTree = __webpack_require__(7);
-var ReactUpdates = __webpack_require__(19);
+var ReactUpdates = __webpack_require__(20);
 
 var warning = __webpack_require__(3);
 
@@ -14658,7 +14661,7 @@ module.exports = instantiateReactComponent;
 
 var _prodInvariant = __webpack_require__(5);
 
-var React = __webpack_require__(33);
+var React = __webpack_require__(34);
 
 var invariant = __webpack_require__(2);
 
@@ -15235,9 +15238,9 @@ module.exports = getActiveElement;
 
 var _prodInvariant = __webpack_require__(5);
 
-var DOMLazyTree = __webpack_require__(36);
+var DOMLazyTree = __webpack_require__(37);
 var DOMProperty = __webpack_require__(27);
-var React = __webpack_require__(33);
+var React = __webpack_require__(34);
 var ReactBrowserEventEmitter = __webpack_require__(65);
 var ReactCurrentOwner = __webpack_require__(16);
 var ReactDOMComponentTree = __webpack_require__(7);
@@ -15247,9 +15250,9 @@ var ReactFeatureFlags = __webpack_require__(159);
 var ReactInstanceMap = __webpack_require__(45);
 var ReactInstrumentation = __webpack_require__(15);
 var ReactMarkupChecksum = __webpack_require__(434);
-var ReactReconciler = __webpack_require__(35);
+var ReactReconciler = __webpack_require__(36);
 var ReactUpdateQueue = __webpack_require__(103);
-var ReactUpdates = __webpack_require__(19);
+var ReactUpdates = __webpack_require__(20);
 
 var emptyObject = __webpack_require__(49);
 var instantiateReactComponent = __webpack_require__(169);
@@ -15803,7 +15806,7 @@ module.exports = getHostComponentFromComposite;
 exports.__esModule = true;
 exports.default = getContainer;
 
-var _reactDom = __webpack_require__(18);
+var _reactDom = __webpack_require__(19);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -15828,7 +15831,7 @@ exports.default = function (componentOrElement) {
   return (0, _ownerDocument2.default)(_reactDom2.default.findDOMNode(componentOrElement));
 };
 
-var _reactDom = __webpack_require__(18);
+var _reactDom = __webpack_require__(19);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -16190,7 +16193,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IGNORE_CLASS_NAME", function() { return IGNORE_CLASS_NAME; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 
 
@@ -17264,7 +17267,7 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = __webpack_require__(18);
+var _reactDom = __webpack_require__(19);
 
 var _utils = __webpack_require__(23);
 
@@ -17541,11 +17544,11 @@ module.exports = getFuncName;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_redux__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_redux__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_redux__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_profileAction__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_profileAction__ = __webpack_require__(33);
 var _jsxFileName = "/home/ubuntu/workspace/src/shared/components/BookCard.js";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -17574,7 +17577,7 @@ var BookCard = function (_React$Component) {
     _createClass(BookCard, [{
         key: "viewBooks",
         value: function viewBooks() {
-            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_profileAction__["i" /* viewBook */])(this.props.info));
+            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_profileAction__["h" /* viewBook */])(this.props.info));
         }
     }, {
         key: "render",
@@ -17798,11 +17801,11 @@ var timer = exports.timer = typeof performance !== "undefined" && performance !=
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shared_App__ = __webpack_require__(207);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_redux__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_configureStore__ = __webpack_require__(538);
 var _jsxFileName = "/home/ubuntu/workspace/src/browser/index.js";
@@ -18095,7 +18098,7 @@ module.exports = ReactChildren;
 
 
 
-var _prodInvariant = __webpack_require__(34);
+var _prodInvariant = __webpack_require__(35);
 
 var invariant = __webpack_require__(2);
 
@@ -18210,7 +18213,7 @@ module.exports = PooledClass;
 
 
 
-var _prodInvariant = __webpack_require__(34);
+var _prodInvariant = __webpack_require__(35);
 
 var ReactCurrentOwner = __webpack_require__(16);
 var REACT_ELEMENT_TYPE = __webpack_require__(118);
@@ -18625,7 +18628,7 @@ module.exports = ReactDOMFactories;
 
 
 
-var _prodInvariant = __webpack_require__(34);
+var _prodInvariant = __webpack_require__(35);
 
 var ReactPropTypeLocationNames = __webpack_require__(214);
 var ReactPropTypesSecret = __webpack_require__(215);
@@ -19830,7 +19833,7 @@ module.exports = factory;
  */
 
 
-var _prodInvariant = __webpack_require__(34);
+var _prodInvariant = __webpack_require__(35);
 
 var ReactElement = __webpack_require__(29);
 
@@ -23134,7 +23137,7 @@ var Connect = function (_React$Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_redux__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_mainAction__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(1);
@@ -25767,10 +25770,10 @@ module.exports = function (encodedURI) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_bootstrap_typeahead__ = __webpack_require__(296);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_bootstrap_typeahead___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_bootstrap_typeahead__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__actions_profileAction__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__actions_profileAction__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react_redux__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
@@ -26354,7 +26357,7 @@ module.exports = debounce;
 /* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(17);
+var root = __webpack_require__(18);
 
 /**
  * Gets the timestamp of the number of milliseconds that have elapsed since
@@ -26482,7 +26485,7 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = __webpack_require__(18);
+var _reactDom = __webpack_require__(19);
 
 var _Portal = __webpack_require__(442);
 
@@ -27135,7 +27138,7 @@ module.exports = isMasked;
 /* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(17);
+var root = __webpack_require__(18);
 
 /** Used to detect overreaching core-js shims. */
 var coreJsData = root['__core-js_shared__'];
@@ -27701,7 +27704,7 @@ module.exports = equalByTag;
 /* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(17);
+var root = __webpack_require__(18);
 
 /** Built-in value references. */
 var Uint8Array = root.Uint8Array;
@@ -28381,7 +28384,7 @@ module.exports = getTag;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(31),
-    root = __webpack_require__(17);
+    root = __webpack_require__(18);
 
 /* Built-in method references that are verified to be native. */
 var DataView = getNative(root, 'DataView');
@@ -28394,7 +28397,7 @@ module.exports = DataView;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(31),
-    root = __webpack_require__(17);
+    root = __webpack_require__(18);
 
 /* Built-in method references that are verified to be native. */
 var Promise = getNative(root, 'Promise');
@@ -28407,7 +28410,7 @@ module.exports = Promise;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(31),
-    root = __webpack_require__(17);
+    root = __webpack_require__(18);
 
 /* Built-in method references that are verified to be native. */
 var Set = getNative(root, 'Set');
@@ -28435,8 +28438,8 @@ module.exports = Set;
 var ReactDOMComponentTree = __webpack_require__(7);
 var ReactDefaultInjection = __webpack_require__(358);
 var ReactMount = __webpack_require__(177);
-var ReactReconciler = __webpack_require__(35);
-var ReactUpdates = __webpack_require__(19);
+var ReactReconciler = __webpack_require__(36);
+var ReactUpdates = __webpack_require__(20);
 var ReactVersion = __webpack_require__(436);
 
 var findDOMNode = __webpack_require__(437);
@@ -29279,7 +29282,7 @@ var EventPluginHub = __webpack_require__(43);
 var EventPropagators = __webpack_require__(42);
 var ExecutionEnvironment = __webpack_require__(9);
 var ReactDOMComponentTree = __webpack_require__(7);
-var ReactUpdates = __webpack_require__(19);
+var ReactUpdates = __webpack_require__(20);
 var SyntheticEvent = __webpack_require__(22);
 
 var inputValueTracking = __webpack_require__(160);
@@ -30688,7 +30691,7 @@ module.exports = ReactComponentBrowserEnvironment;
 
 var _prodInvariant = __webpack_require__(5);
 
-var DOMLazyTree = __webpack_require__(36);
+var DOMLazyTree = __webpack_require__(37);
 var ExecutionEnvironment = __webpack_require__(9);
 
 var createNodesFromMarkup = __webpack_require__(377);
@@ -31097,7 +31100,7 @@ var _prodInvariant = __webpack_require__(5),
 
 var AutoFocusUtils = __webpack_require__(382);
 var CSSPropertyOperations = __webpack_require__(383);
-var DOMLazyTree = __webpack_require__(36);
+var DOMLazyTree = __webpack_require__(37);
 var DOMNamespaces = __webpack_require__(96);
 var DOMProperty = __webpack_require__(27);
 var DOMPropertyOperations = __webpack_require__(166);
@@ -32800,7 +32803,7 @@ var _prodInvariant = __webpack_require__(5),
 var DOMPropertyOperations = __webpack_require__(166);
 var LinkedValueUtils = __webpack_require__(98);
 var ReactDOMComponentTree = __webpack_require__(7);
-var ReactUpdates = __webpack_require__(19);
+var ReactUpdates = __webpack_require__(20);
 
 var invariant = __webpack_require__(2);
 var warning = __webpack_require__(3);
@@ -33087,7 +33090,7 @@ module.exports = ReactDOMInput;
 
 var _assign = __webpack_require__(6);
 
-var React = __webpack_require__(33);
+var React = __webpack_require__(34);
 var ReactDOMComponentTree = __webpack_require__(7);
 var ReactDOMSelect = __webpack_require__(168);
 
@@ -33216,7 +33219,7 @@ var _prodInvariant = __webpack_require__(5),
 
 var LinkedValueUtils = __webpack_require__(98);
 var ReactDOMComponentTree = __webpack_require__(7);
-var ReactUpdates = __webpack_require__(19);
+var ReactUpdates = __webpack_require__(20);
 
 var invariant = __webpack_require__(2);
 var warning = __webpack_require__(3);
@@ -33382,7 +33385,7 @@ var ReactInstanceMap = __webpack_require__(45);
 var ReactInstrumentation = __webpack_require__(15);
 
 var ReactCurrentOwner = __webpack_require__(16);
-var ReactReconciler = __webpack_require__(35);
+var ReactReconciler = __webpack_require__(36);
 var ReactChildReconciler = __webpack_require__(397);
 
 var emptyFunction = __webpack_require__(13);
@@ -33825,7 +33828,7 @@ module.exports = ReactMultiChild;
 
 
 
-var ReactReconciler = __webpack_require__(35);
+var ReactReconciler = __webpack_require__(36);
 
 var instantiateReactComponent = __webpack_require__(169);
 var KeyEscapeUtils = __webpack_require__(102);
@@ -33985,14 +33988,14 @@ module.exports = ReactChildReconciler;
 var _prodInvariant = __webpack_require__(5),
     _assign = __webpack_require__(6);
 
-var React = __webpack_require__(33);
+var React = __webpack_require__(34);
 var ReactComponentEnvironment = __webpack_require__(99);
 var ReactCurrentOwner = __webpack_require__(16);
 var ReactErrorUtils = __webpack_require__(91);
 var ReactInstanceMap = __webpack_require__(45);
 var ReactInstrumentation = __webpack_require__(15);
 var ReactNodeTypes = __webpack_require__(170);
-var ReactReconciler = __webpack_require__(35);
+var ReactReconciler = __webpack_require__(36);
 
 if (process.env.NODE_ENV !== 'production') {
   var checkReactTypeSpec = __webpack_require__(399);
@@ -35416,7 +35419,7 @@ module.exports = ReactServerUpdateQueue;
 
 var _assign = __webpack_require__(6);
 
-var DOMLazyTree = __webpack_require__(36);
+var DOMLazyTree = __webpack_require__(37);
 var ReactDOMComponentTree = __webpack_require__(7);
 
 var ReactDOMEmptyComponent = function (instantiate) {
@@ -35621,7 +35624,7 @@ var _prodInvariant = __webpack_require__(5),
     _assign = __webpack_require__(6);
 
 var DOMChildrenOperations = __webpack_require__(95);
-var DOMLazyTree = __webpack_require__(36);
+var DOMLazyTree = __webpack_require__(37);
 var ReactDOMComponentTree = __webpack_require__(7);
 
 var escapeTextContentForBrowser = __webpack_require__(64);
@@ -35785,7 +35788,7 @@ module.exports = ReactDOMTextComponent;
 
 var _assign = __webpack_require__(6);
 
-var ReactUpdates = __webpack_require__(19);
+var ReactUpdates = __webpack_require__(20);
 var Transaction = __webpack_require__(61);
 
 var emptyFunction = __webpack_require__(13);
@@ -35860,7 +35863,7 @@ var EventListener = __webpack_require__(174);
 var ExecutionEnvironment = __webpack_require__(9);
 var PooledClass = __webpack_require__(32);
 var ReactDOMComponentTree = __webpack_require__(7);
-var ReactUpdates = __webpack_require__(19);
+var ReactUpdates = __webpack_require__(20);
 
 var getEventTarget = __webpack_require__(92);
 var getUnboundedScrollPosition = __webpack_require__(412);
@@ -36061,7 +36064,7 @@ var ReactComponentEnvironment = __webpack_require__(99);
 var ReactEmptyComponent = __webpack_require__(171);
 var ReactBrowserEventEmitter = __webpack_require__(65);
 var ReactHostComponent = __webpack_require__(172);
-var ReactUpdates = __webpack_require__(19);
+var ReactUpdates = __webpack_require__(20);
 
 var ReactInjection = {
   Component: ReactComponentEnvironment.injection,
@@ -38422,7 +38425,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(18);
+var _reactDom = __webpack_require__(19);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -38593,7 +38596,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(18);
+var _reactDom = __webpack_require__(19);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -40732,7 +40735,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(18);
+var _reactDom = __webpack_require__(19);
 
 var _utils = __webpack_require__(23);
 
@@ -42976,7 +42979,7 @@ exports.default = typeaheadInnerContainer;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_BookCard__ = __webpack_require__(201);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_redux__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash_filter__ = __webpack_require__(525);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash_filter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_lodash_filter__);
@@ -43034,7 +43037,6 @@ var Main = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
-            console.log(this.props.books);
             var books = __WEBPACK_IMPORTED_MODULE_2_lodash_filter___default()(this.props.books, function (book) {
                 return book.title.toLowerCase().indexOf(_this2.state.term) > -1;
             });
@@ -43043,7 +43045,7 @@ var Main = function (_React$Component) {
                 {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 28
+                        lineNumber: 27
                     },
                     __self: this
                 },
@@ -43052,7 +43054,7 @@ var Main = function (_React$Component) {
                     {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 29
+                            lineNumber: 28
                         },
                         __self: this
                     },
@@ -43063,7 +43065,7 @@ var Main = function (_React$Component) {
                     "a",
                     { href: "/logout", __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 30
+                            lineNumber: 29
                         },
                         __self: this
                     },
@@ -43072,7 +43074,7 @@ var Main = function (_React$Component) {
                     __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["b" /* Link */],
                     { to: "/connect", __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 30
+                            lineNumber: 29
                         },
                         __self: this
                     },
@@ -43082,7 +43084,7 @@ var Main = function (_React$Component) {
                     __WEBPACK_IMPORTED_MODULE_4_react_router_dom__["b" /* Link */],
                     { to: "/profile", __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 31
+                            lineNumber: 30
                         },
                         __self: this
                     },
@@ -43090,21 +43092,21 @@ var Main = function (_React$Component) {
                 ),
                 __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement("input", { onChange: this.addSearchTerm.bind(this), type: "search", className: "form-control", placeholder: "Enter a book name", __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 32
+                        lineNumber: 31
                     },
                     __self: this
                 }),
                 books.map(function (book, i) {
                     return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0__components_BookCard__["a" /* default */], { key: i, info: book, __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 34
+                            lineNumber: 33
                         },
                         __self: _this2
                     });
                 }),
                 __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_Modal__["a" /* default */], { btnuse: "addrequest", __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 36
+                        lineNumber: 35
                     },
                     __self: this
                 })
@@ -45538,7 +45540,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(18);
+var _reactDom = __webpack_require__(19);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -46546,8 +46548,8 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*!
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions_profileAction__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions_profileAction__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_redux__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Modal__ = __webpack_require__(115);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(1);
@@ -46692,9 +46694,9 @@ var propsMap = function propsMap(store) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_redux__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_redux__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_redux__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__actions_profileAction__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__actions_profileAction__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
@@ -46723,16 +46725,9 @@ var RequestList = function (_React$Component) {
     }
 
     _createClass(RequestList, [{
-        key: "componentWillMount",
-        value: function componentWillMount() {
-            if (this.props.username) {
-                this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_profileAction__["g" /* getRequests */])(this.props.username));
-            }
-        }
-    }, {
         key: "viewRequest",
         value: function viewRequest(request) {
-            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_profileAction__["j" /* viewRequest */])(request));
+            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_profileAction__["i" /* viewRequest */])(request));
         }
     }, {
         key: "render",
@@ -46744,7 +46739,7 @@ var RequestList = function (_React$Component) {
                 {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 20
+                        lineNumber: 15
                     },
                     __self: this
                 },
@@ -46752,7 +46747,7 @@ var RequestList = function (_React$Component) {
                     "div",
                     { className: "col-md-6", __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 21
+                            lineNumber: 16
                         },
                         __self: this
                     },
@@ -46761,7 +46756,7 @@ var RequestList = function (_React$Component) {
                         {
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 22
+                                lineNumber: 17
                             },
                             __self: this
                         },
@@ -46772,7 +46767,7 @@ var RequestList = function (_React$Component) {
                                         return _this2.viewRequest(request);
                                     }, __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 24
+                                        lineNumber: 19
                                     },
                                     __self: _this2
                                 },
@@ -46780,7 +46775,7 @@ var RequestList = function (_React$Component) {
                                     __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
                                     { to: "/request", __source: {
                                             fileName: _jsxFileName,
-                                            lineNumber: 25
+                                            lineNumber: 20
                                         },
                                         __self: _this2
                                     },
@@ -46795,7 +46790,7 @@ var RequestList = function (_React$Component) {
                     "div",
                     { className: "col-md-6", __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 29
+                            lineNumber: 24
                         },
                         __self: this
                     },
@@ -46804,7 +46799,7 @@ var RequestList = function (_React$Component) {
                         {
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 30
+                                lineNumber: 25
                             },
                             __self: this
                         },
@@ -46815,7 +46810,7 @@ var RequestList = function (_React$Component) {
                                         return _this2.viewRequest(request);
                                     }, __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 32
+                                        lineNumber: 27
                                     },
                                     __self: _this2
                                 },
@@ -46823,7 +46818,7 @@ var RequestList = function (_React$Component) {
                                     __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
                                     { to: "/request", __source: {
                                             fileName: _jsxFileName,
-                                            lineNumber: 33
+                                            lineNumber: 28
                                         },
                                         __self: _this2
                                     },
@@ -46858,12 +46853,12 @@ var propsMap = function propsMap(store) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_redux__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_redux__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_redux__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BookCard__ = __webpack_require__(201);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_profileAction__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_profileAction__ = __webpack_require__(33);
 var _jsxFileName = "/home/ubuntu/workspace/src/shared/components/Search.js";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -46901,7 +46896,7 @@ var Search = function (_React$Component) {
         key: "submitSearch",
         value: function submitSearch(event) {
             event.preventDefault();
-            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_profileAction__["h" /* searchBooks */])(this.state.term));
+            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_profileAction__["g" /* searchBooks */])(this.state.term));
         }
     }, {
         key: "render",
@@ -46996,13 +46991,13 @@ var propsMap = function propsMap(store) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_redux__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_redux__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_redux__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Modal__ = __webpack_require__(115);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_profileAction__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_profileAction__ = __webpack_require__(33);
 var _jsxFileName = "/home/ubuntu/workspace/src/shared/components/Request.js";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -47031,7 +47026,7 @@ var Request = function (_React$Component) {
     _createClass(Request, [{
         key: "viewBooks",
         value: function viewBooks(bookinfo) {
-            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_profileAction__["i" /* viewBook */])(bookinfo));
+            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_profileAction__["h" /* viewBook */])(bookinfo));
         }
     }, {
         key: "addExchange",
@@ -48675,12 +48670,20 @@ function reducer() {
     switch (action.type) {
         case "LOGGED_IN":
             {
+                var inrequests = action.payload.requests.filter(function (request) {
+                    return request.receiver.username == action.payload.username;
+                });
+                var outrequests = action.payload.requests.filter(function (request) {
+                    return request.sender.username == action.payload.username;
+                });
                 return _extends({}, state, {
                     username: action.payload.username,
                     email: action.payload.email,
                     wrongcredential: false,
                     error: false,
-                    ownedbooks: action.payload.books
+                    ownedbooks: action.payload.books,
+                    inrequests: inrequests,
+                    outrequests: outrequests
                 });
             }
         case "WRONG_CREDENTIAL":
@@ -48702,17 +48705,10 @@ function reducer() {
                     ownedbooks: [].concat(_toConsumableArray(state.ownedbooks), [action.payload])
                 });
             }
-        case "GET_ALL_REQUESTS":
+        case "NEW_REQUEST_ADDED":
             {
-                var inrequests = action.payload.filter(function (request) {
-                    return request.receiver.username == state.username;
-                });
-                var outrequests = action.payload.filter(function (request) {
-                    return request.sender.username == state.username;
-                });
                 return _extends({}, state, {
-                    inrequests: inrequests,
-                    outrequests: outrequests
+                    outrequests: [].concat(_toConsumableArray(state.outrequests), [action.payload])
                 });
             }
         case "CHANGE_PAGE":
@@ -48815,6 +48811,12 @@ function reducer() {
             {
                 return _extends({}, state, {
                     open: false
+                });
+            }
+        case "NEW_REQUEST_ADDED":
+            {
+                return _extends({}, state, {
+                    requestself: false
                 });
             }
 

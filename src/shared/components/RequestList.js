@@ -1,16 +1,11 @@
 import {connect} from "react-redux";
-import {getRequests, viewRequest} from "../actions/profileAction";
+import {viewRequest} from "../actions/profileAction";
 import { Link } from 'react-router-dom';
 import React from "react";
 
 class RequestList extends React.Component{
   constructor(){
       super()
-  }
-  componentWillMount(){
-     if (this.props.username){
-            this.props.dispatch(getRequests(this.props.username));
-    }
   }
   viewRequest(request){
         this.props.dispatch(viewRequest(request));

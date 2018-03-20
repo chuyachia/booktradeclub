@@ -85,7 +85,7 @@ function dbHandler(){
                 newTrade.receiver.unread=true;
                 newTrade.save((err,result)=>{
                     if(err) throw err;
-                    res.send({success:true,message:"New request added"})
+                    res.send({success:true,message:"New request added",data:result})
                 })
                 break;
             case "exchange":
@@ -108,7 +108,6 @@ function dbHandler(){
     }
     
     this.getRequests = function(req,res){
-        //req.body.username
         Trades.find({
             $or:[{'sender.username':req.params.username},{'receiver.username':req.params.username}]
         }).exec((err,result)=>{

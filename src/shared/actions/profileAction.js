@@ -110,18 +110,6 @@ export function addUser(userinfo){
     }
 }
 
-export function getRequests(username){
-    return function(dispatch){
-        axios.get('/request/'+username)
-        .then(response=>{
-            dispatch({
-                type:"GET_ALL_REQUESTS",
-                payload:response.data
-            })
-        })
-        .catch(err=>console.log(err))
-    }
-}
 
 export function viewRequest(requestinfo){
     return function(dispatch){
@@ -139,7 +127,6 @@ export function viewRequest(requestinfo){
 }
 
 export function addExchange(bookid,bookname,tradeid){
-    console.log(tradeid);
     return function(dispatch){
             var param = {
                 action:"exchange",

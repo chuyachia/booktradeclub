@@ -1,8 +1,10 @@
 // Local strategy setup
 //https://scotch.io/tutorials/easy-node-authentication-setup-and-local
 const LocalStrategy = require('passport-local').Strategy;
-import Users from "../models/users";
 import Books from "../models/books";
+import Trades from "../models/trades";
+import Users from "../models/users";
+
 
 export default function(passport){
     passport.serializeUser((user, done) => {  	
@@ -10,12 +12,19 @@ export default function(passport){
     })
   
     passport.deserializeUser((id, done) => {
-    	Users.findById(id, (err, user) => {  
-        Books.find({ownBy:user.username},function(error,books){
-          if (error) throw error;
-          var booksowned = books.map((book)=>book.bookId);
-          user.books = booksowned;
-          done(err, user);
+    	Users.findById(id, (err, user) => {
+    	  if (err) throw err;
+    	 Trades.find({
+            $or:[{'sender.username':user.username},{'receiver.username':user.username}]
+        }).exec((error,result)=>{
+            if (error) throw error;
+            user.requests = result;
+            Books.find({ownBy:user.username},function(error,books){
+              if (error) throw error;
+              var booksowned = books.map((book)=>book.bookId);
+              user.books = booksowned;
+              done(err, user);
+            })
         })
     		
     	})
@@ -33,12 +42,19 @@ export default function(passport){
             if (!user.validPassword(password)) {
                 return done(null, false, { message: 'Wrong username or password.' });
             }
-            Books.find({ownBy:user.username},function(err,books){
-              if (err) throw err;
-              var booksowned = books.map((book)=>book.bookId);
-              user.books = booksowned;
-              return done(null, user);
-            })
+          	 Trades.find({
+                  $or:[{'sender.username':user.username},{'receiver.username':user.username}]
+              }).exec((error,result)=>{
+                  if (error) throw error;
+                  user.requests = result;
+                  Books.find({ownBy:user.username},function(error,books){
+                    if (error) throw error;
+                    var booksowned = books.map((book)=>book.bookId);
+                    user.books = booksowned;
+                    done(null, user);
+                  })
+              })
+            
         })
         
         

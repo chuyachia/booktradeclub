@@ -1,7 +1,4 @@
-// Problem:
-// unlogged -> modal:request -> login -> modal:request -> profile
-// login -> modal:request -> profile
-// Error: Can't set headers after they are sent 
+// Attach requests data to user when log in as books
 import apiHandler from "./controllers/apiHandler";
 import App from "../shared/App";
 import bodyParser from 'body-parser';
@@ -53,7 +50,7 @@ app.post('/auth', function(req, res) {
     if (!user) { return res.json({ success: false, message: info.message }); }
     req.logIn(user, function(err) {
       if (err) throw err; 
-      return res.json({ success: true, username:user.username,books:user.books });
+      return res.json({ success: true, username:user.username,books:user.books,requests:user.requests });
     });
   })(req, res);
 });
@@ -93,7 +90,7 @@ app.get("*",(req,res) => {
     if(req.isAuthenticated()){
           store.dispatch({
             type:"LOGGED_IN",
-            payload:{username:req.user.username,books:req.user.books}
+            payload:{username:req.user.username,books:req.user.books,requests:req.user.requests}
         })
     }
     if (req.url=="/profile"&&!req.isAuthenticated()){

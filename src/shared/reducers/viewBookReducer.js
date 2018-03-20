@@ -43,6 +43,12 @@ export default function reducer(state={
                 open:false
             }
         }
+        case "NEW_REQUEST_ADDED":{
+            return{
+                ...state,
+                requestself:false
+            }
+        }
 
     }
     return state;

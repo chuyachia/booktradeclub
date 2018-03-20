@@ -30,7 +30,9 @@ export function logIn(userinfo){
                     payload:{
                         username:response.data.username,
                         email:response.data.email,
-                        books:response.data.books}
+                        books:response.data.books,
+                        requests:response.data.requests
+                    }
                 })
             } else {
                 dispatch({
@@ -99,7 +101,8 @@ export function addRequest(sender,receiver,bookid,bookname){
             axios.post('/request',param)
             .then(response=>{
                 dispatch({
-                    type:"NEW_REQUEST_ADDED"
+                    type:"NEW_REQUEST_ADDED",
+                    payload:response.data.data
                 })
             })
             .catch(error=>console.log(error))
