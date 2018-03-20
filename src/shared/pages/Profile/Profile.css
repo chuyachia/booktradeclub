@@ -1,0 +1,42 @@
+.card {
+  position: relative;
+  height: 150px;
+  width: 100px;
+  overflow: hidden;
+  display:inline-block;
+  cursor:pointer;
+}
+img{
+  margin-top:5px;
+  margin-right:5px;
+  float:left;
+}
+.card img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: auto;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
+
+ul{
+  line-height: 200%;
+}
+
+.conversation{
+  position:relative;
+  height:100vh;
+}
+.right{
+  text-align:right;
+}
+
+.usercontrol{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  border:2px solid black;
+}
