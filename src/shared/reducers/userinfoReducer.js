@@ -2,8 +2,8 @@ export default function reducer(state={
     wrongcredential:false,
     username:null,
     email:null,
+    location:null,
     error:false,
-    page:"search",
     ownedbooks:[],
     inrequests:[],
     outrequests:[]
@@ -16,6 +16,7 @@ export default function reducer(state={
                 ...state,
                 username:action.payload.username,
                 email:action.payload.email,
+                location:action.payload.location,
                 wrongcredential:false,
                 error:false,
                 ownedbooks:action.payload.books,
@@ -48,10 +49,11 @@ export default function reducer(state={
             outrequests:[...state.outrequests,action.payload]
             }
         }
-        case "CHANGE_PAGE":{
+        case "USER_INFO_CHANGED":{
             return{
                 ...state,
-                page:action.payload
+                email:action.payload.email,
+                location:action.payload.location
             }
         }
     }

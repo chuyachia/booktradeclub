@@ -17,7 +17,7 @@ class Connect extends React.Component{
     render(){
         var underline={ textDecoration: "underline"};
         return(
-        <div class="row container">
+        <div class="row">
             <div class="col-md-6 connect"><span style={this.state.choice=="login"?underline:null} onClick={()=>this.changePage("login")}>Log in</span></div>
             <div class="col-md-6 connect"><span style={this.state.choice=="signup"?underline:null} onClick={()=>this.changePage("signup")}>Sign up</span></div>
             <div class="col-md-12">{this.state.choice=="login"?<LoginForm/>:<RegisterForm/>}</div>

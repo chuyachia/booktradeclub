@@ -21,14 +21,19 @@ img{
           transform: translate(-50%,-50%);
 }
 
-ul{
-  line-height: 200%;
+.personinfo{
+ line-height: 40px; 
 }
 
+.iconbtn{
+  border: 0;
+  background: none
+}
 .conversation{
   position:relative;
   height:100vh;
 }
+
 .right{
   text-align:right;
 }
@@ -38,6 +43,17 @@ ul{
   bottom:0;
   width:100%;
   border:2px solid black;
+}
+.title{
+  text-align:center;
+}
+
+.dropdown{
+    float:right;
+}
+.dropdown-menu-right {
+    right: 0;
+    left: auto;
 }.connect{
     text-align:center;
 }

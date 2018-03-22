@@ -50,7 +50,15 @@ app.post('/auth', function(req, res) {
     if (!user) { return res.json({ success: false, message: info.message }); }
     req.logIn(user, function(err) {
       if (err) throw err; 
-      return res.json({ success: true, username:user.username,books:user.books,requests:user.requests });
+      return res.json({ 
+        success: true, 
+        username:user.username,
+        email:user.email,
+        location:user.location,
+        books:user.books,
+        requests:user.requests 
+        
+      });
     });
   })(req, res);
 });
@@ -84,16 +92,24 @@ app.route('/request/:username')
 app.route('/userbooks/:username')
   .get(dbHandler.getUserBooks);
 
+app.route('/userinfo')
+  .post(dbHandler.changeUserInfo)
   
 app.get("*",(req,res) => {
     const store = configureStore();
     if(req.isAuthenticated()){
           store.dispatch({
             type:"LOGGED_IN",
-            payload:{username:req.user.username,books:req.user.books,requests:req.user.requests}
+            payload:{
+              username:req.user.username,
+              books:req.user.books,
+              requests:req.user.requests,
+              email:req.user.email,
+              location:req.user.location,
+            }
         })
     }
-    if (req.url=="/profile"&&!req.isAuthenticated()){
+    if ((req.url=="/profile"||req.url=="/request")&&!req.isAuthenticated()){
       res.redirect('/connect');
     }
     const context = {}

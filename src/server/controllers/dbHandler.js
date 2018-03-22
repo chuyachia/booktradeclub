@@ -4,7 +4,6 @@ import Users from "../models/users";
 
 function dbHandler(){
     this.addBook = function(req,res){
-        console.log(req.isAuthenticated());
         if (req.isAuthenticated()){
             var {username, ...bookinfo} =req.body;
             Books.findOneAndUpdate(
@@ -79,6 +78,7 @@ function dbHandler(){
             case "add":
                 var newTrade = new Trades();
                 newTrade.sender.username = req.body.from;
+                newTrade.sender.unread =false;
                 newTrade.receiver.username = req.body.to;
                 newTrade.receiver.bookId = req.body.bookid;
                 newTrade.receiver.bookName = req.body.bookname;
@@ -89,9 +89,13 @@ function dbHandler(){
                 })
                 break;
             case "exchange":
-                console.log(req.body);
                 Trades.findOneAndUpdate({_id:req.body.tradeid},{$set:
-                {"sender.bookId":req.body.bookid,"sender.bookName":req.body.bookname}})
+                {
+                    "sender.bookId":req.body.bookid,
+                    "sender.bookName":req.body.bookname,
+                    "sender.unread":true,
+                    "receiver.unread":false,
+                }})
                 .exec((err,result)=>{
                     if(err) throw err;
                     res.send({success:true,message:"New exchange added"});
@@ -104,6 +108,14 @@ function dbHandler(){
                     res.send({success:true,message:"Trade confirmed"});
                 })
                 break;
+            case "decline":
+                Trades.findOneAndUpdate({_id:req.body.tradeid},{declined:true})
+                .exec((err,result)=>{
+                    if(err) throw err;
+                    res.send({success:true,message:"Trade declined"});
+                })
+                break;
+                
         }
     }
     
@@ -114,6 +126,26 @@ function dbHandler(){
             if (err) throw err;
             res.send(result);
         })
+    }
+    
+    this.changeUserInfo = function(req,res){
+        switch(req.body.action){
+            case "email":
+                Users.findOneAndUpdate({'username':req.body.username},{email:req.body.data},{new:true})
+                .exec((err,result)=>{
+                    if (err) throw err;
+                    res.send(result);
+                })
+                break;
+            case "location":
+                Users.findOneAndUpdate({'username':req.body.username},{location:req.body.data},{new:true})
+                .exec((err,result)=>{
+                    if (err) throw err;
+                    res.send(result);
+                })
+                break;
+    
+        }
     }
 
 }

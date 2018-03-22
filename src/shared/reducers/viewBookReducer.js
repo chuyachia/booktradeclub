@@ -2,15 +2,43 @@ export default function reducer(state={
     open:false,
     tologin:false,
     ownerslocation:null,
+    btnuse:null,
     info:{}
 },action){
     switch(action.type) {
+        case "VIEW_ADD_BOOK":{
+            return {
+                ...state,
+                open:true,
+                info:action.payload,
+                btnuse:"addbook"
+            };
+        }
+        case "VIEW_REQUEST_BOOK":{
+            return {
+                ...state,
+                open:true,
+                add:false,
+                info:action.payload,
+                btnuse:"addrequest"
+            };
+        }
+        case "VIEW_EXCHANGE_BOOK":{
+            return {
+                ...state,
+                open:true,
+                add:false,
+                info:action.payload,
+                btnuse:"answersender"
+            };
+        }
         case "VIEW_BOOK":{
             return {
                 ...state,
                 open:true,
                 add:false,
-                info:action.payload
+                info:action.payload,
+                btnuse:null
             };
         }
         case "CLOSE_BOOK":{
@@ -41,12 +69,6 @@ export default function reducer(state={
             return{
                 ...state,
                 open:false
-            }
-        }
-        case "NEW_REQUEST_ADDED":{
-            return{
-                ...state,
-                requestself:false
             }
         }
 

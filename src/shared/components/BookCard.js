@@ -9,7 +9,7 @@ class BookCard extends React.Component{
         super(props);
     }
     viewBooks(){
-        this.props.dispatch(viewBook(this.props.info));
+        this.props.dispatch(viewBook(this.props.info,this.props.modaluse));
     }
     render(){
         return(

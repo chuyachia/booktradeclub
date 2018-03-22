@@ -23,12 +23,34 @@ export function searchBooks(bookname){
   
 }
 
-export function viewBook(bookinfo){
+export function viewBook(bookinfo,type){
     return function(dispatch){
-        dispatch({
-            type:"VIEW_BOOK",
-            payload:bookinfo
-        });
+        switch(type){
+            case "addsearch":
+                dispatch({
+                    type:"VIEW_ADD_BOOK",
+                    payload:bookinfo
+                });
+                break;
+            case "addrequest":
+                dispatch({
+                    type:"VIEW_REQUEST_BOOK",
+                    payload:bookinfo
+                });
+                break;
+            case "answersender":
+               dispatch({
+                    type:"VIEW_EXCHANGE_BOOK",
+                    payload:bookinfo
+                });
+                break;
+            default:
+                dispatch({
+                    type:"VIEW_BOOK",
+                    payload:bookinfo
+                });
+                break;
+        }
     };
 }
 
@@ -48,7 +70,7 @@ export function addBook(bookinfo,username){
             if (response.data.success){
                 dispatch({
                     type:"NEW_BOOK_ADDED",
-                    payload:bookinfo.bookId
+                    payload:bookinfo
                 }) 
             } else{
                dispatch({
@@ -113,6 +135,9 @@ export function addUser(userinfo){
 
 export function viewRequest(requestinfo){
     return function(dispatch){
+        dispatch({
+            type:"OPEN_REQUEST"
+        });
         axios.get('/userbooks/'+requestinfo.sender.username)
         .then(response=>{
             var rtn = {};
@@ -152,9 +177,23 @@ export function confirmTrade(tradeid){
             action:"confirm"
         })
             .then(response=>{
-                console.log(response.data);
                 dispatch({
                     type:"TRADE_CONFIRMED"
+                })
+            })
+            .catch(error=>console.log(error))  
+    }
+}
+
+export function declineTrade(tradeid){
+    return function(dispatch){
+        axios.post('/request',{
+            tradeid:tradeid,
+            action:"decline"
+        })
+            .then(response=>{
+                dispatch({
+                    type:"TRADE_DECLINED"
                 })
             })
             .catch(error=>console.log(error))  
@@ -169,3 +208,44 @@ export function changePage(target){
         })
     }
 }
+
+export function changeEmail(){
+    return function(dispatch){
+        dispatch({
+            type:"CHANGE_EMAIL"
+        })
+    }
+}
+
+export function changeLocation(){
+    return function(dispatch){
+        dispatch({
+            type:"CHANGE_LOCATION"
+        })
+    }
+}
+
+
+export function cancelChange(){
+    return function(dispatch){
+        dispatch({
+            type:"CANCEL_CHANGE"
+        })
+    }
+}
+
+export function submitChange(username,action,data){
+    return function(dispatch){
+       axios.post('/userinfo',{
+            username,data,action
+        })
+        .then(response=>{
+            dispatch({
+                type:"USER_INFO_CHANGED",
+                payload:response.data
+            })
+        })
+        .catch(error=>console.log(error))
+    }
+}
+

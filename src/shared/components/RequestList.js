@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
-import {viewRequest} from "../actions/profileAction";
 import { Link } from 'react-router-dom';
 import React from "react";
+import {viewRequest} from "../actions/profileAction";
 
 class RequestList extends React.Component{
   constructor(){
@@ -12,7 +12,7 @@ class RequestList extends React.Component{
     }
   render(){
       return(
-          <div>
+          <div >
               <div class="col-md-6">
                   <ul>
                   {this.props.inrequests.map((request,i)=>(

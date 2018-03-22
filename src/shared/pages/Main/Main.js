@@ -1,12 +1,12 @@
-// Add books in Search cause Main render loop
-
 import BookCard from "../../components/BookCard";
 import { connect } from "react-redux";
+import DropDownBtn from "../../components/DropDownBtn"
 import filter from "lodash.filter";
 import {getAllBooks} from "../../actions/mainAction";
-import { Link } from 'react-router-dom'
-import Modal from "../../components/Modal"
+import { Link } from 'react-router-dom';
+import Modal from "../../components/Modal";
 import React from "react";
+import "./Main.css";
 
 class Main extends React.Component {
     constructor(){
@@ -25,14 +25,13 @@ class Main extends React.Component {
         var books = filter(this.props.books,(book)=>book.title.toLowerCase().indexOf(this.state.term)>-1);
         return (
         <div>
+        <DropDownBtn/>
         {this.props.username&&<div>Hi, {this.props.username}</div>}
-        {this.props.username?<a href="/logout">Logout</a>:<Link to="/connect">Login</Link>}
-        {this.props.username&&<Link to="/profile">Profile</Link>}
         <input onChange={this.addSearchTerm.bind(this)} type="search" class="form-control" placeholder="Enter a book name"/>
         {books.map((book,i)=> (
-            <BookCard key={i} info={book}/>
+            <BookCard key={i} info={book} modaluse="addrequest"/>
             ))}
-        <Modal btnuse="addrequest"/>
+        <Modal/>
         </div>);
     }
 }

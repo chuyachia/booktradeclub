@@ -1,6 +1,7 @@
 // use props.books obtained after logged in to check if searched book is already added. if yes, add book button should change
 import {connect} from "react-redux";
 import BookCard from "./BookCard";
+import Modal from "./Modal";
 import React from "react";
 import {searchBooks} from "../actions/profileAction";
 
@@ -32,7 +33,7 @@ class Search extends React.Component {
                 </div>
             </form>
             {this.props.books.map((book,i)=> (
-            <BookCard key={i} info={book}/>
+            <BookCard key={i} info={book} modaluse="addsearch"/>
             ))}
         </div>
         )

@@ -4,6 +4,12 @@ export default function reducer(state={
     senderbooks:[]
 },action){
     switch(action.type) {
+        case "OPEN_REQUEST":{
+            return{
+                ...state,
+                info:{}
+            }
+        }
         case "VIEW_REQUEST":{
             return {
                 ...state,
@@ -29,6 +35,15 @@ export default function reducer(state={
                 info:{
                     ...state.info,
                     confirmed:true
+                }
+            }
+        }
+        case "TRADE_DECLINED":{
+            return{
+                ...state,
+               info:{
+                    ...state.info,
+                    declined:true
                 }
             }
         }

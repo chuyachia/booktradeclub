@@ -18,7 +18,7 @@ class Modal extends React.Component{
     }
     addRequest(indx){
         var receiver = this.props.info.ownBy[indx];
-        this.props.dispatch(addRequest(this.props.username,receiver,this.props.info.bookId,this.props.info.title))
+        this.props.dispatch(addRequest(this.props.username,receiver,this.props.info.bookId,this.props.info.title));
     }
     componentWillReceiveProps(nextProps){
         if (nextProps.info.ownBy&&nextProps.info!=this.props.info){
@@ -30,8 +30,9 @@ class Modal extends React.Component{
         if (this.props.tologin){
             return(<Redirect to={{
             pathname: "/connect"
-          }}/>)
+          }}/>);
         } else {
+            var ownedbooks = this.props.ownedbooks.map(book=>book.bookId);
             var outrequests = this.props.outrequests.filter(request=>request.receiver.bookId==this.props.info.bookId);
             var outrequser = outrequests.map(request=>request.receiver.username);
             return(
@@ -67,20 +68,19 @@ class Modal extends React.Component{
                     <tr key={i}>
                       <td>{user}</td>
                       <td>{this.props.ownerslocation[i]}</td>
-                      {user!==this.props.username&&
-                      (<td>
-                          {outrequser.indexOf(user)==-1?
+                      <td>
+                      {user!==this.props.username
+                        ?outrequser.indexOf(user)==-1?
                           (<button class="btn" onClick={()=>{this.addRequest(i)}}>Request</button>):
                           (<button class="btn" disabled>Already requested</button>)
-                          }
-                      </td>)
-                      }
+                          :null
+                      }</td>
                     </tr>
                     ))}
                   </tbody>
                 </table></div>}
                 
-               {this.props.btnuse=="addbook"&&(this.props.ownedbooks.indexOf(this.props.info.bookId)==-1
+               {this.props.btnuse=="addbook"&&(ownedbooks.indexOf(this.props.info.bookId)==-1
                     ?<button class="btn" onClick={this.addBook.bind(this)}>Add to my books</button>
                     :<button class="btn" disabled>Already added</button>)
                }
@@ -94,6 +94,7 @@ class Modal extends React.Component{
 }
 var propsMap = (store)=>{
     return{
+        btnuse: store.viewbook.btnuse,
         tologin:store.viewbook.tologin,
         open:store.viewbook.open,
         info:store.viewbook.info,

@@ -30,6 +30,7 @@ export function logIn(userinfo){
                     payload:{
                         username:response.data.username,
                         email:response.data.email,
+                        location:response.data.location,
                         books:response.data.books,
                         requests:response.data.requests
                     }
