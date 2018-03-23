@@ -1,3 +1,5 @@
+// allow view book info when click book name in conversation. how to pass book information to modal? init an axios call to search
+// in books collection?
 import {connect} from "react-redux";
 import { Link } from 'react-router-dom';
 import Modal from "./Modal";
@@ -8,9 +10,12 @@ class Request extends React.Component{
     constructor(props){
         super(props);
     }
-    viewBooks(bookinfo){
+    viewBooksExchange(bookinfo){
         this.props.dispatch(viewBook(bookinfo,"answersender"));
     }
+    /*viewBooksInfo(bookinfo){
+        this.props.dispatch(viewBook(bookinfo,"info"));
+    }*/
     addExchange(bookid,bookname){
         this.props.dispatch(addExchange(bookid,bookname,this.props.info._id));
     }
@@ -23,8 +28,7 @@ class Request extends React.Component{
 
     render(){
         function requestInit(book){
-            return (<p>I'm interested in the book <b>{book}</b> in your collection. 
-                <br/>Have a look at the books that I have to exchange!</p>);
+            return (<p>I'm interested in the book <b>{book}</b> in your collection. Have a look at the books that I have to exchange!</p>);
         }
         function requestRes(book){
             return (<p>I would accept to exchange my book with your <b>{book}</b>.</p>);
@@ -44,64 +48,87 @@ class Request extends React.Component{
             var receiver = sender=="You"?this.props.info.receiver.username:"You";
 
             return (
-            <div class="container conversation">
-                <div class={sender=="You"?"right":"left"}>
-                <h4>{sender}</h4>{requestInit(this.props.info.receiver.bookName)}</div>
+            <div class="container">
+            <nav class="navbar navbar-dark bg-dark fixed-top">
+              <Link class="navbar-brand" to="/profile"><i class="fas fa-arrow-left"></i></Link>
+            </nav>
+                <div class={sender=="You"?"card col-md-5 offset-md-7":"card col-md-5"}>
+                    <div class="card-body">
+                        <h4 class="card-title">{sender}</h4>{requestInit(this.props.info.receiver.bookName)}
+                    </div>
+                </div>
                 
-                {!this.props.info.sender.bookName&&this.props.info.declined&&(<div class={receiver=="You"?"right":null}>
-                <h4>{receiver}</h4>
-                {reqeustDecline()}
+                {!this.props.info.sender.bookName&&this.props.info.status=="declined"&&(<div class={receiver=="You"?"card col-md-5 offset-md-7":"card col-md-5"}>
+                    <div class="card-body">
+                        <h4 class="card-title">{receiver}</h4>
+                        {reqeustDecline()}
+                    </div>
                 </div>)}
                
-                {this.props.info.sender.bookName&&(<div class={receiver=="You"?"right":null}>
-                <h4>{receiver}</h4>
-                {requestRes(this.props.info.sender.bookName)}
+                {this.props.info.sender.bookName&&(<div class={receiver=="You"?"card col-md-5 offset-md-7":"card col-md-5"}>
+                    <div class="card-body">
+                        <h4 class="card-title">{receiver}</h4>
+                        {requestRes(this.props.info.sender.bookName)}
+                    </div>
                 </div>)}
                 
-                {this.props.info.sender.bookName&&this.props.info.confirmed&&(<div class={sender=="You"?"right":null}>
-                <h4>{sender}</h4>
-                {requestConfirm()}
+                {this.props.info.sender.bookName&&this.props.info.status=="confirmed"&&(<div class={sender=="You"?"card col-md-5 offset-md-7":"card col-md-5"}>
+                    <div class="card-body">
+                        <h4 class="card-title">{sender}</h4>
+                        {requestConfirm()}
+                    </div>
                 </div>)}
                 
-                {this.props.info.sender.bookName&&this.props.info.declined&&(<div class={sender=="You"?"right":null}>
-                <h4>{sender}</h4>
-                {reqeustDecline()}
+                {this.props.info.sender.bookName&&this.props.info.status=="declined"&&(<div class={sender=="You"?"card col-md-5 offset-md-7":"card col-md-5"}>
+                    <div class="card-body">
+                        <h4 class="card-title">{sender}</h4>
+                        {reqeustDecline()}
+                    </div>
                 </div>)}
                 
                 {sender=="You"?
                 (<div class="usercontrol">
-                    {!this.props.info.sender.bookName&&!this.props.info.declined&&(
+                    {!this.props.info.sender.bookName&&this.props.info.status=="pending"&&(
                     <div>{instructWaint(this.props.info.receiver.username)}</div>)}
-                    {this.props.info.sender.bookName&&!this.props.info.confirmed&&!this.props.info.declined&&(
+                    
+                    {this.props.info.sender.bookName&&this.props.info.status=="pending"&&(
                     <div>Do you want to accept this exchange?
-                    <button class="btn" onClick={this.confirmTrade.bind(this)}>Accept request</button>
-                    <button class="btn" onClick={this.declineTrade.bind(this)}>Decline request</button>
-                    <button class="btn"><Link to="/profile">Decide later</Link></button>
+                    <div>
+                        <button class="btn btn-raised" onClick={this.confirmTrade.bind(this)}>Accept request</button>
+                        <button class="btn btn-raised" onClick={this.declineTrade.bind(this)}>Decline request</button>
+                        <Link class="btn btn-raised" to="/profile">Decide later</Link>
+                    </div>
                     </div>)}
-                    {this.props.info.sender.bookName&&this.props.info.confirmed&&(
+                    
+                    {this.props.info.sender.bookName&&this.props.info.status=="confirmed"&&(
                     <div><p>The exchange has concluded. You can contact user at email to arrange meetup</p>
                     </div>)}
-                    {this.props.info.declined&&(
+                    
+                    {this.props.info.status=="declined"&&(
                     <div><p>The exchange has ended without success.</p>
                     </div>)}
                 </div>):
                 (<div class="usercontrol">
-                    {!this.props.info.sender.bookName&&!this.props.info.declined&&(
-                    <div>Here's what {this.props.info.sender.username} has to offer, choose a book to trade
-                        {this.props.senderbooks.map((book,i)=>(
-                            <div key={i} style={{cursor:"pointer"}}onClick={()=> this.viewBooks(book)}>{book.title}</div>
-                        ))}
-                    <button class="btn" onClick={this.declineTrade.bind(this)}>Decline request</button>
-                    <button class="btn"><Link to="/profile">Decide later</Link></button>
+                    {!this.props.info.sender.bookName&&this.props.info.status=="pending"&&(
+                    <div class="booklistwrap">Here's what {this.props.info.sender.username} has to offer, choose a book to trade
+                        <ul class="booklist list-unstyled">{this.props.senderbooks.map((book,i)=>(
+                            <li key={i} style={{cursor:"pointer"}} onClick={()=> this.viewBooksExchange(book)}>
+                            <strong>{book.title}</strong></li>
+                        ))}</ul>
+                    <div>
+                        <button class="btn btn-raised" onClick={this.declineTrade.bind(this)}>Decline request</button>
+                        <Link class="btn btn-raised" to="/profile">Decide later</Link>
+                    </div>
                     </div>)}
-                    {this.props.info.sender.bookName&&!this.props.info.confirmed&&!this.props.info.declined&&(<div>
+                    
+                    {this.props.info.sender.bookName&&this.props.info.status=="pending"&&(<div>
                     {instructWaint(this.props.info.sender.username)}
                     </div>)}
                     
-                    {this.props.info.sender.bookName&&this.props.info.confirmed&&(
+                    {this.props.info.sender.bookName&&this.props.info.status=="confirmed"&&(
                     <div><p>The exchange has concluded. You can contact user at email to arrange meetup</p>
                     </div>)}
-                    {this.props.info.declined&&(
+                    {this.props.info.status=="declined"&&(
                     <div><p>The exchange has ended without success.</p>
                     </div>)}
                 </div>)

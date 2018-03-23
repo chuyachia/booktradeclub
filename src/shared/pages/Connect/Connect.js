@@ -15,12 +15,29 @@ class Connect extends React.Component{
         this.setState({choice:target});
     }
     render(){
-        var underline={ textDecoration: "underline"};
         return(
-        <div class="row">
-            <div class="col-md-6 connect"><span style={this.state.choice=="login"?underline:null} onClick={()=>this.changePage("login")}>Log in</span></div>
-            <div class="col-md-6 connect"><span style={this.state.choice=="signup"?underline:null} onClick={()=>this.changePage("signup")}>Sign up</span></div>
-            <div class="col-md-12">{this.state.choice=="login"?<LoginForm/>:<RegisterForm/>}</div>
+        <div class="wrapper">
+            <div class="inner">
+                <div class="card connect">
+                  <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs nav-fill">
+                      <li class="nav-item">
+                      <a class={this.state.choice=="login"?"nav-link active":"nav-link"} onClick={()=>this.changePage("login")}>
+                      {this.state.choice=="login"?(<strong>Log in</strong>):"Log in"}
+                      </a>
+                      </li>
+                      <li class="nav-item">
+                      <a class={this.state.choice=="signup"?"nav-link active":"nav-link"} onClick={()=>this.changePage("signup")}>
+                      {this.state.choice=="signup"?(<strong>Sign up</strong>):"Sign up"}
+                      </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="card-body">
+                    {this.state.choice=="login"?<LoginForm/>:<RegisterForm/>}
+                  </div>
+                </div>
+            </div>
         </div>
         )
     }

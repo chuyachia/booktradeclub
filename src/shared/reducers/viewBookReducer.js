@@ -32,6 +32,15 @@ export default function reducer(state={
                 btnuse:"answersender"
             };
         }
+        case "VIEW_REMOVE_BOOK":{
+            return {
+                ...state,
+                open:true,
+                add:false,
+                info:action.payload,
+                btnuse:"removebook"
+            };
+        }
         case "VIEW_BOOK":{
             return {
                 ...state,
@@ -41,6 +50,7 @@ export default function reducer(state={
                 btnuse:null
             };
         }
+        case "BOOK_DELETED":
         case "CLOSE_BOOK":{
             return {
                 ...state,

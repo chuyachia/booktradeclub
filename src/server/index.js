@@ -1,4 +1,5 @@
 // Attach requests data to user when log in as books
+
 import apiHandler from "./controllers/apiHandler";
 import App from "../shared/App";
 import bodyParser from 'body-parser';
@@ -73,6 +74,9 @@ app.route('/search/:bookname')
   
 app.route('/book')
   .post(dbHandler.addBook);
+
+app.route('/book/:bookid/:username')
+  .delete(dbHandler.removeBook);
   
 app.route('/allbooks')
   .get(dbHandler.getAllBooks);
@@ -128,7 +132,7 @@ app.get("*",(req,res) => {
         <head>
           <title>Book Trading Club</title>
           <link rel="shortcut icon" href="">
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+          <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css">
           <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
           <link rel="stylesheet" href="https://unpkg.com/react-bootstrap-typeahead/css/Typeahead.css">
           <link rel="stylesheet" href="/css/main.css">

@@ -24,6 +24,15 @@ export default function reducer(state={
                 outrequests : outrequests
             }
         }
+        case "ALL_REQUESTS":{
+            var inreqs = action.payload.filter(request=>request.receiver.username == state.username);
+            var outreqs = action.payload.filter(request=>request.sender.username ==state.username);
+            return {
+                ...state,
+                inrequests : inreqs,
+                outrequests : outreqs
+            }
+        }
         case "WRONG_CREDENTIAL": {
             return{
                 ...state,
@@ -41,6 +50,13 @@ export default function reducer(state={
             return{
                 ...state,
                 ownedbooks:[...state.ownedbooks, action.payload]
+            }
+        }
+        case "BOOK_DELETED":{
+            var newownedbooks= state.ownedbooks.filter(book=>book.bookId!=action.payload);
+            return{
+                ...state,
+                ownedbooks:newownedbooks
             }
         }
         case "NEW_REQUEST_ADDED":{

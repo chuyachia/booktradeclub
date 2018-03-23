@@ -14,8 +14,7 @@ const Trade = new Schema({
         bookName:String,
         unread:Boolean
     },
-    confirmed:Boolean,
-    declined:Boolean
+    status:String
 });
 
 export default mongoose.model('Trade',Trade);

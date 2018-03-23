@@ -23,11 +23,11 @@ class Search extends React.Component {
         <div>
             <form onSubmit={this.submitSearch.bind(this)}>
                 <div class="input-group">
-                  <input onChange={this.addSearchTerm.bind(this)} type="search" class="form-control" 
+                  <input onChange={this.addSearchTerm.bind(this)} type="search" class="form-control" autoFocus
                   placeholder="Enter a book name" required/>
                   <span class="input-group-btn">
-                    <button type="submit" class="btn btn-primary">
-                      Start
+                    <button type="submit" class="btn btn-raised bg-dark text-light">
+                      <i class="fas fa-search"></i>
                     </button> 
                   </span>
                 </div>

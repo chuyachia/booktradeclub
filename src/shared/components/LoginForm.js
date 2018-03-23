@@ -30,7 +30,7 @@ class LoginForm extends React.Component{
         {this.props.username&&<Redirect to={{pathname:'/'}}/>}
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required autoFocus
                 onChange={(event) => {
                   this.setState({username:event.target.value});
                 }}/>
@@ -44,7 +44,7 @@ class LoginForm extends React.Component{
                 }}/>
             </div>
             {this.props.wrongcredential&&<div>Wrong username or password! Try again</div>}
-            <button type="submit" class="btn btn-default">Log in</button>
+            <button type="submit" class="btn btn-raised bg-dark text-light">Log in</button>
         </form>
         )
     }

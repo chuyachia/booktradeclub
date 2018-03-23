@@ -13,7 +13,7 @@ class BookCard extends React.Component{
     }
     render(){
         return(
-            <div class="card">
+            <div class="card bookdisplay">
                 <img src={this.props.info.imageUrl} alt={this.props.info.title} class="img-thumbnail" onClick={this.viewBooks.bind(this)}/>
             </div>
             );

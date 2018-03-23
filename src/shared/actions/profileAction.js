@@ -44,6 +44,12 @@ export function viewBook(bookinfo,type){
                     payload:bookinfo
                 });
                 break;
+            case "removebook":
+                dispatch({
+                    type:"VIEW_REMOVE_BOOK",
+                    payload:bookinfo
+                })
+                break;
             default:
                 dispatch({
                     type:"VIEW_BOOK",
@@ -82,6 +88,24 @@ export function addBook(bookinfo,username){
             console.log(error)
             dispatch({
             type:"ADD_BOOK_ERROR"
+            })
+        });
+    };
+}
+
+export function removeBook(bookid,username){
+        return function(dispatch){
+        axios.delete('/book/'+bookid+"/"+username)
+        .then(response=>{
+            dispatch({
+                type:"BOOK_DELETED",
+                payload:bookid
+            }) 
+        })
+        .catch(error => {
+            console.log(error)
+            dispatch({
+            type:"DELETE_BOOK_ERROR"
             })
         });
     };
@@ -132,13 +156,40 @@ export function addUser(userinfo){
     }
 }
 
+export function getAllRequests(username){
+    return function(dispatch){
+        axios.get('/request/'+username)
+        .then(response=>{
+            dispatch({
+                type:"ALL_REQUESTS",
+                payload:response.data
+            })
+        })
+        .catch(error=>console.log(error))
+    }
+}
+
+export function getSenderBooks(username){
+    return function(dispatch){
+        axios.get('/userbooks/'+username)
+        .then(response=>{
+            dispatch({
+                type:"SENDER_BOOKS",
+                payload:response.data
+            })
+        })
+        .catch(error=>console.log(error))
+    }
+}
+
 
 export function viewRequest(requestinfo){
     return function(dispatch){
         dispatch({
-            type:"OPEN_REQUEST"
+            type:"VIEW_REQUEST",
+            payload:requestinfo
         });
-        axios.get('/userbooks/'+requestinfo.sender.username)
+        /*axios.get('/userbooks/'+requestinfo.sender.username)
         .then(response=>{
             var rtn = {};
             rtn.tradeinfo = requestinfo;
@@ -148,6 +199,7 @@ export function viewRequest(requestinfo){
                 payload:rtn
             });
         })
+        .catch(error=>console.log(error))*/
     }
 }
 

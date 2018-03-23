@@ -1,17 +1,50 @@
-.card {
+.personinfo{
+ line-height: 40px; 
+}
+
+.iconbtn{
+  border: 0;
+  background: none;
+  cursor:pointer;
+}
+
+
+.usercontrol{
+  position:absolute;
+  bottom:10px;
+  left:0;
+  right:0;
+  margin: 0 auto;
+  width:50%;
+  max-height:40%;
+}
+
+.booklistwrap{
+  height:100%;
+  max-height:100%;
+  overflow: hidden;
+}
+
+.booklist{
+  overflow-y: scroll;
+  height:180px;
+  max-height:180px;
+}
+
+.bookdisplay {
   position: relative;
   height: 150px;
   width: 100px;
   overflow: hidden;
   display:inline-block;
   cursor:pointer;
+  margin:5px;
 }
 img{
-  margin-top:5px;
   margin-right:5px;
   float:left;
 }
-.card img {
+.bookdisplay img {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -21,31 +54,8 @@ img{
           transform: translate(-50%,-50%);
 }
 
-.personinfo{
- line-height: 40px; 
-}
-
-.iconbtn{
-  border: 0;
-  background: none
-}
-.conversation{
-  position:relative;
-  height:100vh;
-}
-
-.right{
-  text-align:right;
-}
-
-.usercontrol{
-  position:absolute;
-  bottom:0;
-  width:100%;
-  border:2px solid black;
-}
-.title{
-  text-align:center;
+.container{
+  padding-top:80px;
 }
 
 .dropdown{
@@ -54,10 +64,41 @@ img{
 .dropdown-menu-right {
     right: 0;
     left: auto;
-}.connect{
-    text-align:center;
 }
-.connect span{
-    cursor:pointer;
+.connect{
+    width:60%;
 }
+
+.nav-item{
+    cursor:pointer
+}
+
+.wrapper{
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-orient:horizontal;
+    -webkit-box-direction:normal;
+        -ms-flex-direction:row;
+            flex-direction:row;
+}
+
+.inner {
+    min-height: calc(100vh - 100px);
+    width:100%;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+}
+
 /*# sourceMappingURL=main.css.map*/

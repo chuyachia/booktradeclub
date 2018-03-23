@@ -1,4 +1,4 @@
-import {addBook,closeBook} from "../actions/profileAction";
+import {addBook,closeBook,removeBook} from "../actions/profileAction";
 import {connect} from "react-redux";
 import {addRequest, getUsersLocation} from "../actions/mainAction";
 import React from 'react';
@@ -15,6 +15,9 @@ class Modal extends React.Component{
     }
     addBook(){
         this.props.dispatch(addBook(this.props.info,this.props.username));
+    }
+    removeBook(){
+        this.props.dispatch(removeBook(this.props.info.bookId,this.props.username));
     }
     addRequest(indx){
         var receiver = this.props.info.ownBy[indx];
@@ -40,18 +43,22 @@ class Modal extends React.Component{
                isOpen={this.props.open}
                ariaHideApp={false}
                contentLabel="Review Modal">
-              <a style={{float:"right",cursor:"pointer"}}><i class="fas fa-times" onClick={this.closeBook.bind(this)}/></a>
+              <a class="text-dark" style={{float:"right",cursor:"pointer"}}><i class="fas fa-times" onClick={this.closeBook.bind(this)}/></a>
                <h3>{this.props.info.title}</h3>
-               <ul class="list-unstyled">
-               <li><img src={this.props.info.imageUrl} alt={this.props.info.title} class="img-thumbnail"/></li>
+               <dl>
+                    <dt><img src={this.props.info.imageUrl} alt={this.props.info.title} class="img-thumbnail"/></dt>
                {this.props.info.authors&&
-               (<li>Author: {this.props.info.authors.map((author)=> author)}</li>)}
-               <li>Publisher : {this.props.info.publisher}</li>
-               <li>Date : {this.props.info.publishedDate}</li>
-               {this.props.info.categories&&
-               (<li>Category : {this.props.info.categories.map((cat)=>cat)}</li>)}
-               <li>{this.props.info.description}</li>
-               </ul>
+               (<div>
+                    <dt>Author</dt>
+                    <dd>{this.props.info.authors.map((author)=> author)}</dd>
+                </div>)}
+                    <dt>Publisher</dt>
+                    <dd>{this.props.info.publisher}</dd>
+                    <dt>Published</dt>
+                    <dd>{this.props.info.publishedDate}</dd>
+
+                    <dd>{this.props.info.description}</dd>
+               </dl>
                
                {this.props.btnuse=="addrequest"&&this.props.ownerslocation&&
                <div>
@@ -71,7 +78,7 @@ class Modal extends React.Component{
                       <td>
                       {user!==this.props.username
                         ?outrequser.indexOf(user)==-1?
-                          (<button class="btn" onClick={()=>{this.addRequest(i)}}>Request</button>):
+                          (<button class="btn btn-raised bg-dark text-light" onClick={()=>{this.addRequest(i)}}>Request</button>):
                           (<button class="btn" disabled>Already requested</button>)
                           :null
                       }</td>
@@ -81,12 +88,16 @@ class Modal extends React.Component{
                 </table></div>}
                 
                {this.props.btnuse=="addbook"&&(ownedbooks.indexOf(this.props.info.bookId)==-1
-                    ?<button class="btn" onClick={this.addBook.bind(this)}>Add to my books</button>
+                    ?<button class="btn btn-raised bg-dark text-light" onClick={this.addBook.bind(this)}>Add to my books</button>
                     :<button class="btn" disabled>Already added</button>)
                }
                
                {this.props.btnuse =="answersender"&&
-               (<button class="btn" onClick={()=>this.props.addexchange(this.props.info.bookId,this.props.info.title)}>Exchange</button>)}
+               (<button class="btn btn-raised bg-dark text-light" onClick={()=>this.props.addexchange(this.props.info.bookId,this.props.info.title)}>Exchange</button>)}
+                
+                {this.props.btnuse =="removebook"&&
+               (<button class="btn btn-raised bg-dark text-light" onClick={this.removeBook.bind(this)}>Remove from my books</button>)}
+                
                 </ReactModal>
             );
         }

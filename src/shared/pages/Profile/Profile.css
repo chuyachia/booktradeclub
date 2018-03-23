@@ -1,51 +1,33 @@
-.card {
-  position: relative;
-  height: 150px;
-  width: 100px;
-  overflow: hidden;
-  display:inline-block;
-  cursor:pointer;
-}
-img{
-  margin-top:5px;
-  margin-right:5px;
-  float:left;
-}
-.card img {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  height: 100%;
-  width: auto;
-  -webkit-transform: translate(-50%,-50%);
-      -ms-transform: translate(-50%,-50%);
-          transform: translate(-50%,-50%);
-}
-
 .personinfo{
  line-height: 40px; 
 }
 
 .iconbtn{
   border: 0;
-  background: none
-}
-.conversation{
-  position:relative;
-  height:100vh;
+  background: none;
+  cursor:pointer;
 }
 
-.right{
-  text-align:right;
-}
 
 .usercontrol{
   position:absolute;
-  bottom:0;
-  width:100%;
-  border:2px solid black;
+  bottom:10px;
+  left:0;
+  right:0;
+  margin: 0 auto;
+  width:50%;
+  max-height:40%;
 }
-.title{
-  text-align:center;
+
+.booklistwrap{
+  height:100%;
+  max-height:100%;
+  overflow: hidden;
+}
+
+.booklist{
+  overflow-y: scroll;
+  height:180px;
+  max-height:180px;
 }
 

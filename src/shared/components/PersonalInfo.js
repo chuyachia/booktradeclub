@@ -32,8 +32,8 @@ class PersonalInfo extends React.Component{
     render(){
         return(
             <div class="personinfo">
-                <h3 class="title">{this.props.username}</h3>
-                <label for="location">Location&nbsp;</label>
+                <h3 class="text-center">{this.props.username}</h3>
+                <label for="location"><strong>Location&nbsp;</strong></label>
                 {this.props.editlocation
                 ?(
                     <form style={{'display':'inline'}} onSubmit={(event)=>{
@@ -68,7 +68,7 @@ class PersonalInfo extends React.Component{
                 </span>)
                 }
                 <br/>
-                <label for="email">Email&nbsp;</label>
+                <label for="email"><strong>Email&nbsp;</strong></label>
                 {this.props.editemail
                 ?(
                     <form style={{'display':'inline'}} class="form-inline" onSubmit={(event)=>{

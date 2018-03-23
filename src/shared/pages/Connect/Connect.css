@@ -1,6 +1,21 @@
 .connect{
-    text-align:center;
+    width:60%;
 }
-.connect span{
-    cursor:pointer;
+
+.nav-item{
+    cursor:pointer
+}
+
+.wrapper{
+    display:flex;
+    flex-direction:row;
+}
+
+.inner {
+    min-height: calc(100vh - 100px);
+    width:100%;
+    align-items: center;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
 }

@@ -17,7 +17,7 @@ class DropDownBtn extends React.Component{
     }
     render(){
         return(<div class="dropdown show">
-          <a class="btn" role="button" id="dropdownMenuLink" onClick={this.changeCollapse.bind(this)}>
+          <a class="btn bg-dark text-light" role="button" id="dropdownMenuLink" onClick={this.changeCollapse.bind(this)}>
             <i class="fas fa-bars"></i>
           </a>
           <div class={this.state.collapse?"dropdown-menu dropdown-menu-right show":"dropdown-menu dropdown-menu-right"} 
@@ -26,6 +26,8 @@ class DropDownBtn extends React.Component{
             {this.props.username&&<Link class="dropdown-item" to="/profile">Profile</Link>}
             {this.props.username?<a class="dropdown-item" href="/logout">Logout</a>
             :<Link class="dropdown-item" to="/connect">Login</Link>}
+            <div class="dropdown-divider"></div>
+            <Link class="dropdown-item" to="/about">About</Link>
           </div>
         </div>)
     }

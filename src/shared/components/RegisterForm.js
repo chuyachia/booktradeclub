@@ -38,7 +38,7 @@ class RegisterForm extends React.Component{
             return(<form onSubmit={this.submitRegister.bind(this)}>
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required autoFocus
                             onChange={(event) => {
                               this.setState({username:event.target.value});
                             }}/>
@@ -82,7 +82,7 @@ class RegisterForm extends React.Component{
                             inputProps= {{name:"location",id:"location",required:true}}
                           />
                           </div>
-                        <button type="submit" class="btn btn-default">Sign up</button>
+                        <button type="submit" class="btn btn-raised bg-dark text-light">Sign up</button>
                     </form>
             )
         } else {

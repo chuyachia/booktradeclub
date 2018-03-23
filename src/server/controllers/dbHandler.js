@@ -29,6 +29,26 @@ function dbHandler(){
         }
     }
     
+    this.removeBook= function(req,res){
+        Books.findOneAndUpdate(
+                {'bookId':req.params.bookid},
+                {$pull:{ownBy:req.params.username}},
+                {new:true}
+        ).exec((err,result) => {
+            if (err) throw err;
+            if(result.ownBy.length==0){
+                Books.remove(
+                    {'bookId':req.params.bookid}
+                ).exec((err,result)=>{
+                   if (err) throw err;
+                   res.send({message:"book deleted"})
+                })
+            } else {
+                res.send({message:"book deleted"})
+            }
+        })
+    }
+    
     this.getAllBooks = function(req,res){
         Books.find((err,result)=>{
            if (err) throw err;
@@ -83,6 +103,7 @@ function dbHandler(){
                 newTrade.receiver.bookId = req.body.bookid;
                 newTrade.receiver.bookName = req.body.bookname;
                 newTrade.receiver.unread=true;
+                newTrade.status="pending"
                 newTrade.save((err,result)=>{
                     if(err) throw err;
                     res.send({success:true,message:"New request added",data:result})
@@ -102,14 +123,14 @@ function dbHandler(){
                 })
                 break;
             case "confirm":
-                Trades.findOneAndUpdate({_id:req.body.tradeid},{confirmed:true})
+                Trades.findOneAndUpdate({_id:req.body.tradeid},{status:"confirmed"})
                 .exec((err,result)=>{
                     if(err) throw err;
                     res.send({success:true,message:"Trade confirmed"});
                 })
                 break;
             case "decline":
-                Trades.findOneAndUpdate({_id:req.body.tradeid},{declined:true})
+                Trades.findOneAndUpdate({_id:req.body.tradeid},{status:"declined"})
                 .exec((err,result)=>{
                     if(err) throw err;
                     res.send({success:true,message:"Trade declined"});
@@ -124,6 +145,7 @@ function dbHandler(){
             $or:[{'sender.username':req.params.username},{'receiver.username':req.params.username}]
         }).exec((err,result)=>{
             if (err) throw err;
+            console.log(result)
             res.send(result);
         })
     }

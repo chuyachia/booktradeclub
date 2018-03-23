@@ -13,9 +13,14 @@ export default function reducer(state={
         case "VIEW_REQUEST":{
             return {
                 ...state,
-                info:action.payload.tradeinfo,
-                senderbooks:action.payload.senderbooks
+                info:action.payload,
             };
+        }
+        case "SENDER_BOOKS":{
+            return{
+                ...state,
+                senderbooks:action.payload
+            }
         }
         case "NEW_EXCHANGE_ADDED" :{
             return {
@@ -34,7 +39,7 @@ export default function reducer(state={
                 ...state,
                 info:{
                     ...state.info,
-                    confirmed:true
+                    status:"confirmed"
                 }
             }
         }
@@ -43,7 +48,7 @@ export default function reducer(state={
                 ...state,
                info:{
                     ...state.info,
-                    declined:true
+                    status:"declined"
                 }
             }
         }
