@@ -122,6 +122,9 @@ app.get("*",(req,res) => {
     if ((req.url=="/profile"||req.url=="/request")&&!req.isAuthenticated()){
       res.redirect('/connect');
     }
+    if (req.url=="/connect"&&req.isAuthenticated()){
+      res.redirect('/');
+    }
     const context = {}
     const markup = renderToString(
       <Provider store={store}>

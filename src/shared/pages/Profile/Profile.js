@@ -50,7 +50,9 @@ class Profile extends React.Component {
               </li>
                <li class="nav-item">
                 <a class={this.props.page=="requests"?"nav-link active":"nav-link"} onClick={()=>this.changePage("requests")}>
-                {this.props.page=="requests"?(<strong>View requests</strong>):"View requests"}</a>
+                {this.props.page=="requests"?(<strong>View requests</strong>):"View requests"}&nbsp;
+                {this.props.unread>0&&<span class="badge badge-pill badge-warning">{this.props.unread} new</span>}
+                </a>
               </li>
             </ul>
             </div>
@@ -66,9 +68,12 @@ class Profile extends React.Component {
 }
 
 var propsMap = (store)=>{
+    var unreadin= store.userinfo.inrequests.filter(request=>request.receiver.unread==true);
+    var unreadout = store.userinfo.outrequests.filter(request=>request.sender.unread==true);
     return {
         page : store.setting.page,
-        ownedbooks:store.userinfo.ownedbooks
+        ownedbooks:store.userinfo.ownedbooks,
+        unread: unreadin.length+unreadout.length
     };
 };
 

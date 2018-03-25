@@ -35,6 +35,12 @@ export function logIn(userinfo){
                         requests:response.data.requests
                     }
                 })
+                setTimeout(function() { 
+                dispatch({
+                    type:"REDIRECT",
+                    payload:'/'
+                }) 
+                }, 1000)
             } else {
                 dispatch({
                     type:"WRONG_CREDENTIAL",
@@ -81,7 +87,7 @@ export function getUsersLocation(users){
     }
 }
 
-export function addRequest(sender,receiver,bookid,bookname){
+export function addRequest(sender,receiver,bookid,bookname,email){
     return function(dispatch){
         if(!sender){
             dispatch({
@@ -97,7 +103,8 @@ export function addRequest(sender,receiver,bookid,bookname){
                 from:sender,
                 to:receiver,
                 bookid:bookid,
-                bookname:bookname
+                bookname:bookname,
+                email:email
             }
             axios.post('/request',param)
             .then(response=>{

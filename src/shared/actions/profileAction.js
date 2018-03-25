@@ -188,22 +188,39 @@ export function getSenderBooks(username){
 }
 
 
-export function viewRequest(requestinfo){
+export function viewRequest(requestinfo,role,unread){
     return function(dispatch){
         dispatch({
             type:"VIEW_REQUEST",
             payload:requestinfo
         });
+        console.log(role);
+        console.log(unread);
+        if(unread){
+            axios.post('/request',{
+                tradeid:requestinfo._id,
+                role:role,
+                action:"read"
+            })
+            .then(response=>{
+                dispatch({
+                    type:"READ_REQUEST",
+                    payload:role
+                })
+            })
+            .catch(error=>console.log(error))  
+        }
     }
 }
 
-export function addExchange(bookid,bookname,tradeid){
+export function addExchange(bookid,bookname,tradeid,email){
     return function(dispatch){
             var param = {
                 action:"exchange",
                 tradeid:tradeid,
                 bookid:bookid,
-                bookname:bookname
+                bookname:bookname,
+                email:email
             }
             axios.post('/request',param)
             .then(response=>{
@@ -222,27 +239,30 @@ export function confirmTrade(tradeid){
             tradeid:tradeid,
             action:"confirm"
         })
-            .then(response=>{
-                dispatch({
-                    type:"TRADE_CONFIRMED"
-                })
+        .then(response=>{
+            dispatch({
+                type:"TRADE_CONFIRMED"
             })
-            .catch(error=>console.log(error))  
+        })
+        .catch(error=>console.log(error))  
     }
 }
 
-export function declineTrade(tradeid){
+export function declineTrade(tradeid,to){
     return function(dispatch){
         axios.post('/request',{
             tradeid:tradeid,
-            action:"decline"
+            action:"decline",
+            to:to
         })
-            .then(response=>{
-                dispatch({
-                    type:"TRADE_DECLINED"
-                })
+        .then(response=>{
+            console.log(to);
+            dispatch({
+                type:"TRADE_DECLINED",
+                payload:to
             })
-            .catch(error=>console.log(error))  
+        })
+        .catch(error=>console.log(error))  
     }
 }
 

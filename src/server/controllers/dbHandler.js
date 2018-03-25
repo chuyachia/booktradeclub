@@ -107,7 +107,8 @@ function dbHandler(){
             case "add":
                 var newTrade = new Trades();
                 newTrade.sender.username = req.body.from;
-                newTrade.sender.unread =false;
+                newTrade.sender.unread =true;
+                newTrade.sender.email = req.body.email;
                 newTrade.receiver.username = req.body.to;
                 newTrade.receiver.bookId = req.body.bookid;
                 newTrade.receiver.bookName = req.body.bookname;
@@ -124,7 +125,7 @@ function dbHandler(){
                     "sender.bookId":req.body.bookid,
                     "sender.bookName":req.body.bookname,
                     "sender.unread":true,
-                    "receiver.unread":false,
+                    "receiver.email":req.body.email
                 }})
                 .exec((err,result)=>{
                     if(err) throw err;
@@ -132,18 +133,50 @@ function dbHandler(){
                 })
                 break;
             case "confirm":
-                Trades.findOneAndUpdate({_id:req.body.tradeid},{status:"confirmed"})
+                Trades.findOneAndUpdate({_id:req.body.tradeid},{$set:{
+                    "status":"confirmed",
+                    "receiver.unread":true
+                }})
                 .exec((err,result)=>{
                     if(err) throw err;
                     res.send({success:true,message:"Trade confirmed"});
                 })
                 break;
             case "decline":
-                Trades.findOneAndUpdate({_id:req.body.tradeid},{status:"declined"})
-                .exec((err,result)=>{
-                    if(err) throw err;
-                    res.send({success:true,message:"Trade declined"});
-                })
+                if (req.body.to=="sender"){
+                    Trades.findOneAndUpdate({_id:req.body.tradeid},{$set:{
+                        status:"declined",
+                        "sender.unread":true
+                    }})
+                    .exec((err,result)=>{
+                        if(err) throw err;
+                        res.send({success:true,message:"Trade declined"});
+                    })
+                } else {
+                    Trades.findOneAndUpdate({_id:req.body.tradeid},{$set:{
+                        status:"declined",
+                        "receiver.unread":true
+                    }})
+                    .exec((err,result)=>{
+                        if(err) throw err;
+                        res.send({success:true,message:"Trade declined"});
+                    })
+                }
+                break;
+            case "read":
+                if (req.body.role=='sender'){
+                    Trades.findOneAndUpdate({_id:req.body.tradeid},{'sender.unread':false})
+                    .exec((err,result)=>{
+                        if(err) throw err;
+                        res.send({success:true,message:"Change read state"});
+                    })
+                } else {
+                    Trades.findOneAndUpdate({_id:req.body.tradeid},{'receiver.unread':false})
+                    .exec((err,result)=>{
+                        if(err) throw err;
+                        res.send({success:true,message:"Change read state"});
+                    })
+                }
                 break;
                 
         }

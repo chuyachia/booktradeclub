@@ -4593,22 +4593,39 @@ function getSenderBooks(username) {
     };
 }
 
-function viewRequest(requestinfo) {
+function viewRequest(requestinfo, role, unread) {
     return function (dispatch) {
         dispatch({
             type: "VIEW_REQUEST",
             payload: requestinfo
         });
+        console.log(role);
+        console.log(unread);
+        if (unread) {
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/request', {
+                tradeid: requestinfo._id,
+                role: role,
+                action: "read"
+            }).then(function (response) {
+                dispatch({
+                    type: "READ_REQUEST",
+                    payload: role
+                });
+            }).catch(function (error) {
+                return console.log(error);
+            });
+        }
     };
 }
 
-function addExchange(bookid, bookname, tradeid) {
+function addExchange(bookid, bookname, tradeid, email) {
     return function (dispatch) {
         var param = {
             action: "exchange",
             tradeid: tradeid,
             bookid: bookid,
-            bookname: bookname
+            bookname: bookname,
+            email: email
         };
         __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/request', param).then(function (response) {
             dispatch({
@@ -4636,14 +4653,17 @@ function confirmTrade(tradeid) {
     };
 }
 
-function declineTrade(tradeid) {
+function declineTrade(tradeid, to) {
     return function (dispatch) {
         __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/request', {
             tradeid: tradeid,
-            action: "decline"
+            action: "decline",
+            to: to
         }).then(function (response) {
+            console.log(to);
             dispatch({
-                type: "TRADE_DECLINED"
+                type: "TRADE_DECLINED",
+                payload: to
             });
         }).catch(function (error) {
             return console.log(error);
@@ -6663,6 +6683,12 @@ function logIn(userinfo) {
                         requests: response.data.requests
                     }
                 });
+                setTimeout(function () {
+                    dispatch({
+                        type: "REDIRECT",
+                        payload: '/'
+                    });
+                }, 1000);
             } else {
                 dispatch({
                     type: "WRONG_CREDENTIAL",
@@ -6707,7 +6733,7 @@ function getUsersLocation(users) {
     };
 }
 
-function addRequest(sender, receiver, bookid, bookname) {
+function addRequest(sender, receiver, bookid, bookname, email) {
     return function (dispatch) {
         if (!sender) {
             dispatch({
@@ -6723,7 +6749,8 @@ function addRequest(sender, receiver, bookid, bookname) {
                 from: sender,
                 to: receiver,
                 bookid: bookid,
-                bookname: bookname
+                bookname: bookname,
+                email: email
             };
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/request', param).then(function (response) {
                 dispatch({
@@ -8365,7 +8392,7 @@ var Modal = function (_React$Component) {
         key: "addRequest",
         value: function addRequest(indx) {
             var receiver = this.props.info.ownBy[indx];
-            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_mainAction__["a" /* addRequest */])(this.props.username, receiver, this.props.info.bookId, this.props.info.title));
+            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_mainAction__["a" /* addRequest */])(this.props.username, receiver, this.props.info.bookId, this.props.info.title, this.props.email));
         }
     }, {
         key: "componentWillReceiveProps",
@@ -8746,6 +8773,7 @@ var propsMap = function propsMap(store) {
         open: store.viewbook.open,
         info: store.viewbook.info,
         username: store.userinfo.username,
+        email: store.userinfo.email,
         ownedbooks: store.userinfo.ownedbooks,
         outrequests: store.userinfo.outrequests,
         ownerslocation: store.viewbook.ownerslocation
@@ -25307,99 +25335,122 @@ var LoginForm = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
-            return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-                "form",
-                { onSubmit: this.submitLogin.bind(this), __source: {
+            if (this.props.redirect) {
+                return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Redirect */], { to: {
+                        pathname: this.props.redirect
+                    }, __source: {
                         fileName: _jsxFileName,
                         lineNumber: 29
                     },
                     __self: this
-                },
-                this.props.username && __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Redirect */], { to: { pathname: '/' }, __source: {
-                        fileName: _jsxFileName,
-                        lineNumber: 30
-                    },
-                    __self: this
-                }),
-                __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-                    "div",
-                    { className: "form-group", __source: {
+                });
+            } else if (!this.props.username) {
+                return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+                    "form",
+                    { onSubmit: this.submitLogin.bind(this), __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 31
+                            lineNumber: 34
                         },
                         __self: this
                     },
+                    this.props.username && __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_router_dom__["c" /* Redirect */], { to: { pathname: '/' }, __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 35
+                        },
+                        __self: this
+                    }),
                     __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-                        "label",
-                        { htmlFor: "username", __source: {
+                        "div",
+                        { className: "form-group", __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 32
+                                lineNumber: 36
                             },
                             __self: this
                         },
-                        "Username"
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement("input", { type: "text", className: "form-control", id: "username", name: "username", placeholder: "Username", required: true, autoFocus: true,
-                        onChange: function onChange(event) {
-                            _this2.setState({ username: event.target.value });
-                        }, __source: {
-                            fileName: _jsxFileName,
-                            lineNumber: 33
-                        },
-                        __self: this
-                    })
-                ),
-                __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-                    "div",
-                    { className: "form-group", __source: {
-                            fileName: _jsxFileName,
-                            lineNumber: 38
-                        },
-                        __self: this
-                    },
-                    __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-                        "label",
-                        { htmlFor: "password", __source: {
+                        __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+                            "label",
+                            { htmlFor: "username", __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 37
+                                },
+                                __self: this
+                            },
+                            "Username"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement("input", { type: "text", className: "form-control", id: "username", name: "username", placeholder: "Username", required: true, autoFocus: true,
+                            onChange: function onChange(event) {
+                                _this2.setState({ username: event.target.value });
+                            }, __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 39
+                                lineNumber: 38
+                            },
+                            __self: this
+                        })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+                        "div",
+                        { className: "form-group", __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 43
                             },
                             __self: this
                         },
-                        "Password"
+                        __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+                            "label",
+                            { htmlFor: "password", __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 44
+                                },
+                                __self: this
+                            },
+                            "Password"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement("input", { type: "password", className: "form-control", id: "password", name: "password", placeholder: "Password", required: true,
+                            ref: "password",
+                            onChange: function onChange(event) {
+                                _this2.setState({ password: event.target.value });
+                            }, __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 45
+                            },
+                            __self: this
+                        })
                     ),
-                    __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement("input", { type: "password", className: "form-control", id: "password", name: "password", placeholder: "Password", required: true,
-                        ref: "password",
-                        onChange: function onChange(event) {
-                            _this2.setState({ password: event.target.value });
-                        }, __source: {
-                            fileName: _jsxFileName,
-                            lineNumber: 40
+                    this.props.wrongcredential && __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+                        "div",
+                        {
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 51
+                            },
+                            __self: this
                         },
-                        __self: this
-                    })
-                ),
-                this.props.wrongcredential && __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+                        "Wrong username or password! Try again"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+                        "button",
+                        { type: "submit", className: "btn btn-raised bg-dark text-light", __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 52
+                            },
+                            __self: this
+                        },
+                        "Log in"
+                    )
+                );
+            } else {
+                return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
                     "div",
                     {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 46
+                            lineNumber: 56
                         },
                         __self: this
                     },
-                    "Wrong username or password! Try again"
-                ),
-                __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-                    "button",
-                    { type: "submit", className: "btn btn-raised bg-dark text-light", __source: {
-                            fileName: _jsxFileName,
-                            lineNumber: 47
-                        },
-                        __self: this
-                    },
-                    "Log in"
-                )
-            );
+                    "Logged in with success. Redirecting to the main page..."
+                );
+            }
         }
     }]);
 
@@ -25408,6 +25459,7 @@ var LoginForm = function (_React$Component) {
 
 var propsMap = function propsMap(store) {
     return {
+        redirect: store.userinfo.redirect,
         wrongcredential: store.userinfo.wrongcredential,
         username: store.userinfo.username,
         error: store.userinfo.error
@@ -52964,7 +53016,19 @@ var Profile = function (_React$Component) {
                                             __self: this
                                         },
                                         "View requests"
-                                    ) : "View requests"
+                                    ) : "View requests",
+                                    "\xA0",
+                                    this.props.unread > 0 && __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
+                                        "span",
+                                        { className: "badge badge-pill badge-warning", __source: {
+                                                fileName: _jsxFileName,
+                                                lineNumber: 54
+                                            },
+                                            __self: this
+                                        },
+                                        this.props.unread,
+                                        " new"
+                                    )
                                 )
                             )
                         )
@@ -52973,7 +53037,7 @@ var Profile = function (_React$Component) {
                         "div",
                         { className: "col-md-12", __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 57
+                                lineNumber: 59
                             },
                             __self: this
                         },
@@ -52981,7 +53045,7 @@ var Profile = function (_React$Component) {
                         __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_Modal__["a" /* default */], {
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 59
+                                lineNumber: 61
                             },
                             __self: this
                         })
@@ -52990,7 +53054,7 @@ var Profile = function (_React$Component) {
                 __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_Footer__["a" /* default */], {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 62
+                        lineNumber: 64
                     },
                     __self: this
                 })
@@ -53002,9 +53066,16 @@ var Profile = function (_React$Component) {
 }(__WEBPACK_IMPORTED_MODULE_7_react___default.a.Component);
 
 var propsMap = function propsMap(store) {
+    var unreadin = store.userinfo.inrequests.filter(function (request) {
+        return request.receiver.unread == true;
+    });
+    var unreadout = store.userinfo.outrequests.filter(function (request) {
+        return request.sender.unread == true;
+    });
     return {
         page: store.setting.page,
-        ownedbooks: store.userinfo.ownedbooks
+        ownedbooks: store.userinfo.ownedbooks,
+        unread: unreadin.length + unreadout.length
     };
 };
 
@@ -53569,8 +53640,8 @@ var RequestList = function (_React$Component) {
 
     _createClass(RequestList, [{
         key: "viewRequest",
-        value: function viewRequest(request) {
-            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_profileAction__["r" /* viewRequest */])(request));
+        value: function viewRequest(request, role, unread) {
+            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_profileAction__["r" /* viewRequest */])(request, role, unread));
         }
     }, {
         key: "getSenderBooks",
@@ -53665,7 +53736,7 @@ var RequestList = function (_React$Component) {
                                 return __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
                                     "li",
                                     { key: i, onClick: function onClick() {
-                                            _this2.viewRequest(request);
+                                            _this2.viewRequest(request, "receiver", request.receiver.unread);
                                             _this2.getSenderBooks(request.sender.username);
                                         }, __source: {
                                             fileName: _jsxFileName,
@@ -53685,7 +53756,18 @@ var RequestList = function (_React$Component) {
                                         request.sender.username
                                     ),
                                     "\xA0",
-                                    _this2.tradeStatus(request.status)
+                                    _this2.tradeStatus(request.status),
+                                    "\xA0",
+                                    request.receiver.unread && __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
+                                        "span",
+                                        { className: "badge badge-pill badge-warning", __source: {
+                                                fileName: _jsxFileName,
+                                                lineNumber: 45
+                                            },
+                                            __self: _this2
+                                        },
+                                        "New"
+                                    )
                                 );
                             })
                         )
@@ -53694,7 +53776,7 @@ var RequestList = function (_React$Component) {
                         "div",
                         { className: "col-md-6", __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 49
+                                lineNumber: 50
                             },
                             __self: this
                         },
@@ -53702,7 +53784,7 @@ var RequestList = function (_React$Component) {
                             "ul",
                             { className: "list-unstyled", __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 50
+                                    lineNumber: 51
                                 },
                                 __self: this
                             },
@@ -53710,10 +53792,10 @@ var RequestList = function (_React$Component) {
                                 return __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
                                     "li",
                                     { key: i, onClick: function onClick() {
-                                            return _this2.viewRequest(request);
+                                            return _this2.viewRequest(request, "sender", request.sender.unread);
                                         }, __source: {
                                             fileName: _jsxFileName,
-                                            lineNumber: 52
+                                            lineNumber: 53
                                         },
                                         __self: _this2
                                     },
@@ -53721,7 +53803,7 @@ var RequestList = function (_React$Component) {
                                         __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
                                         { to: "/request", __source: {
                                                 fileName: _jsxFileName,
-                                                lineNumber: 53
+                                                lineNumber: 54
                                             },
                                             __self: _this2
                                         },
@@ -53729,7 +53811,18 @@ var RequestList = function (_React$Component) {
                                         request.receiver.username
                                     ),
                                     "\xA0",
-                                    _this2.tradeStatus(request.status)
+                                    _this2.tradeStatus(request.status),
+                                    "\xA0",
+                                    request.sender.unread && __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
+                                        "span",
+                                        { className: "badge badge-pill badge-warning", __source: {
+                                                fileName: _jsxFileName,
+                                                lineNumber: 56
+                                            },
+                                            __self: _this2
+                                        },
+                                        "New"
+                                    )
                                 );
                             })
                         )
@@ -53930,11 +54023,12 @@ var propsMap = function propsMap(store) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_redux__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Modal__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actions_profileAction__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Footer__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_router_dom__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Modal__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__actions_profileAction__ = __webpack_require__(31);
 var _jsxFileName = "/home/ubuntu/workspace/src/shared/components/Request.js";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -53945,8 +54039,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// allow view book info when click book name in conversation. how to pass book information to modal? init an axios call to search
-// in books collection?
+
 
 
 
@@ -53966,7 +54059,7 @@ var Request = function (_React$Component) {
     _createClass(Request, [{
         key: "viewBooksExchange",
         value: function viewBooksExchange(bookinfo) {
-            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_profileAction__["q" /* viewBook */])(bookinfo, "answersender"));
+            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__actions_profileAction__["q" /* viewBook */])(bookinfo, "answersender"));
         }
     }, {
         key: "viewBooksInfo",
@@ -53974,7 +54067,7 @@ var Request = function (_React$Component) {
             var _this2 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/bookinfo/' + bookid).then(function (response) {
-                if (response.data) _this2.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_profileAction__["q" /* viewBook */])(response.data, "info"));
+                if (response.data) _this2.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__actions_profileAction__["q" /* viewBook */])(response.data, "info"));
             }).catch(function (err) {
                 return console.log(err);
             });
@@ -53982,17 +54075,22 @@ var Request = function (_React$Component) {
     }, {
         key: "addExchange",
         value: function addExchange(bookid, bookname) {
-            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_profileAction__["b" /* addExchange */])(bookid, bookname, this.props.info._id));
+            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__actions_profileAction__["b" /* addExchange */])(bookid, bookname, this.props.info._id, this.props.email));
         }
     }, {
         key: "confirmTrade",
         value: function confirmTrade() {
-            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_profileAction__["j" /* confirmTrade */])(this.props.info._id));
+            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__actions_profileAction__["j" /* confirmTrade */])(this.props.info._id));
         }
     }, {
         key: "declineTrade",
         value: function declineTrade() {
-            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_profileAction__["k" /* declineTrade */])(this.props.info._id));
+            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__actions_profileAction__["k" /* declineTrade */])(this.props.info._id, "sender"));
+        }
+    }, {
+        key: "declineExchange",
+        value: function declineExchange() {
+            this.props.dispatch(Object(__WEBPACK_IMPORTED_MODULE_6__actions_profileAction__["k" /* declineTrade */])(this.props.info._id, "receiver"));
         }
     }, {
         key: "render",
@@ -54000,23 +54098,23 @@ var Request = function (_React$Component) {
             var _this3 = this;
 
             function requestInit(book, id, func) {
-                return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                     "p",
                     {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 37
+                            lineNumber: 38
                         },
                         __self: this
                     },
                     "I'm interested in the book ",
-                    __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                         "strong",
                         { onClick: function onClick() {
                                 return func(id);
                             }, __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 37
+                                lineNumber: 38
                             },
                             __self: this
                         },
@@ -54026,23 +54124,23 @@ var Request = function (_React$Component) {
                 );
             }
             function requestRes(book, id, func) {
-                return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                     "p",
                     {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 40
+                            lineNumber: 41
                         },
                         __self: this
                     },
                     "I would accept to exchange my book with your ",
-                    __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                         "strong",
                         { onClick: function onClick() {
                                 return func(id);
                             }, __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 40
+                                lineNumber: 41
                             },
                             __self: this
                         },
@@ -54052,12 +54150,12 @@ var Request = function (_React$Component) {
                 );
             }
             function requestConfirm() {
-                return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                     "p",
                     {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 43
+                            lineNumber: 44
                         },
                         __self: this
                     },
@@ -54065,12 +54163,12 @@ var Request = function (_React$Component) {
                 );
             }
             function instructWaint(name) {
-                return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                     "p",
                     {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 46
+                            lineNumber: 47
                         },
                         __self: this
                     },
@@ -54080,12 +54178,12 @@ var Request = function (_React$Component) {
                 );
             }
             function reqeustDecline() {
-                return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                     "p",
                     {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 49
+                            lineNumber: 50
                         },
                         __self: this
                     },
@@ -54097,59 +54195,59 @@ var Request = function (_React$Component) {
                 var sender = this.props.info.sender.username == this.props.username ? "You" : this.props.info.sender.username;
                 var receiver = sender == "You" ? this.props.info.receiver.username : "You";
 
-                return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                     "div",
                     { className: "container dialogue", __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 57
+                            lineNumber: 58
                         },
                         __self: this
                     },
-                    __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                         "nav",
                         { className: "navbar navbar-dark bg-dark fixed-top", __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 58
+                                lineNumber: 59
                             },
                             __self: this
                         },
-                        __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
+                        __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["b" /* Link */],
                             { className: "navbar-brand", to: "/profile", __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 59
+                                    lineNumber: 60
                                 },
                                 __self: this
                             },
-                            __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement("i", { className: "fas fa-arrow-left", __source: {
+                            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement("i", { className: "fas fa-arrow-left", __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 59
+                                    lineNumber: 60
                                 },
                                 __self: this
                             })
                         )
                     ),
-                    __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                         "div",
                         { className: sender == "You" ? "card col-md-5 offset-md-7" : "card col-md-5", __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 61
+                                lineNumber: 62
                             },
                             __self: this
                         },
-                        __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                             "div",
                             { className: "card-body", __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 62
+                                    lineNumber: 63
                                 },
                                 __self: this
                             },
-                            __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                 "h4",
                                 { className: "card-title", __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 63
+                                        lineNumber: 64
                                     },
                                     __self: this
                                 },
@@ -54158,27 +54256,27 @@ var Request = function (_React$Component) {
                             requestInit(this.props.info.receiver.bookName, this.props.info.receiver.bookId, this.viewBooksInfo.bind(this))
                         )
                     ),
-                    !this.props.info.sender.bookName && this.props.info.status == "declined" && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                    !this.props.info.sender.bookName && this.props.info.status == "declined" && __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                         "div",
                         { className: receiver == "You" ? "card col-md-5 offset-md-7" : "card col-md-5", __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 68
+                                lineNumber: 69
                             },
                             __self: this
                         },
-                        __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                             "div",
                             { className: "card-body", __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 69
+                                    lineNumber: 70
                                 },
                                 __self: this
                             },
-                            __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                 "h4",
                                 { className: "card-title", __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 70
+                                        lineNumber: 71
                                     },
                                     __self: this
                                 },
@@ -54187,27 +54285,27 @@ var Request = function (_React$Component) {
                             reqeustDecline()
                         )
                     ),
-                    this.props.info.sender.bookName && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                    this.props.info.sender.bookName && __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                         "div",
                         { className: receiver == "You" ? "card col-md-5 offset-md-7" : "card col-md-5", __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 75
+                                lineNumber: 76
                             },
                             __self: this
                         },
-                        __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                             "div",
                             { className: "card-body", __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 76
+                                    lineNumber: 77
                                 },
                                 __self: this
                             },
-                            __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                 "h4",
                                 { className: "card-title", __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 77
+                                        lineNumber: 78
                                     },
                                     __self: this
                                 },
@@ -54216,27 +54314,27 @@ var Request = function (_React$Component) {
                             requestRes(this.props.info.sender.bookName, this.props.info.sender.bookId, this.viewBooksInfo.bind(this))
                         )
                     ),
-                    this.props.info.sender.bookName && this.props.info.status == "confirmed" && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                    this.props.info.sender.bookName && this.props.info.status == "confirmed" && __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                         "div",
                         { className: sender == "You" ? "card col-md-5 offset-md-7" : "card col-md-5", __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 82
+                                lineNumber: 83
                             },
                             __self: this
                         },
-                        __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                             "div",
                             { className: "card-body", __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 83
+                                    lineNumber: 84
                                 },
                                 __self: this
                             },
-                            __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                 "h4",
                                 { className: "card-title", __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 84
+                                        lineNumber: 85
                                     },
                                     __self: this
                                 },
@@ -54245,27 +54343,27 @@ var Request = function (_React$Component) {
                             requestConfirm()
                         )
                     ),
-                    this.props.info.sender.bookName && this.props.info.status == "declined" && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                    this.props.info.sender.bookName && this.props.info.status == "declined" && __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                         "div",
                         { className: sender == "You" ? "card col-md-5 offset-md-7" : "card col-md-5", __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 89
+                                lineNumber: 90
                             },
                             __self: this
                         },
-                        __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                             "div",
                             { className: "card-body", __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 90
+                                    lineNumber: 91
                                 },
                                 __self: this
                             },
-                            __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                 "h4",
                                 { className: "card-title", __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 91
+                                        lineNumber: 92
                                     },
                                     __self: this
                                 },
@@ -54274,69 +54372,69 @@ var Request = function (_React$Component) {
                             reqeustDecline()
                         )
                     ),
-                    sender == "You" ? __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                    sender == "You" ? __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                         "div",
                         { className: "usercontrol", __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 97
+                                lineNumber: 98
                             },
                             __self: this
                         },
-                        !this.props.info.sender.bookName && this.props.info.status == "pending" && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                        !this.props.info.sender.bookName && this.props.info.status == "pending" && __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                             "div",
                             {
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 99
+                                    lineNumber: 100
                                 },
                                 __self: this
                             },
                             instructWaint(this.props.info.receiver.username)
                         ),
-                        this.props.info.sender.bookName && this.props.info.status == "pending" && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                        this.props.info.sender.bookName && this.props.info.status == "pending" && __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                             "div",
                             {
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 102
+                                    lineNumber: 103
                                 },
                                 __self: this
                             },
                             "Do you want to accept this exchange?",
-                            __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                 "div",
                                 {
                                     __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 103
+                                        lineNumber: 104
                                     },
                                     __self: this
                                 },
-                                __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                     "button",
                                     { className: "btn btn-raised", onClick: this.confirmTrade.bind(this), __source: {
-                                            fileName: _jsxFileName,
-                                            lineNumber: 104
-                                        },
-                                        __self: this
-                                    },
-                                    "Accept request"
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
-                                    "button",
-                                    { className: "btn btn-raised", onClick: this.declineTrade.bind(this), __source: {
                                             fileName: _jsxFileName,
                                             lineNumber: 105
                                         },
                                         __self: this
                                     },
-                                    "Decline request"
+                                    "Accept request"
                                 ),
-                                __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                                    { className: "btn btn-raised", to: "/profile", __source: {
+                                __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+                                    "button",
+                                    { className: "btn btn-raised", onClick: this.declineExchange.bind(this), __source: {
                                             fileName: _jsxFileName,
                                             lineNumber: 106
+                                        },
+                                        __self: this
+                                    },
+                                    "Decline request"
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+                                    __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["b" /* Link */],
+                                    { className: "btn btn-raised", to: "/profile", __source: {
+                                            fileName: _jsxFileName,
+                                            lineNumber: 107
                                         },
                                         __self: this
                                     },
@@ -54344,92 +54442,96 @@ var Request = function (_React$Component) {
                                 )
                             )
                         ),
-                        this.props.info.sender.bookName && this.props.info.status == "confirmed" && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                        this.props.info.sender.bookName && this.props.info.status == "confirmed" && __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                             "div",
                             {
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 111
+                                    lineNumber: 112
                                 },
                                 __self: this
                             },
-                            __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                 "p",
                                 {
                                     __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 111
+                                        lineNumber: 112
                                     },
                                     __self: this
                                 },
-                                "The exchange has concluded. You can contact user at email to arrange meetup"
+                                "The exchange has concluded. You can contact ",
+                                this.props.info.receiver.username,
+                                " at ",
+                                this.props.info.receiver.email,
+                                " to arrange the details of the exchange"
                             )
                         ),
-                        this.props.info.status == "declined" && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                        this.props.info.status == "declined" && __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                             "div",
                             {
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 115
+                                    lineNumber: 116
                                 },
                                 __self: this
                             },
-                            __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                 "p",
                                 {
                                     __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 115
+                                        lineNumber: 116
                                     },
                                     __self: this
                                 },
                                 "The exchange has ended without success."
                             )
                         )
-                    ) : __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                    ) : __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                         "div",
                         { className: "usercontrol", __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 118
+                                lineNumber: 119
                             },
                             __self: this
                         },
-                        !this.props.info.sender.bookName && this.props.info.status == "pending" && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                        !this.props.info.sender.bookName && this.props.info.status == "pending" && __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                             "div",
                             { className: "booklistwrap", __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 120
+                                    lineNumber: 121
                                 },
                                 __self: this
                             },
                             "Here's what ",
                             this.props.info.sender.username,
                             " has to offer, choose a book to trade",
-                            __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                 "ul",
                                 { className: "booklist list-unstyled", __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 121
+                                        lineNumber: 122
                                     },
                                     __self: this
                                 },
                                 this.props.senderbooks.map(function (book, i) {
-                                    return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                                    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                         "li",
                                         { key: i, style: { cursor: "pointer" }, onClick: function onClick() {
                                                 return _this3.viewBooksExchange(book);
                                             }, __source: {
                                                 fileName: _jsxFileName,
-                                                lineNumber: 122
+                                                lineNumber: 123
                                             },
                                             __self: _this3
                                         },
-                                        __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                                        __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                             "strong",
                                             {
                                                 __source: {
                                                     fileName: _jsxFileName,
-                                                    lineNumber: 123
+                                                    lineNumber: 124
                                                 },
                                                 __self: _this3
                                             },
@@ -54438,30 +54540,30 @@ var Request = function (_React$Component) {
                                     );
                                 })
                             ),
-                            __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                 "div",
                                 {
                                     __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 125
+                                        lineNumber: 126
                                     },
                                     __self: this
                                 },
-                                __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                     "button",
                                     { className: "btn btn-raised", onClick: this.declineTrade.bind(this), __source: {
                                             fileName: _jsxFileName,
-                                            lineNumber: 126
+                                            lineNumber: 127
                                         },
                                         __self: this
                                     },
                                     "Decline request"
                                 ),
-                                __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
+                                __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+                                    __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["b" /* Link */],
                                     { className: "btn btn-raised", to: "/profile", __source: {
                                             fileName: _jsxFileName,
-                                            lineNumber: 127
+                                            lineNumber: 128
                                         },
                                         __self: this
                                     },
@@ -54469,53 +54571,57 @@ var Request = function (_React$Component) {
                                 )
                             )
                         ),
-                        this.props.info.sender.bookName && this.props.info.status == "pending" && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                        this.props.info.sender.bookName && this.props.info.status == "pending" && __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                             "div",
                             {
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 131
+                                    lineNumber: 132
                                 },
                                 __self: this
                             },
                             instructWaint(this.props.info.sender.username)
                         ),
-                        this.props.info.sender.bookName && this.props.info.status == "confirmed" && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                        this.props.info.sender.bookName && this.props.info.status == "confirmed" && __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                             "div",
                             {
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 136
+                                    lineNumber: 137
                                 },
                                 __self: this
                             },
-                            __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                 "p",
                                 {
                                     __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 136
+                                        lineNumber: 137
                                     },
                                     __self: this
                                 },
-                                "The exchange has concluded. You can contact user at email to arrange meetup"
+                                "The exchange has concluded. You can contact ",
+                                this.props.info.sender.username,
+                                " at ",
+                                this.props.info.sender.email,
+                                " to arrange the details of the exchange"
                             )
                         ),
-                        this.props.info.status == "declined" && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                        this.props.info.status == "declined" && __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                             "div",
                             {
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 139
+                                    lineNumber: 140
                                 },
                                 __self: this
                             },
-                            __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                 "p",
                                 {
                                     __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 139
+                                        lineNumber: 140
                                     },
                                     __self: this
                                 },
@@ -54523,9 +54629,16 @@ var Request = function (_React$Component) {
                             )
                         )
                     ),
-                    __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Modal__["a" /* default */], { addexchange: this.addExchange.bind(this), __source: {
+                    __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Modal__["a" /* default */], { addexchange: this.addExchange.bind(this), __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 143
+                            lineNumber: 144
+                        },
+                        __self: this
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Footer__["a" /* default */], {
+                        __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 145
                         },
                         __self: this
                     })
@@ -54537,13 +54650,14 @@ var Request = function (_React$Component) {
     }]);
 
     return Request;
-}(__WEBPACK_IMPORTED_MODULE_4_react___default.a.Component);
+}(__WEBPACK_IMPORTED_MODULE_5_react___default.a.Component);
 
 var propsMap = function propsMap(store) {
     return {
         info: store.viewreq.info,
         senderbooks: store.viewreq.senderbooks,
-        username: store.userinfo.username
+        username: store.userinfo.username,
+        email: store.userinfo.email
     };
 };
 
@@ -55816,7 +55930,8 @@ function reducer() {
         error: false,
         ownedbooks: [],
         inrequests: [],
-        outrequests: []
+        outrequests: [],
+        redirect: null
     };
     var action = arguments[1];
 
@@ -55892,6 +56007,12 @@ function reducer() {
                 return _extends({}, state, {
                     email: action.payload.email,
                     location: action.payload.location
+                });
+            }
+        case "REDIRECT":
+            {
+                return _extends({}, state, {
+                    redirect: action.payload
                 });
             }
     }
@@ -56018,6 +56139,8 @@ function reducer() {
 /* harmony export (immutable) */ __webpack_exports__["a"] = reducer;
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+// unnecessary modify unread here
+// all requests will be refetch when back to request list
 function reducer() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
         open: false,
@@ -56060,7 +56183,8 @@ function reducer() {
             {
                 return _extends({}, state, {
                     info: _extends({}, state.info, {
-                        status: "confirmed"
+                        status: "confirmed",
+                        receiver: _extends({}, state.info.receiver)
                     })
                 });
             }
@@ -56068,10 +56192,12 @@ function reducer() {
             {
                 return _extends({}, state, {
                     info: _extends({}, state.info, {
-                        status: "declined"
+                        status: "declined",
+                        receiver: _extends({}, state.info.receiver)
                     })
                 });
             }
+
     }
     return state;
 }

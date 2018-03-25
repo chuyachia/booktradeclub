@@ -7,8 +7,8 @@ class RequestList extends React.Component{
   constructor(){
       super()
   }
-  viewRequest(request){
-        this.props.dispatch(viewRequest(request));
+  viewRequest(request,role,unread){
+        this.props.dispatch(viewRequest(request,role,unread));
    }
     getSenderBooks(username){
         this.props.dispatch(getSenderBooks(username));
@@ -37,11 +37,12 @@ class RequestList extends React.Component{
                   <ul class="list-unstyled">
                   {this.props.inrequests.map((request,i)=>(
                   <li key={i} onClick={()=> {
-                    this.viewRequest(request);
+                    this.viewRequest(request,"receiver",request.receiver.unread);
                     this.getSenderBooks(request.sender.username)
                   }}>
                   <Link to="/request">Request received from {request.sender.username}</Link>
-                  &nbsp;{this.tradeStatus(request.status)}
+                  &nbsp;{this.tradeStatus(request.status)}&nbsp;
+                  {request.receiver.unread&&<span class="badge badge-pill badge-warning">New</span>}
                   </li>)
                   )}
                   </ul>
@@ -49,9 +50,10 @@ class RequestList extends React.Component{
               <div class="col-md-6">
                   <ul class="list-unstyled">
                   {this.props.outrequests.map((request,i)=>(
-                  <li key={i} onClick={()=> this.viewRequest(request)}>
+                  <li key={i} onClick={()=> this.viewRequest(request,"sender",request.sender.unread)}>
                   <Link to="/request">Request sent to {request.receiver.username}</Link>
-                  &nbsp;{this.tradeStatus(request.status)}
+                  &nbsp;{this.tradeStatus(request.status)}&nbsp;
+                  {request.sender.unread&&<span class="badge badge-pill badge-warning">New</span>}
                   </li>))}
                   </ul>
               </div>

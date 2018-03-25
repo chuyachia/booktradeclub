@@ -6,7 +6,8 @@ export default function reducer(state={
     error:false,
     ownedbooks:[],
     inrequests:[],
-    outrequests:[]
+    outrequests:[],
+    redirect:null
 },action){
     switch(action.type) {
         case "LOGGED_IN":{
@@ -70,6 +71,12 @@ export default function reducer(state={
                 ...state,
                 email:action.payload.email,
                 location:action.payload.location
+            }
+        }
+        case "REDIRECT":{
+            return{
+                ...state,
+                redirect:action.payload
             }
         }
     }

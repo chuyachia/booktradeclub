@@ -1,3 +1,5 @@
+// unnecessary modify unread here
+// all requests will be refetch when back to request list
 export default function reducer(state={
     open:false,
     info:{},
@@ -29,7 +31,7 @@ export default function reducer(state={
                     ...state.info,
                     sender:{...state.info.sender, 
                         bookId:action.payload.bookid,
-                        bookName:action.payload.bookname
+                        bookName:action.payload.bookname,
                     }
                 }
             }
@@ -39,7 +41,10 @@ export default function reducer(state={
                 ...state,
                 info:{
                     ...state.info,
-                    status:"confirmed"
+                    status:"confirmed",
+                    receiver:{
+                        ...state.info.receiver,
+                    }
                 }
             }
         }
@@ -48,10 +53,14 @@ export default function reducer(state={
                 ...state,
                info:{
                     ...state.info,
-                    status:"declined"
+                    status:"declined",
+                    receiver:{
+                        ...state.info.receiver,
+                    }
                 }
             }
         }
+
     }
     return state;
 }

@@ -21,7 +21,7 @@ class Modal extends React.Component{
     }
     addRequest(indx){
         var receiver = this.props.info.ownBy[indx];
-        this.props.dispatch(addRequest(this.props.username,receiver,this.props.info.bookId,this.props.info.title));
+        this.props.dispatch(addRequest(this.props.username,receiver,this.props.info.bookId,this.props.info.title,this.props.email));
     }
     componentWillReceiveProps(nextProps){
         if (nextProps.btnuse=="addrequest"&&nextProps.info.ownBy&&nextProps.info!=this.props.info){
@@ -110,6 +110,7 @@ var propsMap = (store)=>{
         open:store.viewbook.open,
         info:store.viewbook.info,
         username : store.userinfo.username,
+        email:store.userinfo.email,
         ownedbooks:store.userinfo.ownedbooks,
         outrequests:store.userinfo.outrequests,
         ownerslocation:store.viewbook.ownerslocation

@@ -1,7 +1,6 @@
-// allow view book info when click book name in conversation. how to pass book information to modal? init an axios call to search
-// in books collection?
 import axios from "axios";
 import {connect} from "react-redux";
+import Footer from "./Footer";
 import { Link } from 'react-router-dom';
 import Modal from "./Modal";
 import React from 'react';
@@ -23,15 +22,17 @@ class Request extends React.Component{
         .catch(err=>console.log(err))
     }
     addExchange(bookid,bookname){
-        this.props.dispatch(addExchange(bookid,bookname,this.props.info._id));
+        this.props.dispatch(addExchange(bookid,bookname,this.props.info._id,this.props.email));
     }
     confirmTrade(){
         this.props.dispatch(confirmTrade(this.props.info._id));
     }
     declineTrade(){
-        this.props.dispatch(declineTrade(this.props.info._id));
+        this.props.dispatch(declineTrade(this.props.info._id,"sender"));
     }
-
+    declineExchange(){
+        this.props.dispatch(declineTrade(this.props.info._id,"receiver"));
+    }
     render(){
         function requestInit(book,id,func){
             return (<p>I'm interested in the book <strong onClick={()=>func(id)}>{book}</strong> in your collection. Have a look at the books that I have to exchange!</p>);
@@ -102,13 +103,13 @@ class Request extends React.Component{
                     <div>Do you want to accept this exchange?
                     <div>
                         <button class="btn btn-raised" onClick={this.confirmTrade.bind(this)}>Accept request</button>
-                        <button class="btn btn-raised" onClick={this.declineTrade.bind(this)}>Decline request</button>
+                        <button class="btn btn-raised" onClick={this.declineExchange.bind(this)}>Decline request</button>
                         <Link class="btn btn-raised" to="/profile">Decide later</Link>
                     </div>
                     </div>)}
                     
                     {this.props.info.sender.bookName&&this.props.info.status=="confirmed"&&(
-                    <div><p>The exchange has concluded. You can contact user at email to arrange meetup</p>
+                    <div><p>The exchange has concluded. You can contact {this.props.info.receiver.username} at {this.props.info.receiver.email} to arrange the details of the exchange</p>
                     </div>)}
                     
                     {this.props.info.status=="declined"&&(
@@ -133,7 +134,7 @@ class Request extends React.Component{
                     </div>)}
                     
                     {this.props.info.sender.bookName&&this.props.info.status=="confirmed"&&(
-                    <div><p>The exchange has concluded. You can contact user at email to arrange meetup</p>
+                    <div><p>The exchange has concluded. You can contact {this.props.info.sender.username} at {this.props.info.sender.email} to arrange the details of the exchange</p>
                     </div>)}
                     {this.props.info.status=="declined"&&(
                     <div><p>The exchange has ended without success.</p>
@@ -141,6 +142,7 @@ class Request extends React.Component{
                 </div>)
                 }
                 <Modal addexchange={this.addExchange.bind(this)}/>
+                <Footer/>
             </div>)
         } else {
             return(null)
@@ -154,6 +156,7 @@ var propsMap = (store)=>{
         info:store.viewreq.info,
         senderbooks : store.viewreq.senderbooks,
         username : store.userinfo.username,
+        email:store.userinfo.email
     };
 };
 
