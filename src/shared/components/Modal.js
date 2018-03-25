@@ -24,7 +24,7 @@ class Modal extends React.Component{
         this.props.dispatch(addRequest(this.props.username,receiver,this.props.info.bookId,this.props.info.title));
     }
     componentWillReceiveProps(nextProps){
-        if (nextProps.info.ownBy&&nextProps.info!=this.props.info){
+        if (nextProps.btnuse=="addrequest"&&nextProps.info.ownBy&&nextProps.info!=this.props.info){
             this.props.dispatch(getUsersLocation(nextProps.info.ownBy));
         }
     }

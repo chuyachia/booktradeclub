@@ -53,6 +53,7 @@ class RegisterForm extends React.Component{
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Password" required
+                            pattern=".{6,}" 
                             onChange={(event) => {
                               this.setState({password:event.target.value});
                             }}/>

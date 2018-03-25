@@ -11,6 +11,7 @@ function dbHandler(){
                 {$push:{ownBy:username}},
                 {new:true}
             ).exec((err,result) => {
+                console.log(result);
                 if (err) throw err;
                 if (result) {
                     console.log(result);
@@ -54,6 +55,14 @@ function dbHandler(){
            if (err) throw err;
            res.send(result);
         })
+    }
+    
+    this.getBookInfo= function(req,res){
+        Books.findOne({'bookId':req.params.bookid})
+            .exec((err,result)=>{
+                if (err) throw err;
+                res.send(result);
+            })
     }
     
     this.addUser = function(req,res){
@@ -148,6 +157,25 @@ function dbHandler(){
             console.log(result)
             res.send(result);
         })
+    }
+    this.resetPassword = function(req,res){
+        Users.findOne({username: req.body.username}).exec(
+          (err,user)=>{
+            if (err) throw err;
+            if (!user) {
+              res.send({status:'wrongusername'})
+            } else if (!user.validPassword(req.body.oldpassword)) {
+                res.send({status:'wrongpassword'})
+            } else {
+                Users.findOneAndUpdate({username: req.body.username},
+                    {password:user.generateHash(req.body.newpassword)}) 
+                    .exec((err,result)=>{
+                        if(err) throw err;
+                        res.send({status:'passwordchanged'})
+                    })
+            }
+          })
+
     }
     
     this.changeUserInfo = function(req,res){

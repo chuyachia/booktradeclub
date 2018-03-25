@@ -4,7 +4,7 @@ import BookCard from "./BookCard";
 import Modal from "./Modal";
 import React from "react";
 import {searchBooks} from "../actions/profileAction";
-
+import { SyncLoader } from 'react-spinners';
 
 class Search extends React.Component {
     constructor(){
@@ -32,8 +32,14 @@ class Search extends React.Component {
                   </span>
                 </div>
             </form>
+            <div class="spinner-wrap">
+                <SyncLoader
+                  color={'#424242'} 
+                  loading={this.props.loading} 
+                />
+            </div>
             {this.props.books.map((book,i)=> (
-            <BookCard key={i} info={book} modaluse="addsearch"/>
+            <BookCard key={i} info={book} modaluse="addbook"/>
             ))}
         </div>
         )
@@ -42,6 +48,7 @@ class Search extends React.Component {
 
 var propsMap = (store)=>{
     return {
+        loading: store.searches.loading,
         books : store.searches.books,
         error : store.searches.error
     };

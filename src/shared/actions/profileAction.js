@@ -26,31 +26,36 @@ export function searchBooks(bookname){
 export function viewBook(bookinfo,type){
     return function(dispatch){
         switch(type){
-            case "addsearch":
+            case "addbook":
+                bookinfo.btnuse = "addbook";
                 dispatch({
                     type:"VIEW_ADD_BOOK",
                     payload:bookinfo
                 });
                 break;
             case "addrequest":
+                bookinfo.btnuse = "addrequest";
                 dispatch({
                     type:"VIEW_REQUEST_BOOK",
                     payload:bookinfo
                 });
                 break;
             case "answersender":
+                bookinfo.btnuse = "answersender";
                dispatch({
                     type:"VIEW_EXCHANGE_BOOK",
                     payload:bookinfo
                 });
                 break;
             case "removebook":
+                bookinfo.btnuse = "removebook";
                 dispatch({
                     type:"VIEW_REMOVE_BOOK",
                     payload:bookinfo
                 })
                 break;
             default:
+                bookinfo.btnuse = "info";
                 dispatch({
                     type:"VIEW_BOOK",
                     payload:bookinfo
@@ -189,17 +194,6 @@ export function viewRequest(requestinfo){
             type:"VIEW_REQUEST",
             payload:requestinfo
         });
-        /*axios.get('/userbooks/'+requestinfo.sender.username)
-        .then(response=>{
-            var rtn = {};
-            rtn.tradeinfo = requestinfo;
-            rtn.senderbooks = response.data;
-            dispatch({
-                type:"VIEW_REQUEST",
-                payload:rtn
-            });
-        })
-        .catch(error=>console.log(error))*/
     }
 }
 
@@ -277,6 +271,14 @@ export function changeLocation(){
     }
 }
 
+export function changePassword(){
+    return function(dispatch){
+        dispatch({
+            type:"CHANGE_PASSWORD"
+        })
+    }
+}
+
 
 export function cancelChange(){
     return function(dispatch){
@@ -288,16 +290,44 @@ export function cancelChange(){
 
 export function submitChange(username,action,data){
     return function(dispatch){
-       axios.post('/userinfo',{
-            username,data,action
-        })
-        .then(response=>{
-            dispatch({
-                type:"USER_INFO_CHANGED",
-                payload:response.data
+        if(action=="password"){
+            data.username=username;
+            axios.post('/passwordreset',data)
+            .then(response=>{
+                if(response.data.status=="passwordchanged"){
+                   dispatch({
+                       type:"PASSWORD_CHANGED"
+                   })
+                   setTimeout(function() { 
+                    dispatch({
+                        type:"SUCCESS_OFF"
+                    }) 
+                    }, 2000)
+                } else if(response.data.status=="wrongpassword"){
+                   dispatch({
+                       type:"PASSWORD_MATCH_FAIL"
+                   })  
+                } else {
+                    dispatch({
+                        type:"PASSWORD_CHANGE_ERROR"
+                    })
+                }
+                
             })
-        })
-        .catch(error=>console.log(error))
+            .catch(error=>console.log(error)) 
+
+        } else {
+         axios.post('/userinfo',{
+                username,data,action
+            })
+            .then(response=>{
+                dispatch({
+                    type:"USER_INFO_CHANGED",
+                    payload:response.data
+                })
+            })
+            .catch(error=>console.log(error))  
+        }
     }
 }
 

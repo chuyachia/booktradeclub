@@ -1,7 +1,7 @@
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
 import axios from "axios";
 import BookCard from "./BookCard";
-import {changeEmail,changeLocation,cancelChange,submitChange} from "../actions/profileAction"
+import {changeEmail,changeLocation,changePassword,cancelChange,submitChange} from "../actions/profileAction"
 import {connect} from "react-redux";
 import React from 'react';
 
@@ -13,6 +13,8 @@ class PersonalInfo extends React.Component{
         this.state={
             email:'',
             location:'',
+            oldpassword:'',
+            newpassword:'',
             isLoading:false
         }
     }
@@ -22,17 +24,67 @@ class PersonalInfo extends React.Component{
     changeLocation(){
         this.props.dispatch(changeLocation());
     }
+    changePassword(){
+        this.props.dispatch(changePassword());
+    }
     cancelChange(){
         this.props.dispatch(cancelChange());
     }
     submitChange(target){
-        var data=target=="email"?this.state.email:this.state.location;
-        this.props.dispatch(submitChange(this.props.username,target,data));
+        switch(target){
+        case "email":
+            this.props.dispatch(submitChange(this.props.username,target,this.state.email));
+            break;
+        case "location":
+            this.props.dispatch(submitChange(this.props.username,target,this.state.location));
+            break;
+        case "password":
+            var pwpair ={oldpassword:this.state.oldpassword,newpassword:this.state.newpassword};
+            this.props.dispatch(submitChange(this.props.username,target,pwpair));
+            break;
+        default:
+            break;
+        }
     }
     render(){
         return(
             <div class="personinfo">
                 <h3 class="text-center">{this.props.username}</h3>
+                <div>
+                <label for="passwordold"><strong>Password&nbsp;</strong></label>
+                <span>
+                <button class="iconbtn"><i class="fas fa-edit" onClick={this.changePassword.bind(this)}></i></button>
+                {this.props.changedsucess&&(<p><i>Successfully changed</i></p>)}
+                </span>
+                {this.props.editpassword
+                ?(
+                    <form onSubmit={(event)=>{
+                    event.preventDefault();
+                    this.submitChange("password");
+                    }}>
+                     <input type="password" placeholder="Old password" id="oldpassword" name ="oldpassword" class="form-control" required
+                     onChange={(event) => {
+                              this.setState({oldpassword:event.target.value});
+                            }}/>
+                     <input type="password" placeholder="New password" id="newpassword" name ="newpassword" class="form-control" required
+                     pattern=".{6,}" 
+                     onChange={(event) => {
+                              this.setState({newpassword:event.target.value});
+                            }}/>
+                    {this.state.newpassword&&this.state.newpassword.length<6&&(
+                        <div style={{color:"red"}}>Password needs to have at least 6 characters</div>
+                    )}
+                    {this.props.psunmatch&&(
+                        <div style={{color:"red"}}>Old password does not match</div>
+                    )}
+                     <button type="submit" class="iconbtn"><i class="fas fa-check"></i></button>
+                     <button class="iconbtn"><i class="fas fa-times" onClick={this.cancelChange.bind(this)}></i></button>
+                     </form>
+                )
+                :null
+                }
+                </div>
+                <div>
                 <label for="location"><strong>Location&nbsp;</strong></label>
                 {this.props.editlocation
                 ?(
@@ -67,7 +119,8 @@ class PersonalInfo extends React.Component{
                 <button class="iconbtn"><i class="fas fa-edit" onClick={this.changeLocation.bind(this)}></i></button>
                 </span>)
                 }
-                <br/>
+                </div>
+                <div>
                 <label for="email"><strong>Email&nbsp;</strong></label>
                 {this.props.editemail
                 ?(
@@ -88,7 +141,7 @@ class PersonalInfo extends React.Component{
                 :(<span>{this.props.email}
                 <button class="iconbtn"><i class="fas fa-edit" onClick={this.changeEmail.bind(this)}></i></button>
                 </span>)
-                }
+                }</div>
             </div>)
     }
 }
@@ -101,7 +154,10 @@ var propsMap = (store)=>{
         location:store.userinfo.location,
         ownedbooks:store.userinfo.ownedbooks,
         editemail:store.setting.editemail,
-        editlocation:store.setting.editlocation
+        editlocation:store.setting.editlocation,
+        editpassword:store.setting.editpassword,
+        psunmatch:store.setting.psunmatch,
+        changedsucess:store.setting.changedsucess
     };
 };
 

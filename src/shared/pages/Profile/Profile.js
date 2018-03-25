@@ -2,6 +2,7 @@
 import BookCard from "../../components/BookCard";
 import {changePage} from "../../actions/profileAction";
 import { connect } from "react-redux";
+import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar"
 import Modal from "../../components/Modal";
 import PersonalInfo from "../../components/PersonalInfo";
@@ -58,6 +59,7 @@ class Profile extends React.Component {
            <Modal/>
            </div>
         </div>
+        <Footer/>
         </div>
         )
     }

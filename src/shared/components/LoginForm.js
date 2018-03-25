@@ -13,7 +13,7 @@ class LoginForm extends React.Component{
         };
     }
     componentWillReceiveProps(nextProp){
-        if(nextProp.error){
+        if(nextProp.wrongcredential){
             this.refs.password.value = '';
         }
     }

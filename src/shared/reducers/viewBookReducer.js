@@ -6,48 +6,17 @@ export default function reducer(state={
     info:{}
 },action){
     switch(action.type) {
-        case "VIEW_ADD_BOOK":{
-            return {
-                ...state,
-                open:true,
-                info:action.payload,
-                btnuse:"addbook"
-            };
-        }
-        case "VIEW_REQUEST_BOOK":{
-            return {
-                ...state,
-                open:true,
-                add:false,
-                info:action.payload,
-                btnuse:"addrequest"
-            };
-        }
-        case "VIEW_EXCHANGE_BOOK":{
-            return {
-                ...state,
-                open:true,
-                add:false,
-                info:action.payload,
-                btnuse:"answersender"
-            };
-        }
-        case "VIEW_REMOVE_BOOK":{
-            return {
-                ...state,
-                open:true,
-                add:false,
-                info:action.payload,
-                btnuse:"removebook"
-            };
-        }
+        case "VIEW_ADD_BOOK":
+        case "VIEW_REQUEST_BOOK":
+        case "VIEW_EXCHANGE_BOOK":
+        case "VIEW_REMOVE_BOOK":
         case "VIEW_BOOK":{
+            var {btnuse, ...info} = action.payload;
             return {
                 ...state,
                 open:true,
-                add:false,
-                info:action.payload,
-                btnuse:null
+                info:info,
+                btnuse:btnuse
             };
         }
         case "BOOK_DELETED":

@@ -1,5 +1,6 @@
 export default function reducer(state={
     books:[],
+    loading:true,
     error: null
 },action){
     switch(action.type) {
@@ -12,12 +13,14 @@ export default function reducer(state={
         case "NEW_QUERY": {
             return{
                 ...state,
+                loading:false,
                 books:action.payload
             }
         }
         case "QUERY_ERROR":{
             return {
                 ...state,
+                loading:false,
                 error:action.payload
             }
         }

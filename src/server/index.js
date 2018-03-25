@@ -69,6 +69,9 @@ app.get('/logout', function(req, res) {
     res.redirect('/');
 });
 
+app.route('/passwordreset')
+  .post(dbHandler.resetPassword)
+
 app.route('/search/:bookname')
   .get(apiHandler.search);
   
@@ -77,6 +80,9 @@ app.route('/book')
 
 app.route('/book/:bookid/:username')
   .delete(dbHandler.removeBook);
+
+app.route('/bookinfo/:bookid')
+  .get(dbHandler.getBookInfo);
   
 app.route('/allbooks')
   .get(dbHandler.getAllBooks);

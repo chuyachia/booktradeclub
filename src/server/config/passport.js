@@ -21,8 +21,6 @@ export default function(passport){
             user.requests = result;
             Books.find({ownBy:user.username},function(error,books){
               if (error) throw error;
-              //var booksowned = books.map((book)=>book.bookId);
-              //var booksowned 
               user.books = books;
               done(err, user);
             })
@@ -50,7 +48,6 @@ export default function(passport){
                   user.requests = result;
                   Books.find({ownBy:user.username},function(error,books){
                     if (error) throw error;
-                    //var booksowned = books.map((book)=>book.bookId);
                     user.books = books;
                     done(null, user);
                   })

@@ -31,7 +31,9 @@
   max-height:180px;
 }
 
-.bookdisplay {
+.dialogue strong {
+  cursor:pointer;
+}.bookdisplay {
   position: relative;
   height: 150px;
   width: 100px;
@@ -65,7 +67,26 @@ img{
     right: 0;
     left: auto;
 }
-.connect{
+.spinner-wrap{
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.footer{
+  position:fixed;
+  bottom:0;
+  right:0;
+  text-align: right;
+  padding:15px
+}
+.footer span {
+  position:relative;
+  display:block
+}
+.fas,.fab{
+  margin-top:5px
+}.connect{
     width:60%;
 }
 
