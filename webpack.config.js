@@ -1,7 +1,7 @@
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const autoprefixer = require("autoprefixer");
-
+console.log(process.env.NODE_ENV)
 const browserConfig = {
   entry: "./src/browser/index.js",
   output: {
@@ -50,6 +50,11 @@ const browserConfig = {
       banner: "__isBrowser__ = true;",
       raw: true,
       include: /\.js$/
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      }
     })
   ]
 };

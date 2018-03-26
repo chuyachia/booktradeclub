@@ -1,5 +1,5 @@
 {
   "plugins": [
     "react-html-attrs","transform-object-assign","transform-object-rest-spread","emotion"
-  ]
+    ]
 }

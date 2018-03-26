@@ -4,7 +4,13 @@ import promise from "redux-promise-middleware";
 import reducer from "./reducers";
 import thunk from "redux-thunk";
 
-const middleware = applyMiddleware(promise(),thunk,logger());
+var middleware;
+
+if(process.env.NODE_ENV == "development"){
+    middleware = applyMiddleware(promise(),thunk,logger());
+} else {
+   middleware = applyMiddleware(promise(),thunk); 
+}
 
 const configureStore = preloadedState =>
   createStore(reducer, preloadedState, middleware);
