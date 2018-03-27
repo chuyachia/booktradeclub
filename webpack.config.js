@@ -1,7 +1,7 @@
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const autoprefixer = require("autoprefixer");
-console.log(process.env.NODE_ENV)
+
 const browserConfig = {
   entry: "./src/browser/index.js",
   output: {

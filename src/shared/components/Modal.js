@@ -36,7 +36,7 @@ class Modal extends React.Component{
           }}/>);
         } else {
             var ownedbooks = this.props.ownedbooks.map(book=>book.bookId);
-            var outrequests = this.props.outrequests.filter(request=>request.receiver.bookId==this.props.info.bookId);
+            var outrequests = this.props.outrequests.filter(request=>request.receiver.bookId==this.props.info.bookId&&request.status!="declined");
             var outrequser = outrequests.map(request=>request.receiver.username);
             return(
             <ReactModal style={modalStyles}
