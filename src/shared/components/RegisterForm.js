@@ -6,7 +6,7 @@ import {addUser} from "../actions/profileAction";
 import axios from "axios";
 import {connect} from "react-redux";
 import React from "react"
-import {Redirect } from "react-router-dom";
+import {Redirect,Link } from "react-router-dom";
 
 
 const getlocapi = "https://cors-anywhere.herokuapp.com/http://gd.geobytes.com/AutoCompleteCity?q=";
@@ -49,6 +49,7 @@ class RegisterForm extends React.Component{
                             onChange={(event) => {
                               this.setState({email:event.target.value});
                             }}/>
+                            <small class="form-text text-muted">We will only share it with people with whom you have concluded a book exchange.</small>
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
@@ -82,8 +83,10 @@ class RegisterForm extends React.Component{
                             placeholder="Enter your city"
                             inputProps= {{name:"location",id:"location",required:true}}
                           />
+                          <small class="form-text text-muted">It's important to indicate your real location so that people near you will make a request to you.</small>
                           </div>
                         <button type="submit" class="btn btn-raised bg-dark text-light">Sign up</button>
+                        <Link class="btn btn-secondary" to="/">Cancel</Link>
                     </form>
             )
         } else {

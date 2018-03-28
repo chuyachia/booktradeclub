@@ -1,3 +1,4 @@
+import About from "./pages/About/About"
 import Connect from "./pages/Connect/Connect";
 import Main from "./pages/Main/Main";
 import Profile from "./pages/Profile/Profile";
@@ -20,6 +21,10 @@ const routes = [
     {
         path:"/request",
         component:Request
+    },
+    {
+        path:"/about",
+        component:About
     },
     {
         path:"*",

@@ -194,8 +194,6 @@ export function viewRequest(requestinfo,role,unread){
             type:"VIEW_REQUEST",
             payload:requestinfo
         });
-        console.log(role);
-        console.log(unread);
         if(unread){
             axios.post('/request',{
                 tradeid:requestinfo._id,
@@ -256,7 +254,6 @@ export function declineTrade(tradeid,to){
             to:to
         })
         .then(response=>{
-            console.log(to);
             dispatch({
                 type:"TRADE_DECLINED",
                 payload:to

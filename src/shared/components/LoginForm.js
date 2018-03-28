@@ -2,7 +2,7 @@ import axios from "axios";
 import {connect} from "react-redux";
 import {logIn} from "../actions/mainAction";
 import React from "react";
-import {Redirect } from "react-router-dom";
+import {Redirect, Link } from "react-router-dom";
 
 class LoginForm extends React.Component{
     constructor(props){
@@ -50,10 +50,11 @@ class LoginForm extends React.Component{
                     </div>
                     {this.props.wrongcredential&&<div>Wrong username or password! Try again</div>}
                     <button type="submit" class="btn btn-raised bg-dark text-light">Log in</button>
+                    <Link class="btn btn-secondary" to="/">Cancel</Link>
                 </form>
                 )
         } else {
-            return <div>Logged in with success. Redirecting to the main page...</div>
+            return <div>Successfully logged in. Redirecting to the main page...</div>
         }
     }
 }

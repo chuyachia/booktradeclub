@@ -13,8 +13,11 @@ class BookCard extends React.Component{
     }
     render(){
         return(
-            <div class="card bookdisplay">
-                <img src={this.props.info.imageUrl} alt={this.props.info.title} class="img-thumbnail" onClick={this.viewBooks.bind(this)}/>
+            <div class="card bookdisplay" onClick={this.viewBooks.bind(this)}>
+                <img src={this.props.info.imageUrl} alt={this.props.info.title} class="img-thumbnail"/>
+                  <div class="middle">
+                    <i class="fas fa-search fa-lg"></i>
+                </div>
             </div>
             );
     }
