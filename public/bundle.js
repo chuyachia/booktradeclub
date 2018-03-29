@@ -25685,7 +25685,7 @@ var About = function (_React$Component) {
                         __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
                             "p",
                             null,
-                            "This site is made as part of the freeCodeCamp back-end development certification. It's source code can be found ",
+                            "This site is made as part of the freeCodeCamp back-end development certification. Its source codes can be found ",
                             __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
                                 "a",
                                 { href: "https://github.com/chuyachia/booktradeclub", target: "_blank" },
