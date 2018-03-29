@@ -25,6 +25,7 @@ class PersonalInfo extends React.Component{
         this.props.dispatch(changeLocation());
     }
     changePassword(){
+        console.log('click');
         this.props.dispatch(changePassword());
     }
     cancelChange(){
@@ -53,7 +54,7 @@ class PersonalInfo extends React.Component{
                 <div>
                 <label for="passwordold"><strong>Password&nbsp;</strong></label>
                 <span>
-                <button class="iconbtn"><i class="fas fa-edit" onClick={this.changePassword.bind(this)}></i></button>
+                <button class="iconbtn" onClick={this.changePassword.bind(this)}><i class="fas fa-edit"></i></button>
                 {this.props.changedsucess&&(<p><i>Successfully changed</i></p>)}
                 </span>
                 {this.props.editpassword
@@ -78,7 +79,7 @@ class PersonalInfo extends React.Component{
                         <div style={{color:"red"}}>Old password does not match</div>
                     )}
                      <button type="submit" class="iconbtn"><i class="fas fa-check"></i></button>
-                     <button class="iconbtn"><i class="fas fa-times" onClick={this.cancelChange.bind(this)}></i></button>
+                     <button type="button" class="iconbtn" onClick={this.cancelChange.bind(this)}><i class="fas fa-times"></i></button>
                      </form>
                 )
                 :null
@@ -112,11 +113,11 @@ class PersonalInfo extends React.Component{
                             inputProps= {{name:"location",id:"location",required:true,className:null}}
                           />
                      <button type="submit" class="iconbtn"><i class="fas fa-check"></i></button>
-                     <button class="iconbtn"><i class="fas fa-times" onClick={this.cancelChange.bind(this)}></i></button>
+                     <button type="button" class="iconbtn" onClick={this.cancelChange.bind(this)}><i class="fas fa-times"></i></button>
                      </form>
                 )
                 :(<span>{this.props.location}
-                <button class="iconbtn"><i class="fas fa-edit" onClick={this.changeLocation.bind(this)}></i></button>
+                <button class="iconbtn" onClick={this.changeLocation.bind(this)}><i class="fas fa-edit"></i></button>
                 </span>)
                 }
                 </div>
@@ -134,12 +135,12 @@ class PersonalInfo extends React.Component{
                               this.setState({email:event.target.value});
                             }}/>
                      <button type="submit" class="iconbtn"><i class="fas fa-check"></i></button>
-                     <button class="iconbtn"><i class="fas fa-times" onClick={this.cancelChange.bind(this)}></i></button>
+                     <button type="button" class="iconbtn" onClick={this.cancelChange.bind(this)}><i class="fas fa-times"></i></button>
                      </form>
                     
                 )
                 :(<span>{this.props.email}
-                <button class="iconbtn"><i class="fas fa-edit" onClick={this.changeEmail.bind(this)}></i></button>
+                <button class="iconbtn"  onClick={this.changeEmail.bind(this)}><i class="fas fa-edit"></i></button>
                 </span>)
                 }</div>
             </div>)

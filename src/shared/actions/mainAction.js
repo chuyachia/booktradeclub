@@ -1,5 +1,6 @@
+require('es6-promise').polyfill();
 import axios from 'axios';
-import queryString from "query-string";
+
 
 export function getAllBooks(){
     return function(dispatch){
@@ -75,7 +76,14 @@ export function logOut(){
 
 export function getUsersLocation(users){
     return function(dispatch){
-        var query = queryString.stringify({users:users});
+       var query= users.reduce(function(acc,cur,i){
+            if(i<users.length-1) {
+                return acc+"users="+cur+"&"
+            } else{
+                return acc+"users="+cur
+            }
+        },"")
+        //var query = queryString.stringify({users:users});
         axios.get('/userslocation?'+query)
         .then(response=>{
             dispatch({
