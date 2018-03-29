@@ -11,6 +11,6 @@ This app uses React server-side rendering and Redux.
 * Routing: React-router-dom
 * Database: MongoDB
 * Authentication: Passport
-* Front-end: React, React-modal, React-bootstrap-typeahead"
+* Front-end: React, React-modal, React-bootstrap-typeahead
 * Appearance: Bootstrap material design
 * API: Google Books API

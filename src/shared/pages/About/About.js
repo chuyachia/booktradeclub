@@ -55,7 +55,7 @@ class About extends React.Component{
             </div>
             <div class="col-md-12">
                 <h5>Who is behind it?</h5>
-                <p>This site is made as part of the freeCodeCamp back-end development certification. It's source code can be found <a href="https://github.com/chuyachia/booktradeclub" target="_blank">here</a>. Please refer to <a href="https://portfolio-chuya.glitch.me/" target="_blank">my portfolio</a> for my other projects.</p>
+                <p>This site is made as part of the freeCodeCamp back-end development certification. Its source codes can be found <a href="https://github.com/chuyachia/booktradeclub" target="_blank">here</a>. Please refer to <a href="https://portfolio-chuya.glitch.me/" target="_blank">my portfolio</a> for my other projects.</p>
             </div>
             </div>
             <Footer/>
