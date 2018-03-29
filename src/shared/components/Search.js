@@ -38,7 +38,8 @@ class Search extends React.Component {
                   loading={this.props.loading} 
                 />
             </div>
-            {this.props.books.map((book,i)=> (
+            {this.props.error&&<div>Sorry, something went wrong. Please try with another search term.</div>}
+            {!this.props.error&&this.props.books.map((book,i)=> (
             <BookCard key={i} info={book} modaluse="addbook"/>
             ))}
         </div>

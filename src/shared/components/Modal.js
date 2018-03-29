@@ -50,7 +50,13 @@ class Modal extends React.Component{
                {this.props.info.authors&&
                (<div>
                     <dt>Author</dt>
-                    <dd>{this.props.info.authors.map((author)=> author)}</dd>
+                    <dd>{this.props.info.authors.map((author,i)=> {
+                    if (i<this.props.info.authors.length-1) {
+                        return (<span>{author}, </span>)
+                    } else {
+                        return (<span>{author}</span>)
+                    }
+                    })}</dd>
                 </div>)}
                     <dt>Publisher</dt>
                     <dd>{this.props.info.publisher}</dd>

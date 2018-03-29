@@ -22,6 +22,7 @@ export default function reducer(state={
         case "SEARCH_ERROR":{
             return {
                 ...state,
+                loading:false,
                 error:action.payload
             }
         }
