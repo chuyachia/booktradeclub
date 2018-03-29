@@ -52,9 +52,9 @@ class Modal extends React.Component{
                     <dt>Author</dt>
                     <dd>{this.props.info.authors.map((author,i)=> {
                     if (i<this.props.info.authors.length-1) {
-                        return (<span>{author}, </span>)
+                        return (<span key={i}>{author}, </span>)
                     } else {
-                        return (<span>{author}</span>)
+                        return (<span key={i}>{author}</span>)
                     }
                     })}</dd>
                 </div>)}

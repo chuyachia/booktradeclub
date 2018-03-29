@@ -89,7 +89,7 @@ function dbHandler(){
     this.getUsersLocation = function(req,res){
         Users.find({
             'username':{$in:req.query.users}
-        }).exec((err,results)=>{
+        }).sort({ 'username' : 1 }).exec((err,results)=>{
             if (err) throw err;
             res.send(results.map(result=>result.location));
         })

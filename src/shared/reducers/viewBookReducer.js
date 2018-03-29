@@ -7,11 +7,21 @@ export default function reducer(state={
 },action){
     switch(action.type) {
         case "VIEW_ADD_BOOK":
-        case "VIEW_REQUEST_BOOK":
         case "VIEW_EXCHANGE_BOOK":
         case "VIEW_REMOVE_BOOK":
         case "VIEW_BOOK":{
             var {btnuse, ...info} = action.payload;
+            return {
+                ...state,
+                open:true,
+                info:info,
+                btnuse:btnuse
+            };
+        }
+        case "VIEW_REQUEST_BOOK":{
+            var {btnuse,ownBy, ...info} = action.payload;
+            ownBy.sort();
+            info.ownBy =ownBy;
             return {
                 ...state,
                 open:true,

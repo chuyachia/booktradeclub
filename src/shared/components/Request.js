@@ -109,7 +109,7 @@ class Request extends React.Component{
                     </div>)}
                     
                     {this.props.info.sender.bookName&&this.props.info.status=="confirmed"&&(
-                    <div><p>The exchange has concluded. You can contact {this.props.info.receiver.username} at <strong>
+                    <div><p>The exchange has successfully concluded. You can contact {this.props.info.receiver.username} at <strong>
                     <a href={"mailto:"+this.props.info.receiver.email}>{this.props.info.receiver.email}</a></strong> to arrange the details of the exchange</p>
                     </div>)}
                     
@@ -135,7 +135,7 @@ class Request extends React.Component{
                     </div>)}
                     
                     {this.props.info.sender.bookName&&this.props.info.status=="confirmed"&&(
-                    <div><p>The exchange has concluded. You can contact {this.props.info.sender.username} at <strong>
+                    <div><p>The exchange has successfully concluded. You can contact {this.props.info.sender.username} at <strong>
                     <a href={"mailto:"+this.props.info.sender.email}>{this.props.info.sender.email}</a></strong> to arrange the details of the exchange</p>
                     </div>)}
                     {this.props.info.status=="declined"&&(

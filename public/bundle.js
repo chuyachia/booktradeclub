@@ -7626,14 +7626,14 @@ var Modal = function (_React$Component) {
                                     if (i < _this2.props.info.authors.length - 1) {
                                         return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
                                             "span",
-                                            null,
+                                            { key: i },
                                             author,
                                             ", "
                                         );
                                     } else {
                                         return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
                                             "span",
-                                            null,
+                                            { key: i },
                                             author
                                         );
                                     }
@@ -24403,7 +24403,25 @@ var About = function (_React$Component) {
                     ),
                     __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
                         "div",
-                        { className: "col-md-4" },
+                        { className: "col-md-3" },
+                        __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
+                            "div",
+                            { className: "card" },
+                            __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
+                                "div",
+                                { className: "card-body text-center" },
+                                __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
+                                    "h5",
+                                    null,
+                                    "Log in or create a new account"
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement("i", { className: "fas fa-sign-in-alt fa-3x" })
+                            )
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
+                        "div",
+                        { className: "col-md-3" },
                         __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
                             "div",
                             { className: "card" },
@@ -24421,7 +24439,7 @@ var About = function (_React$Component) {
                     ),
                     __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
                         "div",
-                        { className: "col-md-4" },
+                        { className: "col-md-3" },
                         __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
                             "div",
                             { className: "card" },
@@ -24439,7 +24457,7 @@ var About = function (_React$Component) {
                     ),
                     __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
                         "div",
-                        { className: "col-md-4" },
+                        { className: "col-md-3" },
                         __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
                             "div",
                             { className: "card" },
@@ -51992,7 +52010,7 @@ var Request = function (_React$Component) {
                             __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                 "p",
                                 null,
-                                "The exchange has concluded. You can contact ",
+                                "The exchange has successfully concluded. You can contact ",
                                 this.props.info.receiver.username,
                                 " at ",
                                 __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
@@ -52068,7 +52086,7 @@ var Request = function (_React$Component) {
                             __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
                                 "p",
                                 null,
-                                "The exchange has concluded. You can contact ",
+                                "The exchange has successfully concluded. You can contact ",
                                 this.props.info.sender.username,
                                 " at ",
                                 __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
@@ -53540,7 +53558,6 @@ function reducer() {
 
     switch (action.type) {
         case "VIEW_ADD_BOOK":
-        case "VIEW_REQUEST_BOOK":
         case "VIEW_EXCHANGE_BOOK":
         case "VIEW_REMOVE_BOOK":
         case "VIEW_BOOK":
@@ -53549,6 +53566,21 @@ function reducer() {
                     btnuse = _action$payload.btnuse,
                     info = _objectWithoutProperties(_action$payload, ["btnuse"]);
 
+                return _extends({}, state, {
+                    open: true,
+                    info: info,
+                    btnuse: btnuse
+                });
+            }
+        case "VIEW_REQUEST_BOOK":
+            {
+                var _action$payload2 = action.payload,
+                    btnuse = _action$payload2.btnuse,
+                    ownBy = _action$payload2.ownBy,
+                    info = _objectWithoutProperties(_action$payload2, ["btnuse", "ownBy"]);
+
+                ownBy.sort();
+                info.ownBy = ownBy;
                 return _extends({}, state, {
                     open: true,
                     info: info,

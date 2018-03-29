@@ -18,7 +18,15 @@ class About extends React.Component{
             <div class="col-md-12">
             <h5>How does it work?</h5>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <div class="card">
+                   <div class="card-body text-center">
+                    <h5>Log in or create a new account</h5>
+                    <i class="fas fa-sign-in-alt fa-3x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
                 <div class="card">
                    <div class="card-body text-center">
                     <h5>Add your books for exchange</h5>
@@ -26,7 +34,7 @@ class About extends React.Component{
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="card">
                    <div class="card-body text-center">
                    <h5>Browse other users' books</h5>
@@ -34,7 +42,7 @@ class About extends React.Component{
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="card">
                    <div class="card-body text-center">
                     <h5>Make a request for exchange</h5>
