@@ -58,7 +58,13 @@ export function logIn(userinfo){
         
     }
 }
-
+export function cancelLogin(){
+    return function(dispatch){
+        dispatch({
+            type:"CANCEL_LOGIN"
+        })
+    }
+}
 export function logOut(){
     return function(dispatch){
     axios.get('/logout')

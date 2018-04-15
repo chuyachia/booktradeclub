@@ -1,6 +1,6 @@
 import axios from "axios";
 import {connect} from "react-redux";
-import {logIn} from "../actions/mainAction";
+import {logIn,cancelLogin} from "../actions/mainAction";
 import React from "react";
 import {Redirect, Link } from "react-router-dom";
 
@@ -23,6 +23,9 @@ class LoginForm extends React.Component{
             username:this.state.username,
             password:this.state.password
         }))
+    }
+    cancelLogin(){
+     this.props.dispatch(cancelLogin());
     }
     render(){
             if (this.props.redirect){
@@ -50,7 +53,7 @@ class LoginForm extends React.Component{
                     </div>
                     {this.props.wrongcredential&&<div>Wrong username or password! Try again</div>}
                     <button type="submit" class="btn btn-raised bg-dark text-light">Log in</button>
-                    <Link class="btn btn-secondary" to="/">Cancel</Link>
+                    <Link class="btn btn-secondary" onClick = {this.cancelLogin.bind(this)} to="/">Cancel</Link>
                 </form>
                 )
         } else {

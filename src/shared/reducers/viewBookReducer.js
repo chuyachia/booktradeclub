@@ -42,6 +42,7 @@ export default function reducer(state={
                 tologin:true
             }
         }
+        case "CANCEL_LOGIN":
         case "LOGGED_IN":{
             return {
                 ...state,

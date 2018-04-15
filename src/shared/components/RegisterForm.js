@@ -4,6 +4,7 @@
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
 import {addUser} from "../actions/profileAction";
 import axios from "axios";
+import {cancelLogin} from "../actions/mainAction";
 import {connect} from "react-redux";
 import React from "react"
 import {Redirect,Link } from "react-router-dom";
@@ -28,6 +29,9 @@ class RegisterForm extends React.Component{
             email:this.state.email,
             location:this.state.location
         }));
+    }
+    cancelLogin(){
+     this.props.dispatch(cancelLogin());
     }
     render(){
         if (this.props.redirect){
@@ -86,7 +90,7 @@ class RegisterForm extends React.Component{
                           <small class="form-text text-muted">It's important to indicate your real location so that people near you will make a request to you.</small>
                           </div>
                         <button type="submit" class="btn btn-raised bg-dark text-light">Sign up</button>
-                        <Link class="btn btn-secondary" to="/">Cancel</Link>
+                        <Link class="btn btn-secondary" onClick = {this.cancelLogin.bind(this)} to="/">Cancel</Link>
                     </form>
             )
         } else {
