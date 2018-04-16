@@ -12,6 +12,7 @@ import passport from 'passport';
 import { Provider } from "react-redux";
 import React from "react";
 import {renderToString} from "react-dom/server";
+import routes from "../shared/routes";
 import serialize from "serialize-javascript";
 import session from 'express-session';
 import {StaticRouter, matchPath} from "react-router-dom";
@@ -133,7 +134,8 @@ app.get("*",(req,res) => {
         </StaticRouter>
       </Provider>
         );
-      
+    if (matchPath(req.url,routes).path!=req.url)
+      res.status(404)
     const initialData = store.getState();
     res.send(`
     <!DOCTYPE html>

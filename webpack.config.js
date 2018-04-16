@@ -1,6 +1,8 @@
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const autoprefixer = require("autoprefixer");
+const debug = process.env.NODE_ENV!=="production"
+
 
 const browserConfig = {
   entry: "./src/browser/index.js",
@@ -8,7 +10,7 @@ const browserConfig = {
     path: __dirname,
     filename: "./public/bundle.js"
   },
-  devtool: "cheap-module-source-map",
+  devtool: debug?"cheap-module-source-map":false,
   module: {
     rules: [
       {
@@ -42,8 +44,8 @@ const browserConfig = {
       }
     ]
   },
-  plugins: [
-    new ExtractTextPlugin({
+  plugins:debug?[
+  new ExtractTextPlugin({
       filename: "public/css/[name].css"
     }),
     new webpack.BannerPlugin({
@@ -56,6 +58,23 @@ const browserConfig = {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
       }
     })
+    ]:[
+    new ExtractTextPlugin({
+      filename: "public/css/[name].css"
+    }),
+    new webpack.BannerPlugin({
+      banner: "__isBrowser__ = true;",
+      raw: true,
+      include: /\.js$/
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      }
+    }),
+     new webpack.optimize.UglifyJsPlugin({
+      minimize: true
+    })
   ]
 };
 
@@ -67,7 +86,7 @@ const serverConfig = {
     filename: "server.js",
     libraryTarget: "commonjs2"
   },
-  devtool: "cheap-module-source-map",
+  devtool: debug?"cheap-module-source-map":false,
   module: {
     rules: [
       {

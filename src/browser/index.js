@@ -5,6 +5,7 @@ import React from "react";
 import {render} from "react-dom";
 import configureStore from "../shared/configureStore";
 
+
 const store = configureStore(window.__initialData__);
 delete window.__initialData__;
 
