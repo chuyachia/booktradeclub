@@ -35,7 +35,7 @@ class Request extends React.Component{
     }
     render(){
         function requestInit(book,id,func){
-            return (<p>I'm interested in the book <strong onClick={()=>func(id)}>"{book}"</strong> in your collection. Have a look at the books that I have to exchange!</p>);
+            return (<p>I'm interested in the book <strong onClick={()=>func(id)}>"{book}"</strong> in your collection. Have a look at the books that I have for exchange!</p>);
         }
         function requestRes(book,id,func){
             return (<p>I would accept to exchange my book with your <strong onClick={()=>func(id)}>" {book} "</strong>.</p>);
@@ -44,7 +44,7 @@ class Request extends React.Component{
             return (<p>OK! That's call it a deal.</p>);
         }
         function instructWaint(name){
-            return (<p>Waiting for {name}'s response</p>)
+            return (<p>Waiting for {name}'s response.</p>)
         }
         function reqeustDecline(){
             return(<p>Sorry, I'm not interested.</p>)
@@ -95,7 +95,7 @@ class Request extends React.Component{
                 </div>)}
                 
                 {sender=="You"?
-                (<div class="usercontrol">
+                (<div class="usercontrol bg-light text-dark">
                     {!this.props.info.sender.bookName&&this.props.info.status=="pending"&&(
                     <div>{instructWaint(this.props.info.receiver.username)}</div>)}
                     
@@ -117,9 +117,9 @@ class Request extends React.Component{
                     <div><p>The exchange has ended without success.</p>
                     </div>)}
                 </div>):
-                (<div class="usercontrol">
+                (<div class="usercontrol bg-light text-dark">
                     {!this.props.info.sender.bookName&&this.props.info.status=="pending"&&(
-                    <div class="booklistwrap">Here's what {this.props.info.sender.username} has to offer, choose a book to trade
+                    <div class="booklistwrap  bg-light text-dark">Here's what {this.props.info.sender.username} has to offer, choose a book to trade
                         <ul class="booklist list-unstyled">{this.props.senderbooks.map((book,i)=>(
                             <li key={i} style={{cursor:"pointer"}} onClick={()=> this.viewBooksExchange(book)}>
                             <strong>{book.title}</strong></li>

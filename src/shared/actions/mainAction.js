@@ -23,6 +23,9 @@ export function getAllBooks(){
 
 export function logIn(userinfo){
     return function(dispatch){
+        dispatch({
+            type:"SEND_LOG_IN"
+        });
         axios.post('/auth',userinfo)
         .then(response=> {
             if(response.data.success){

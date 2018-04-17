@@ -15,6 +15,9 @@ class LoginForm extends React.Component{
     componentWillReceiveProps(nextProp){
         if(nextProp.wrongcredential){
             this.refs.password.value = '';
+            this.setState({
+                password:''
+            })
         }
     }
     submitLogin(event){
@@ -46,12 +49,13 @@ class LoginForm extends React.Component{
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" name="password" placeholder="Password" required
-                        ref="password"
+                        ref="password" autoComplete="off"
                         onChange={(event) => {
-                          this.setState({password:event.target.value});
+                          this.setState({
+                          password:event.target.value});
                         }}/>
                     </div>
-                    {this.props.wrongcredential&&<div>Wrong username or password! Try again</div>}
+                    {(this.props.wrongcredential&&this.state.password.length==0)&&<div>Wrong username or password! Try again</div>}
                     <button type="submit" class="btn btn-raised bg-dark text-light">Log in</button>
                     <Link class="btn btn-secondary" onClick = {this.cancelLogin.bind(this)} to="/">Cancel</Link>
                 </form>

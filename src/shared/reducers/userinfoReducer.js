@@ -34,6 +34,13 @@ export default function reducer(state={
                 outrequests : outreqs
             }
         }
+        case "SEND_LOG_IN":{
+           return{
+                ...state,
+                wrongcredential:false,
+                error:false
+            } 
+        }
         case "WRONG_CREDENTIAL": {
             return{
                 ...state,

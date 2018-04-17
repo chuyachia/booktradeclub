@@ -1,4 +1,5 @@
 import Footer from "../../components/Footer";
+import { Link } from 'react-router-dom';
 import NavBar from "../../components/NavBar";
 import React from 'react';
 
@@ -52,6 +53,9 @@ class About extends React.Component{
             </div>
             <div class="col-md-12">
             <p>Once the two parties agree on an exchange, they can contact each to arrange meetups or book mailings. </p>
+            <div class="text-center">
+            <Link to="/connect" class="btn btn-secondary btn-lg active text-center" role="button">Try now <i class="fas fa-arrow-alt-circle-right"></i></Link>
+            </div>
             </div>
             <div class="col-md-12">
                 <h5>Who is behind it?</h5>

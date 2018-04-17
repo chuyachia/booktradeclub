@@ -42,14 +42,16 @@ class RegisterForm extends React.Component{
             return(<form onSubmit={this.submitRegister.bind(this)}>
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required autoFocus
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Username"
+                            autoComplete="off" required autoFocus
                             onChange={(event) => {
                               this.setState({username:event.target.value});
                             }}/>
                         </div>
                         <div class="form-group">
                             <label for="email">Email address</label>
-                            <input type="email" class="form-control" id="email" name ="email" placeholder="Email" required
+                            <input type="email" class="form-control" id="email" name ="email" placeholder="Email" 
+                            autoComplete="off" required
                             onChange={(event) => {
                               this.setState({email:event.target.value});
                             }}/>
@@ -57,7 +59,8 @@ class RegisterForm extends React.Component{
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password"
+                            autoComplete="off"  required
                             pattern=".{6,}" 
                             onChange={(event) => {
                               this.setState({password:event.target.value});
