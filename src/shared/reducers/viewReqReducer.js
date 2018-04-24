@@ -3,13 +3,15 @@
 export default function reducer(state={
     open:false,
     info:{},
-    senderbooks:[]
+    senderbooks:[],
+    error:false
 },action){
     switch(action.type) {
         case "OPEN_REQUEST":{
             return{
                 ...state,
-                info:{}
+                info:{},
+                error:false
             }
         }
         case "VIEW_REQUEST":{
@@ -33,7 +35,8 @@ export default function reducer(state={
                         bookId:action.payload.bookid,
                         bookName:action.payload.bookname,
                     }
-                }
+                },
+                error:false
             }
         }
         case "TRADE_CONFIRMED":{
@@ -45,7 +48,8 @@ export default function reducer(state={
                     receiver:{
                         ...state.info.receiver,
                     }
-                }
+                },
+                error:false
             }
         }
         case "TRADE_DECLINED":{
@@ -57,7 +61,20 @@ export default function reducer(state={
                     receiver:{
                         ...state.info.receiver,
                     }
-                }
+                },
+                error:false
+            }
+        }
+        case "REQUEST_ACTION_ERROR":{
+            return{
+                ...state,
+                error:true
+            }
+        }
+        case "ALERT_CLOSE":{
+            return {
+                ...state,
+                error:false
             }
         }
 

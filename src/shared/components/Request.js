@@ -9,6 +9,9 @@ import {viewBook,addExchange,confirmTrade,declineTrade} from "../actions/profile
 class Request extends React.Component{
     constructor(props){
         super(props);
+        this.state={
+            alertopen:true
+        }
     }
     viewBooksExchange(bookinfo){
         this.props.dispatch(viewBook(bookinfo,"answersender"));
@@ -32,6 +35,9 @@ class Request extends React.Component{
     }
     declineExchange(){
         this.props.dispatch(declineTrade(this.props.info._id,"receiver"));
+    }
+    closeAlert(){
+        this.props.dispatch({type:"ALERT_CLOSE"});
     }
     render(){
         function requestInit(book,id,func){
@@ -59,6 +65,13 @@ class Request extends React.Component{
             <nav class="navbar navbar-dark bg-dark fixed-top">
               <Link class="navbar-brand" to="/profile"><i class="fas fa-arrow-left"></i></Link>
             </nav>
+                {this.props.error&&<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>Oops! Something wend wrong!</strong> The action that you performed failed. Please try again.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>}
+            
                 <div class={sender=="You"?"card col-md-5 offset-md-7":"card col-md-5"}>
                     <div class="card-body">
                         <h4 class="card-title">{sender}</h4>
@@ -93,7 +106,6 @@ class Request extends React.Component{
                         {reqeustDecline()}
                     </div>
                 </div>)}
-                
                 {sender=="You"?
                 (<div class="usercontrol bg-light text-dark">
                     {!this.props.info.sender.bookName&&this.props.info.status=="pending"&&(
@@ -158,7 +170,8 @@ var propsMap = (store)=>{
         info:store.viewreq.info,
         senderbooks : store.viewreq.senderbooks,
         username : store.userinfo.username,
-        email:store.userinfo.email
+        email:store.userinfo.email,
+        error:store.viewreq.error
     };
 };
 

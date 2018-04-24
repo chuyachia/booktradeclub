@@ -13,9 +13,9 @@ export function getAllBooks(){
             });
         })        
         .catch(error=> {
+            console.log(error);
             dispatch({
-                type:"QUERY_ERROR",
-                payload:error
+                type:"QUERY_ERROR"
             });
         });
     }
@@ -92,7 +92,6 @@ export function getUsersLocation(users){
                 return acc+"users="+cur
             }
         },"")
-        //var query = queryString.stringify({users:users});
         axios.get('/userslocation?'+query)
         .then(response=>{
             dispatch({

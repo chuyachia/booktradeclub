@@ -10,7 +10,7 @@
 
 
 .usercontrol{
-  position:absolute;
+  position:fixed;
   bottom:10px;
   left:0;
   right:0;
@@ -148,3 +148,5 @@ img{
         -ms-flex-direction: column;
             flex-direction: column;
 }
+
+/*# sourceMappingURL=main.css.map*/

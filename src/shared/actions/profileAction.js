@@ -174,21 +174,6 @@ export function getAllRequests(username){
         .catch(error=>console.log(error))
     }
 }
-
-export function getSenderBooks(username){
-    return function(dispatch){
-        axios.get('/userbooks/'+username)
-        .then(response=>{
-            dispatch({
-                type:"SENDER_BOOKS",
-                payload:response.data
-            })
-        })
-        .catch(error=>console.log(error))
-    }
-}
-
-
 export function viewRequest(requestinfo,role,unread){
     return function(dispatch){
         dispatch({
@@ -212,6 +197,28 @@ export function viewRequest(requestinfo,role,unread){
     }
 }
 
+
+export function getSenderBooks(username){
+    return function(dispatch){
+        axios.get('/userbooks/'+username)
+        .then(response=>{
+            dispatch({
+                type:"SENDER_BOOKS",
+                payload:response.data
+            })
+        })
+        .catch(error=>{
+            console.log(error)
+            dispatch({
+                type:"REQUEST_ACTION_ERROR"
+            })
+        })  
+    }
+}
+
+
+
+
 export function addExchange(bookid,bookname,tradeid,email){
     return function(dispatch){
             var param = {
@@ -228,7 +235,12 @@ export function addExchange(bookid,bookname,tradeid,email){
                     payload:{bookid,bookname}
                 })
             })
-            .catch(error=>console.log(error))
+            .catch(error=>{
+                console.log(error)
+                dispatch({
+                    type:"REQUEST_ACTION_ERROR"
+                })
+            })  
     }
 }
 
@@ -243,7 +255,12 @@ export function confirmTrade(tradeid){
                 type:"TRADE_CONFIRMED"
             })
         })
-        .catch(error=>console.log(error))  
+        .catch(error=>{
+            console.log(error)
+            dispatch({
+                type:"REQUEST_ACTION_ERROR"
+            })
+        })  
     }
 }
 
@@ -260,7 +277,12 @@ export function declineTrade(tradeid,to){
                 payload:to
             })
         })
-        .catch(error=>console.log(error))  
+        .catch(error=>{
+            console.log(error)
+            dispatch({
+                type:"REQUEST_ACTION_ERROR"
+            })
+        })  
     }
 }
 

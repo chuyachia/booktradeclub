@@ -11,20 +11,26 @@ function dbHandler(){
                 {$push:{ownBy:username}},
                 {new:true}
             ).exec((err,result) => {
-                console.log(result);
-                if (err) throw err;
-                if (result) {
-                    console.log(result);
-                    res.send({success:true,message:"Added a new owner to an existing book."});
-                } else {
-                    bookinfo.ownBy = [username];
-                    var newBook = new Books(bookinfo);
-                    newBook.save((err,result)=>{
-                        if (err) throw err;
-                        console.log(result);
-                        res.send({success:true,message:"Added a new book."});
-                    })
+                if (err) {
+                    console.log(err);
+                    return res.json({success:false,message:"Database error"});                   
                 }
+                if (result) {
+                    console.log('book already existed');
+                    console.log(result);
+                    return res.send({success:true,message:"Added a new owner to an existing book."});
+                }
+                console.log('book not already existed');
+                bookinfo.ownBy = [username];
+                var newBook = new Books(bookinfo);
+                newBook.save((err,result)=>{
+                    if (err) {
+                        console.log(err);
+                        return res.json({success:false,message:"Database error"}); 
+                    }
+                    console.log(result);
+                    return res.send({success:true,message:"Added a new book."});
+                })
             })} else {
             res.send({success:false,message:"Please log in or sign up first"});
         }
@@ -36,32 +42,46 @@ function dbHandler(){
                 {$pull:{ownBy:req.params.username}},
                 {new:true}
         ).exec((err,result) => {
-            if (err) throw err;
+            if (err) {
+                console.log(err);
+                return res.json({sucess:false,message:"Database error"})
+            };
             if(result.ownBy.length==0){
                 Books.remove(
                     {'bookId':req.params.bookid}
                 ).exec((err,result)=>{
-                   if (err) throw err;
-                   res.send({message:"book deleted"})
+                   if (err) {
+                      console.log(err);
+                      return res.json({sucess:false,message:"Database error"})
+                   }
+                   console.log("Removed owner and deleted book");
+                   return res.json({success:true,message:"Book deleted from user"})
                 })
             } else {
-                res.send({message:"book deleted"})
+                console.log("Removed owner");
+                res.json({success:true, message:"Book deleted from user"})
             }
         })
     }
     
     this.getAllBooks = function(req,res){
         Books.find((err,result)=>{
-           if (err) throw err;
-           res.send(result);
+            if (err) {
+                console.log(err);
+                return res.json({})
+            };
+            return res.json(result);
         })
     }
     
     this.getBookInfo= function(req,res){
         Books.findOne({'bookId':req.params.bookid})
             .exec((err,result)=>{
-                if (err) throw err;
-                res.send(result);
+                if (err) {
+                    console.log(err);
+                    return res.json({});
+                };
+                return res.json(result);
             })
     }
     
@@ -69,9 +89,12 @@ function dbHandler(){
         Users.findOne(
             {'username':req.body.username})
             .exec((err,result)=>{
-                if (err) throw err;
+                if (err) {
+                    console.log(err);
+                    return res.json({success:false,message:"Database error"});
+                };
                 if (result){
-                    res.send({success:false,message:"Username exists already"})
+                    return res.json({success:false,message:"Username exists already"});
                 } else {
                     var newUser = new Users();
                     newUser.username= req.body.username;
@@ -79,8 +102,11 @@ function dbHandler(){
                     newUser.email = req.body.email;
                     newUser.location = req.body.location;
                     newUser.save((err,result)=>{
-                        if (err) throw err;
-                        res.send({success:true,message:"User added"})
+                        if (err) {
+                            console.log(err);
+                            return res.json({success:false,message:"Database error"});
+                        };
+                        return res.json({success:true,message:"User added"})
                     })
                 }
             })
@@ -90,15 +116,21 @@ function dbHandler(){
         Users.find({
             'username':{$in:req.query.users}
         }).sort({ 'username' : 1 }).exec((err,results)=>{
-            if (err) throw err;
-            res.send(results.map(result=>result.location));
+            if (err) {
+                console.log(err);
+                return res.json({});
+            }
+            return res.json(results.map(result=>result.location));
         })
     }
     
     this.getUserBooks = function(req,res){
         Books.find({ownBy:req.params.username}).exec((err,results)=>{
-            if (err) throw err;
-            res.send(results)
+            if (err) {
+                console.log(err);
+                return res.json({});
+            }
+            return res.json(results)
         })
     }
     

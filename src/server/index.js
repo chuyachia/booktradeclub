@@ -26,12 +26,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
-mongoose.connect('mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+'@'+process.env.DB_HOST+':'+process.env.DB_PORT+'/'+process.env.DB);
-const db = mongoose.connection;
-db.on('error',console.error.bind(console, 'connection error:'));
-db.once('open', function() {
+mongoose.connect('mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+'@'+process.env.DB_HOST+':'+process.env.DB_PORT+'/'+process.env.DB,
+{ keepAlive: 1})
+.then(function(){
   console.log('connected to db');
-});
+})
+.catch(function(err){
+  console.log(err);
+})
+
 
 PassportFunc(passport);
 
