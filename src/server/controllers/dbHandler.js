@@ -147,8 +147,11 @@ function dbHandler(){
                 newTrade.receiver.unread=true;
                 newTrade.status="pending"
                 newTrade.save((err,result)=>{
-                    if(err) throw err;
-                    res.send({success:true,message:"New request added",data:result})
+                    if (err) {
+                        console.log(err);
+                        return res.json({success:false,message:"Database error"}); 
+                    }
+                    return res.json({success:true,message:"New request added",data:result})
                 })
                 break;
             case "exchange":
@@ -160,8 +163,11 @@ function dbHandler(){
                     "receiver.email":req.body.email
                 }})
                 .exec((err,result)=>{
-                    if(err) throw err;
-                    res.send({success:true,message:"New exchange added"});
+                    if (err) {
+                        console.log(err);
+                        return res.json({success:false,message:"Database error"}); 
+                    }
+                    return res.json({success:true,message:"New exchange added"});
                 })
                 break;
             case "confirm":
@@ -170,8 +176,11 @@ function dbHandler(){
                     "receiver.unread":true
                 }})
                 .exec((err,result)=>{
-                    if(err) throw err;
-                    res.send({success:true,message:"Trade confirmed"});
+                    if (err) {
+                        console.log(err);
+                        return res.json({success:false,message:"Database error"}); 
+                    }
+                    return res.json({success:true,message:"Trade confirmed"});
                 })
                 break;
             case "decline":
@@ -181,32 +190,44 @@ function dbHandler(){
                         "sender.unread":true
                     }})
                     .exec((err,result)=>{
-                        if(err) throw err;
-                        res.send({success:true,message:"Trade declined"});
-                    })
+                        if (err) {
+                            console.log(err);
+                            return res.json({success:false,message:"Database error"}); 
+                        }
+                            return res.json({success:true,message:"Trade declined"});
+                        })
                 } else {
                     Trades.findOneAndUpdate({_id:req.body.tradeid},{$set:{
                         status:"declined",
                         "receiver.unread":true
                     }})
                     .exec((err,result)=>{
-                        if(err) throw err;
-                        res.send({success:true,message:"Trade declined"});
-                    })
+                        if (err) {
+                            console.log(err);
+                            return res.json({success:false,message:"Database error"}); 
+                        }
+                            return res.json({success:true,message:"Trade declined"});
+                        })
                 }
                 break;
             case "read":
                 if (req.body.role=='sender'){
                     Trades.findOneAndUpdate({_id:req.body.tradeid},{'sender.unread':false})
                     .exec((err,result)=>{
-                        if(err) throw err;
-                        res.send({success:true,message:"Change read state"});
+                        if (err) {
+                            console.log(err);
+                            return res.json({success:false,message:"Database error"}); 
+                        }
+                        return res.json({success:true,message:"Change read state"});
                     })
                 } else {
                     Trades.findOneAndUpdate({_id:req.body.tradeid},{'receiver.unread':false})
                     .exec((err,result)=>{
-                        if(err) throw err;
-                        res.send({success:true,message:"Change read state"});
+                        if (err) {
+                            console.log(err);
+                            return res.json({success:false,message:"Database error"}); 
+                        }
+                        return res.json({success:true,message:"Change read state"});
                     })
                 }
                 break;

@@ -129,7 +129,12 @@ export function addRequest(sender,receiver,bookid,bookname,email){
                     payload:response.data.data
                 })
             })
-            .catch(error=>console.log(error))
+            .catch(error=>{
+                console.log(error)
+                dispatch({
+                    type:"ADD_REQUEST_ERROR"
+                })
+            })
         }
     }
 }

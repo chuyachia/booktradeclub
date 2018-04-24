@@ -19,12 +19,12 @@ function apiHandler(){
                     
                 })
             });
-            res.send(retObj)
+            res.json(retObj)
             
         })
         .catch(error=> {
             console.log(error);
-            res.send('Search error');
+            res.json('Search error');
         });
     };
 }
