@@ -1,6 +1,7 @@
 // allow delete book in my books
+import Alert from "../../components/Alert";
 import BookCard from "../../components/BookCard";
-import {changePage} from "../../actions/profileAction";
+import {changePage} from "../../actions/userAction";
 import { connect } from "react-redux";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar"
@@ -34,35 +35,36 @@ class Profile extends React.Component {
         return(
             <div class="container">
             <NavBar/>
-        <div class="row">
-            <div class="col-md-12">
-            <PersonalInfo/>
+            <Alert/>
+            <div class="row">
+                <div class="col-md-12">
+                <PersonalInfo/>
+                </div>
+                <div class="col-md-12">
+                <ul class="nav nav-tabs nav-fill">
+                 <li class="nav-item">
+                    <a class={this.props.page=="mybooks"?"nav-link active":"nav-link"} onClick={()=>this.changePage("mybooks")}>
+                    {this.props.page=="mybooks"?(<strong>My books</strong>):"My books"}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class={this.props.page=="search"?"nav-link active":"nav-link"} onClick={()=>this.changePage("search")}>
+                    {this.props.page=="search"?(<strong>Add new books</strong>):"Add new books"}</a>
+                  </li>
+                   <li class="nav-item">
+                    <a class={this.props.page=="requests"?"nav-link active":"nav-link"} onClick={()=>this.changePage("requests")}>
+                    {this.props.page=="requests"?(<strong>View requests</strong>):"View requests"}&nbsp;
+                    {this.props.unread>0&&<span class="badge badge-pill badge-warning">{this.props.unread} new</span>}
+                    </a>
+                  </li>
+                </ul>
+                </div>
+               <div class="col-md-12">
+               {this.switchReturn()}
+               <Modal/>
+               </div>
             </div>
-            <div class="col-md-12">
-            <ul class="nav nav-tabs nav-fill">
-             <li class="nav-item">
-                <a class={this.props.page=="mybooks"?"nav-link active":"nav-link"} onClick={()=>this.changePage("mybooks")}>
-                {this.props.page=="mybooks"?(<strong>My books</strong>):"My books"}</a>
-              </li>
-              <li class="nav-item">
-                <a class={this.props.page=="search"?"nav-link active":"nav-link"} onClick={()=>this.changePage("search")}>
-                {this.props.page=="search"?(<strong>Add new books</strong>):"Add new books"}</a>
-              </li>
-               <li class="nav-item">
-                <a class={this.props.page=="requests"?"nav-link active":"nav-link"} onClick={()=>this.changePage("requests")}>
-                {this.props.page=="requests"?(<strong>View requests</strong>):"View requests"}&nbsp;
-                {this.props.unread>0&&<span class="badge badge-pill badge-warning">{this.props.unread} new</span>}
-                </a>
-              </li>
-            </ul>
+            <Footer/>
             </div>
-           <div class="col-md-12">
-           {this.switchReturn()}
-           <Modal/>
-           </div>
-        </div>
-        <Footer/>
-        </div>
         )
     }
 }

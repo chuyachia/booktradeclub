@@ -2,7 +2,7 @@
 
 import {connect} from "react-redux";
 import React from "react";
-import {viewBook} from "../actions/profileAction";
+import {viewBook} from "../actions/bookAction";
 
 class BookCard extends React.Component{
     constructor(props){

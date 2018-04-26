@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import BookCard from "./BookCard";
 import Modal from "./Modal";
 import React from "react";
-import {searchBooks} from "../actions/profileAction";
+import {searchBooks} from "../actions/bookAction";
 import { SyncLoader } from 'react-spinners';
 
 class Search extends React.Component {
@@ -38,7 +38,7 @@ class Search extends React.Component {
                   loading={this.props.loading} 
                 />
             </div>
-            {this.props.error&&<div>Sorry, something went wrong. Please try with another search term.</div>}
+            {this.props.error&&<div>Oops, something went wrong. Please try with another search term.</div>}
             {!this.props.error&&this.props.books.map((book,i)=> (
             <BookCard key={i} info={book} modaluse="addbook"/>
             ))}

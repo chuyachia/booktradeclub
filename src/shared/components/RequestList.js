@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import { Link } from 'react-router-dom';
 import React from "react";
-import {viewRequest,getAllRequests,getSenderBooks} from "../actions/profileAction";
+import {viewRequest,getAllRequests,getSenderBooks} from "../actions/requestAction";
 
 class RequestList extends React.Component{
   constructor(){
@@ -20,9 +20,9 @@ class RequestList extends React.Component{
    }
    tradeStatus(status){
        switch(status){
-           case "pending":
+            case "pending":
                return (<span class="badge badge-secondary">Pending</span>)
-           case "confirmed":
+            case "confirmed":
                return (<span class="badge badge-success">Confirmed</span>)
             case "declined":
                 return (<span class="badge badge-light">Declined</span>)

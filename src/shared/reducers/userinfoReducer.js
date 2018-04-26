@@ -3,7 +3,6 @@ export default function reducer(state={
     username:null,
     email:null,
     location:null,
-    error:false,
     ownedbooks:[],
     inrequests:[],
     outrequests:[],
@@ -19,7 +18,6 @@ export default function reducer(state={
                 email:action.payload.email,
                 location:action.payload.location,
                 wrongcredential:false,
-                error:false,
                 ownedbooks:action.payload.books,
                 inrequests : inrequests,
                 outrequests : outrequests
@@ -37,21 +35,19 @@ export default function reducer(state={
         case "SEND_LOG_IN":{
            return{
                 ...state,
-                wrongcredential:false,
-                error:false
+                wrongcredential:false
             } 
         }
         case "WRONG_CREDENTIAL": {
             return{
                 ...state,
-                wrongcredential:true,
-                error:false
+                wrongcredential:true
             }
         }
-        case "LOG_IN_ERROR":{
+        case "CANCEL_LOGIN" :{
             return {
                 ...state,
-                error:true
+                wrongcredential:false
             }
         }
         case "NEW_BOOK_ADDED":{

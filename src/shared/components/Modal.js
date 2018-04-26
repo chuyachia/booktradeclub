@@ -1,6 +1,8 @@
-import {addBook,closeBook,removeBook} from "../actions/profileAction";
+import Alert from "./Alert";
+import {addBook,closeBook,removeBook} from "../actions/bookAction";
 import {connect} from "react-redux";
-import {addRequest, getUsersLocation} from "../actions/mainAction";
+import {addRequest} from "../actions/requestAction";
+import {getUsersLocation} from "../actions/userAction";
 import React from 'react';
 import ReactModal from 'react-modal';
 import {Redirect } from "react-router-dom";
@@ -44,6 +46,7 @@ class Modal extends React.Component{
                ariaHideApp={false}
                contentLabel="Review Modal">
               <a class="text-dark" style={{float:"right",cursor:"pointer"}}><i class="fas fa-times" onClick={this.closeBook.bind(this)}/></a>
+               <Alert/>
                <h3>{this.props.info.title}</h3>
                <dl>
                     <dt><img src={this.props.info.imageUrl} alt={this.props.info.title} class="img-thumbnail"/></dt>

@@ -49,12 +49,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
                                
-app.post('/auth', function(req, res) {
+app.post('/auth', function(req, res,next) {
   passport.authenticate('local', function(err, user, info) {
-    if(err) throw err;
+    if(err)  return next(err);
     if (!user) { return res.json({ success: false, message: info.message }); }
     req.logIn(user, function(err) {
-      if (err) throw err; 
+      if (err) return next(err); 
       return res.json({ 
         success: true, 
         username:user.username,
@@ -73,8 +73,6 @@ app.get('/logout', function(req, res) {
     res.redirect('/');
 });
 
-app.route('/passwordreset')
-  .post(dbHandler.resetPassword)
 
 app.route('/search/:bookname')
   .get(apiHandler.search);
@@ -107,7 +105,10 @@ app.route('/userbooks/:username')
   .get(dbHandler.getUserBooks);
 
 app.route('/userinfo')
-  .post(dbHandler.changeUserInfo)
+  .put(dbHandler.changeUserInfo)
+  
+app.route('/passwordreset')
+  .put(dbHandler.resetPassword)
   
 app.get("*",(req,res) => {
     const store = configureStore();
@@ -158,6 +159,11 @@ app.get("*",(req,res) => {
         </body>
       </html>
       `)
+})
+
+app.use(function(err,req,res,next){
+  console.log(err.stack);
+  res.status(500).send({success:false,status:'servererror'})
 })
 
 app.listen(process.env.PORT || 3000,()=>

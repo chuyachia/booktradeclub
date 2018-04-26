@@ -1,6 +1,6 @@
-import axios from "axios";
+import Alert from "./Alert";
 import {connect} from "react-redux";
-import {logIn,cancelLogin} from "../actions/mainAction";
+import {logIn,cancelLogin} from "../actions/connectAction";
 import React from "react";
 import {Redirect, Link } from "react-router-dom";
 
@@ -37,6 +37,8 @@ class LoginForm extends React.Component{
               }}/>)
             } else if (!this.props.username){
                 return(
+                <div>
+                <Alert/>
                 <form onSubmit={this.submitLogin.bind(this)}>
                 {this.props.username&&<Redirect to={{pathname:'/'}}/>}
                     <div class="form-group">
@@ -59,6 +61,7 @@ class LoginForm extends React.Component{
                     <button type="submit" class="btn btn-raised bg-dark text-light">Log in</button>
                     <Link class="btn btn-secondary" onClick = {this.cancelLogin.bind(this)} to="/">Cancel</Link>
                 </form>
+                </div>
                 )
         } else {
             return <div>Successfully logged in. Redirecting to the main page...</div>
@@ -70,8 +73,7 @@ var propsMap = (store)=>{
     return {
         redirect:store.userinfo.redirect,
         wrongcredential:store.userinfo.wrongcredential,
-        username : store.userinfo.username,
-        error:store.userinfo.error
+        username : store.userinfo.username
     };
 };
 

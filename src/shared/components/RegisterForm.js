@@ -1,10 +1,7 @@
-//http://geobytes.com/free-ajax-cities-jsonp-api/
-//https://www.npmjs.com/package/react-bootstrap-typeahead
-// give names to typeahead input. see how value is retreive when post
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
-import {addUser} from "../actions/profileAction";
+import {addUser} from "../actions/userAction";
 import axios from "axios";
-import {cancelLogin} from "../actions/mainAction";
+import {cancelLogin} from "../actions/connectAction";
 import {connect} from "react-redux";
 import React from "react"
 import {Redirect,Link } from "react-router-dom";

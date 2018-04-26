@@ -2,7 +2,7 @@ import BookCard from "../../components/BookCard";
 import { connect } from "react-redux";
 import filter from "lodash.filter";
 import Footer from "../../components/Footer";
-import {getAllBooks} from "../../actions/mainAction";
+import {getAllBooks} from "../../actions/bookAction";
 import Modal from "../../components/Modal";
 import NavBar from "../../components/NavBar";
 import React from "react";

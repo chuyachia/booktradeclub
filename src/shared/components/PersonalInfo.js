@@ -1,7 +1,6 @@
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
 import axios from "axios";
-import BookCard from "./BookCard";
-import {changeEmail,changeLocation,changePassword,cancelChange,submitChange} from "../actions/profileAction"
+import {changeEmail,changeLocation,changePassword,cancelChange,submitChange} from "../actions/userAction";
 import {connect} from "react-redux";
 import React from 'react';
 
@@ -25,7 +24,6 @@ class PersonalInfo extends React.Component{
         this.props.dispatch(changeLocation());
     }
     changePassword(){
-        console.log('click');
         this.props.dispatch(changePassword());
     }
     cancelChange(){

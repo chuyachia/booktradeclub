@@ -1,10 +1,12 @@
 import axios from "axios";
+import Alert from "./Alert";
 import {connect} from "react-redux";
 import Footer from "./Footer";
 import { Link } from 'react-router-dom';
 import Modal from "./Modal";
 import React from 'react';
-import {viewBook,addExchange,confirmTrade,declineTrade} from "../actions/profileAction";
+import {viewBook} from "../actions/bookAction";
+import {addExchange,confirmTrade,declineTrade} from "../actions/requestAction";
 
 class Request extends React.Component{
     constructor(props){
@@ -65,13 +67,7 @@ class Request extends React.Component{
             <nav class="navbar navbar-dark bg-dark fixed-top">
               <Link class="navbar-brand" to="/profile"><i class="fas fa-arrow-left"></i></Link>
             </nav>
-                {this.props.error&&<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                  <strong>Oops! Something wend wrong!</strong> The action that you performed failed. Please try again.
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>}
-            
+                <Alert/>
                 <div class={sender=="You"?"card col-md-5 offset-md-7":"card col-md-5"}>
                     <div class="card-body">
                         <h4 class="card-title">{sender}</h4>
@@ -170,8 +166,7 @@ var propsMap = (store)=>{
         info:store.viewreq.info,
         senderbooks : store.viewreq.senderbooks,
         username : store.userinfo.username,
-        email:store.userinfo.email,
-        error:store.viewreq.error
+        email:store.userinfo.email
     };
 };
 

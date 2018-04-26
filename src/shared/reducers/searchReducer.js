@@ -1,13 +1,14 @@
 export default function reducer(state={
     loading:false,
     books:[],
-    error: null
+    error: false
 },action){
     switch(action.type) {
         case "START_SEARCH":{
             return {
                 ...state,
                 loading:true,
+                error:false,
                 books:[]
             }
             
@@ -23,7 +24,7 @@ export default function reducer(state={
             return {
                 ...state,
                 loading:false,
-                error:action.payload
+                error:true
             }
         }
     }
