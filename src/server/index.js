@@ -145,6 +145,7 @@ app.get("*",(req,res) => {
     <!DOCTYPE html>
       <html>
         <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1">
           <title>Book Trading Club</title>
           <link rel="shortcut icon" href="">
           <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css">

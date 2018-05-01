@@ -15,10 +15,29 @@
   left:0;
   right:0;
   margin: 0 auto;
-  width:50%;
+  width:80%;
   max-height:40%;
   padding:10px;
 }
+
+@media (min-width: 600px) {
+  .usercontrol {
+      width: 60%;
+  }
+}
+
+@media (min-width: 1100px) {
+  .usercontrol {
+      width: 60%;
+  }
+}
+
+@media (min-width: 2200px) {
+  .usercontrol {
+      width: 50%;
+  }
+}
+
 
 .booklistwrap{
   height:100%;
@@ -114,7 +133,25 @@ img{
 .fas,.fab{
   margin-top:5px
 }.connect{
-    width:60%;
+    width:80%;
+}
+
+@media (min-width: 600px) {
+  .connect {
+      width: 60%;
+  }
+}
+
+@media (min-width: 1100px) {
+  .connect {
+      width: 60%;
+  }
+}
+
+@media (min-width: 2200px) {
+  .connect {
+      width: 50%;
+  }
 }
 
 .nav-item{
