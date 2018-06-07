@@ -6,7 +6,7 @@ import {showAlert} from "./alertAction";
 export function getAllBooks(){
     return function(dispatch){
         dispatch({type: "START_QUERY"});
-        axios.get('/allbooks')
+        axios.get('/books/all')
         .then((response)=>{
             dispatch({
                 type:"NEW_QUERY",
@@ -19,14 +19,12 @@ export function getAllBooks(){
                 type:"QUERY_ERROR"
             });
         });
-    }
+    };
 }
 
 export function searchBooks(bookname){
-    
     return function(dispatch){
         dispatch({type: "START_SEARCH"});
-        
         axios.get('/search/'+bookname)
         .then((response)=> {
             dispatch({
@@ -73,7 +71,7 @@ export function viewBook(bookinfo,type){
                 dispatch({
                     type:"VIEW_REMOVE_BOOK",
                     payload:bookinfo
-                })
+                });
                 break;
             default:
                 bookinfo.btnuse = "info";
@@ -97,38 +95,38 @@ export function closeBook(bookinfo){
 export function addBook(bookinfo,username){
     bookinfo.username = username;
     return function(dispatch){
-        axios.post('/book',bookinfo)
+        axios.post('/books/add',bookinfo)
         .then(response=>{
             if (response.data.success){
                 dispatch({
                     type:"NEW_BOOK_ADDED",
                     payload:bookinfo
-                }) 
+                }); 
             } else{
                dispatch({
                     type:"LOG_IN_REQUIRED"
-                })  
+                });  
             }
         })
         .catch(error => {
-            console.log(error)
-            dispatch(showAlert())
+            console.log(error);
+            dispatch(showAlert());
         });
     };
 }
 
 export function removeBook(bookid,username){
         return function(dispatch){
-        axios.delete('/book/'+bookid+"/"+username)
+        axios.delete('/books/remove/'+bookid+"/"+username)
         .then(response=>{
             dispatch({
                 type:"BOOK_DELETED",
                 payload:bookid
-            }) 
+            }); 
         })
         .catch(error => {
-            console.log(error)
-            dispatch(showAlert())
+            console.log(error);
+            dispatch(showAlert());
         });
     };
 }

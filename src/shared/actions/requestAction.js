@@ -21,7 +21,7 @@ export function addRequest(sender,receiver,bookid,bookname,email){
                 bookname:bookname,
                 email:email
             }
-            axios.post('/request',param)
+            axios.post('/trades/handle',param)
             .then(response=>{
                 dispatch({
                     type:"NEW_REQUEST_ADDED",
@@ -38,7 +38,7 @@ export function addRequest(sender,receiver,bookid,bookname,email){
 
 export function getSenderBooks(username){
     return function(dispatch){
-        axios.get('/userbooks/'+username)
+        axios.get('/books/user/'+username)
         .then(response=>{
             dispatch({
                 type:"SENDER_BOOKS",
@@ -61,7 +61,7 @@ export function addExchange(bookid,bookname,tradeid,email){
                 bookname:bookname,
                 email:email
             }
-            axios.post('/request',param)
+            axios.post('/trades/handle',param)
             .then(response=>{
                 dispatch({
                     type:"NEW_EXCHANGE_ADDED",
@@ -77,7 +77,7 @@ export function addExchange(bookid,bookname,tradeid,email){
 
 export function confirmTrade(tradeid){
     return function(dispatch){
-        axios.post('/request',{
+        axios.post('/trades/handle',{
             tradeid:tradeid,
             action:"confirm"
         })
@@ -95,7 +95,7 @@ export function confirmTrade(tradeid){
 
 export function declineTrade(tradeid,to){
     return function(dispatch){
-        axios.post('/request',{
+        axios.post('/trades/handle',{
             tradeid:tradeid,
             action:"decline",
             to:to
@@ -115,7 +115,7 @@ export function declineTrade(tradeid,to){
 
 export function getAllRequests(username){
     return function(dispatch){
-        axios.get('/request/'+username)
+        axios.get('/trades/'+username)
         .then(response=>{
             dispatch({
                 type:"ALL_REQUESTS",
@@ -133,7 +133,7 @@ export function viewRequest(requestinfo,role,unread){
             payload:requestinfo
         });
         if(unread){
-            axios.post('/request',{
+            axios.post('/trades/handle',{
                 tradeid:requestinfo._id,
                 role:role,
                 action:"read"

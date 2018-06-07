@@ -5,7 +5,7 @@ import {showAlert} from "./alertAction";
 
 export function addUser(userinfo){
     return function(dispatch){
-        axios.post('/newuser',userinfo)
+        axios.post('/users/new',userinfo)
         .then(response=> {
             if(response.data.success) {
                 dispatch({
@@ -50,7 +50,7 @@ export function getUsersLocation(users){
                 return acc+"users="+cur
             }
         },"")
-        axios.get('/userslocation?'+query)
+        axios.get('/users/location?'+query)
         .then(response=>{
             dispatch({
                 type:"GET_USERS_LOCATION",
@@ -107,7 +107,7 @@ export function submitChange(username,action,data){
     return function(dispatch){
         if(action=="password"){
             data.username=username;
-            axios.put('/passwordreset',data)
+            axios.put('/users/changepw',data)
             .then(response=>{
                 if (response.data.success){
                    dispatch({
@@ -132,7 +132,7 @@ export function submitChange(username,action,data){
             .catch(error=>console.log(error)) 
 
         } else {
-         axios.put('/userinfo',{
+         axios.put('/user/changeinfo',{
                 username,data,action
             })
             .then(response=>{

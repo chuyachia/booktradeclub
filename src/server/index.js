@@ -1,10 +1,10 @@
-// Attach requests data to user when log in as books
-
-import apiHandler from "./controllers/apiHandler";
+import apiHandler from "./api/handler";
 import App from "../shared/App";
+import auth from "./routes/auth"; 
 import bodyParser from 'body-parser';
+import books from "./routes/books"; 
+import configPassport from './config/passport';
 import configureStore from "../shared/configureStore";
-import dbHandler from "./controllers/dbHandler";
 import dotenv from 'dotenv';
 import express from "express";
 import mongoose from "mongoose";
@@ -12,11 +12,12 @@ import passport from 'passport';
 import { Provider } from "react-redux";
 import React from "react";
 import {renderToString} from "react-dom/server";
+import trades from "./routes/trades"; 
 import routes from "../shared/routes";
 import serialize from "serialize-javascript";
 import session from 'express-session';
 import {StaticRouter, matchPath} from "react-router-dom";
-import PassportFunc from './config/passport';
+import users from "./routes/users"; 
 
 dotenv.config();
 const app = express();
@@ -33,10 +34,10 @@ mongoose.connect('mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+'@'+pr
 })
 .catch(function(err){
   console.log(err);
-})
+});
 
 
-PassportFunc(passport);
+configPassport(passport);
 
 app.use(session({
 	secret: 'secretBookTrade',
@@ -47,68 +48,12 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-                               
-app.post('/auth', function(req, res,next) {
-  passport.authenticate('local', function(err, user, info) {
-    if(err)  return next(err);
-    if (!user) { return res.json({ success: false, message: info.message }); }
-    req.logIn(user, function(err) {
-      if (err) return next(err); 
-      return res.json({ 
-        success: true, 
-        username:user.username,
-        email:user.email,
-        location:user.location,
-        books:user.books,
-        requests:user.requests 
-        
-      });
-    });
-  })(req, res);
-});
-
-app.get('/logout', function(req, res) {
-    req.logout();
-    res.redirect('/');
-});
-
-
-app.route('/search/:bookname')
-  .get(apiHandler.search);
+app.use('/auth',auth(passport));
+app.use('/books',books);
+app.use('/trades',trades);
+app.use('/users',users);
+app.get('/search/:bookname',apiHandler);
   
-app.route('/book')
-  .post(dbHandler.addBook);
-
-app.route('/book/:bookid/:username')
-  .delete(dbHandler.removeBook);
-
-app.route('/bookinfo/:bookid')
-  .get(dbHandler.getBookInfo);
-  
-app.route('/allbooks')
-  .get(dbHandler.getAllBooks);
-
-app.route('/newuser')
-  .post(dbHandler.addUser);
-  
-app.route('/userslocation')
-  .get(dbHandler.getUsersLocation);
-
-app.route('/request')
-  .post(dbHandler.handleRequest);
-
-app.route('/request/:username')
-  .get(dbHandler.getRequests);
-  
-app.route('/userbooks/:username')
-  .get(dbHandler.getUserBooks);
-
-app.route('/userinfo')
-  .put(dbHandler.changeUserInfo)
-  
-app.route('/passwordreset')
-  .put(dbHandler.resetPassword)
   
 app.get("*",(req,res) => {
     const store = configureStore();

@@ -7,7 +7,7 @@ export function logIn(userinfo){
         dispatch({
             type:"SEND_LOG_IN"
         });
-        axios.post('/auth',userinfo)
+        axios.post('/auth/login',userinfo)
         .then(response=> {
             if(response.data.success){
                 dispatch({
@@ -19,43 +19,43 @@ export function logIn(userinfo){
                         books:response.data.books,
                         requests:response.data.requests
                     }
-                })
+                });
                 setTimeout(function() { 
                 dispatch({
                     type:"REDIRECT",
                     payload:'/'
-                }) 
-                }, 1000)
+                }); 
+                }, 1000);
             } else {
                 dispatch({
                     type:"WRONG_CREDENTIAL",
                     payload:response.data.message
-                })
+                });
             }
         })
         .catch(error=> {
-            console.log(error)
-            dispatch(showAlert())
-        })
+            console.log(error);
+            dispatch(showAlert());
+        });
         
-    }
+    };
 }
 export function cancelLogin(){
     return function(dispatch){
         dispatch({
             type:"CANCEL_LOGIN"
-        })
-    }
+        });
+    };
 }
 export function logOut(){
     return function(dispatch){
-    axios.get('/logout')
+    axios.get('/auth/logout')
     .then(response=>dispatch({
         type:"LOGGED_OUT"
     }))
     .catch(error=>{
         console.log(error);
-        dispatch(showAlert())
-    })
-    }
+        dispatch(showAlert());
+    });
+    };
 }

@@ -1,5 +1,3 @@
-// Local strategy setup
-//https://scotch.io/tutorials/easy-node-authentication-setup-and-local
 const LocalStrategy = require('passport-local').Strategy;
 import Books from "../models/books";
 import Trades from "../models/trades";

@@ -19,7 +19,7 @@ class Request extends React.Component{
         this.props.dispatch(viewBook(bookinfo,"answersender"));
     }
     viewBooksInfo(bookid){
-        axios.get('/bookinfo/'+bookid)
+        axios.get('/books/info/'+bookid)
         .then(response=>{
             if(response.data)
                 this.props.dispatch(viewBook(response.data,"info"));
