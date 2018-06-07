@@ -132,7 +132,7 @@ export function submitChange(username,action,data){
             .catch(error=>console.log(error)) 
 
         } else {
-         axios.put('/user/changeinfo',{
+         axios.put('/users/changeinfo',{
                 username,data,action
             })
             .then(response=>{
