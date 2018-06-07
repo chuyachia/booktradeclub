@@ -24,7 +24,7 @@ class DropDownBtn extends React.Component{
           aria-labelledby="dropdownMenuLink" onClick={this.changeCollapse.bind(this)}>
             <Link class="dropdown-item" to="/">Home</Link>
             {this.props.username&&<Link class="dropdown-item" to="/profile">Profile</Link>}
-            {this.props.username?<a class="dropdown-item" href="/logout">Logout</a>
+            {this.props.username?<a class="dropdown-item" href="/auth/logout">Logout</a>
             :<Link class="dropdown-item" to="/connect">Login</Link>}
             <div class="dropdown-divider"></div>
             <Link class="dropdown-item" to="/about">About</Link>
