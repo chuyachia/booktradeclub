@@ -1,6 +1,7 @@
 import {connect} from "react-redux";
 import { Link } from 'react-router-dom';
 import React from "react";
+import styles from "../css/DropDownBtn.css"
 
 class DropDownBtn extends React.Component{
     constructor(props){
@@ -16,11 +17,12 @@ class DropDownBtn extends React.Component{
         });
     }
     render(){
-        return(<div class="dropdown show">
+        return(
+        <div class={`show ${styles.floatRight}`}>
           <a class="btn bg-dark text-light" role="button" id="dropdownMenuLink" onClick={this.changeCollapse.bind(this)}>
             <i class="fas fa-bars"></i>
           </a>
-          <div class={this.state.collapse?"dropdown-menu dropdown-menu-right show":"dropdown-menu dropdown-menu-right"} 
+          <div class={`dropdown-menu ${this.state.collapse?'show':''} ${styles.right}`}
           aria-labelledby="dropdownMenuLink" onClick={this.changeCollapse.bind(this)}>
             <Link class="dropdown-item" to="/">Home</Link>
             {this.props.username&&<Link class="dropdown-item" to="/profile">Profile</Link>}
@@ -29,7 +31,7 @@ class DropDownBtn extends React.Component{
             <div class="dropdown-divider"></div>
             <Link class="dropdown-item" to="/about">About</Link>
           </div>
-        </div>)
+        </div>);
     }
 }
 

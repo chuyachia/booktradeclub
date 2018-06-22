@@ -1,5 +1,6 @@
 {
   "plugins": [
     "react-html-attrs","transform-object-assign"
-  ]
+  ],
+  "presets": ["env", "react"]
 }

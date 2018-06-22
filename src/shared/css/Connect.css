@@ -1,0 +1,35 @@
+.card{
+    width:80%;
+}
+
+@media (min-width: 600px) {
+  .card {
+      width: 60%;
+  }
+}
+
+@media (min-width: 1100px) {
+  .card {
+      width: 60%;
+  }
+}
+
+@media (min-width: 2200px) {
+  .card {
+      width: 50%;
+  }
+}
+
+.outer{
+    display:flex;
+    flex-direction:row;
+}
+
+.inner {
+    min-height: calc(100vh - 100px);
+    width:100%;
+    align-items: center;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+}

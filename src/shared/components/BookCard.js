@@ -3,6 +3,7 @@
 import {connect} from "react-redux";
 import React from "react";
 import {viewBook} from "../actions/bookAction";
+import styles from "../css/BookCard.css";
 
 class BookCard extends React.Component{
     constructor(props){
@@ -13,9 +14,9 @@ class BookCard extends React.Component{
     }
     render(){
         return(
-            <div class="card bookdisplay" onClick={this.viewBooks.bind(this)}>
+            <div class={`card ${styles.card}`} onClick={this.viewBooks.bind(this)}>
                 <img src={this.props.info.imageUrl} alt={this.props.info.title} class="img-thumbnail"/>
-                  <div class="middle">
+                  <div class={`${styles.center}`}>
                     <i class="fas fa-search fa-lg"></i>
                 </div>
             </div>

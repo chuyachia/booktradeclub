@@ -3,6 +3,7 @@ import axios from "axios";
 import {changeEmail,changeLocation,changePassword,cancelChange,submitChange} from "../actions/userAction";
 import {connect} from "react-redux";
 import React from 'react';
+import styles from '../css/PersonalInfo.css';
 
 const getlocapi = "https://cors-anywhere.herokuapp.com/http://gd.geobytes.com/AutoCompleteCity?q=";
 
@@ -47,12 +48,12 @@ class PersonalInfo extends React.Component{
     }
     render(){
         return(
-            <div class="personinfo">
+            <div class={`${styles.largeLineHeight}`}>
                 <h3 class="text-center">{this.props.username}</h3>
                 <div>
                 <label for="passwordold"><strong>Password&nbsp;</strong></label>
                 <span>
-                <button class="iconbtn" onClick={this.changePassword.bind(this)}><i class="fas fa-edit"></i></button>
+                <button class={`${styles.button}`} onClick={this.changePassword.bind(this)}><i class="fas fa-edit"></i></button>
                 {this.props.changedsucess&&(<p><i>Successfully changed</i></p>)}
                 </span>
                 {this.props.editpassword
@@ -76,8 +77,8 @@ class PersonalInfo extends React.Component{
                     {this.props.psunmatch&&(
                         <div style={{color:"red"}}>Old password does not match</div>
                     )}
-                     <button type="submit" class="iconbtn"><i class="fas fa-check"></i></button>
-                     <button type="button" class="iconbtn" onClick={this.cancelChange.bind(this)}><i class="fas fa-times"></i></button>
+                     <button type="submit" class={`${styles.button}`}><i class="fas fa-check"></i></button>
+                     <button type="button" class={`${styles.button}`} onClick={this.cancelChange.bind(this)}><i class="fas fa-times"></i></button>
                      </form>
                 )
                 :null
@@ -110,12 +111,12 @@ class PersonalInfo extends React.Component{
                             placeholder="Enter your city"
                             inputProps= {{name:"location",id:"location",required:true,className:null}}
                           />
-                     <button type="submit" class="iconbtn"><i class="fas fa-check"></i></button>
-                     <button type="button" class="iconbtn" onClick={this.cancelChange.bind(this)}><i class="fas fa-times"></i></button>
+                     <button type="submit" class={`${styles.button}`}><i class="fas fa-check"></i></button>
+                     <button type="button" class={`${styles.button}`} onClick={this.cancelChange.bind(this)}><i class="fas fa-times"></i></button>
                      </form>
                 )
                 :(<span>{this.props.location}
-                <button class="iconbtn" onClick={this.changeLocation.bind(this)}><i class="fas fa-edit"></i></button>
+                <button class={`${styles.button}`} onClick={this.changeLocation.bind(this)}><i class="fas fa-edit"></i></button>
                 </span>)
                 }
                 </div>
@@ -132,13 +133,13 @@ class PersonalInfo extends React.Component{
                      onChange={(event) => {
                               this.setState({email:event.target.value});
                             }}/>
-                     <button type="submit" class="iconbtn"><i class="fas fa-check"></i></button>
-                     <button type="button" class="iconbtn" onClick={this.cancelChange.bind(this)}><i class="fas fa-times"></i></button>
+                     <button type="submit" class={`${styles.button}`}><i class="fas fa-check"></i></button>
+                     <button type="button" class={`${styles.button}`} onClick={this.cancelChange.bind(this)}><i class="fas fa-times"></i></button>
                      </form>
                     
                 )
                 :(<span>{this.props.email}
-                <button class="iconbtn"  onClick={this.changeEmail.bind(this)}><i class="fas fa-edit"></i></button>
+                <button class={`${styles.button}`}  onClick={this.changeEmail.bind(this)}><i class="fas fa-edit"></i></button>
                 </span>)
                 }</div>
             </div>)

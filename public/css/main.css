@@ -1,15 +1,4 @@
-.personinfo{
- line-height: 40px; 
-}
-
-.iconbtn{
-  border: 0;
-  background: none;
-  cursor:pointer;
-}
-
-
-.usercontrol{
+.Request__box___3BZPq{
   position:fixed;
   bottom:10px;
   left:0;
@@ -21,39 +10,50 @@
 }
 
 @media (min-width: 600px) {
-  .usercontrol {
+  .Request__box___3BZPq {
       width: 60%;
   }
 }
 
 @media (min-width: 1100px) {
-  .usercontrol {
+  .Request__box___3BZPq {
       width: 60%;
   }
 }
 
 @media (min-width: 2200px) {
-  .usercontrol {
+  .Request__box___3BZPq {
       width: 50%;
   }
 }
 
-
-.booklistwrap{
+.Request__wrap___1TkTz{
   height:100%;
   max-height:100%;
   overflow: hidden;
 }
 
-.booklist{
+.Request__scroll___2u8xA{
   overflow-y: scroll;
   height:180px;
   max-height:180px;
 }
 
-.dialogue strong {
+.Request__dialogue___ThtKy strong {
   cursor:pointer;
-}.bookdisplay {
+}.PersonalInfo__largeLineHeight___1JrS5{
+ line-height: 40px; 
+}
+
+.PersonalInfo__button___3YR06 {
+  border: 0;
+  background: none;
+  cursor:pointer;
+}
+.DropDownBtn__right___3Bznx {
+    right: 0;
+    left: auto;
+}.BookCard__card___39keR {
   position: relative;
   height: 150px;
   width: 100px;
@@ -63,63 +63,53 @@
   margin:5px;
 }
 
-img{
-  margin-right:5px;
-  float:left;
-}
-.bookdisplay img {
+
+.BookCard__card___39keR img {
   position: absolute;
   left: 50%;
   top: 50%;
   height: 100%;
   width: auto;
-  -webkit-transition: .5s ease;
   transition: .5s ease;
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
+  backface-visibility: hidden;
   opacity:1;
   -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
           transform: translate(-50%,-50%);
 }
-.middle {
-  -webkit-transition: .5s ease;
+
+.BookCard__center___y_6R7 {
   transition: .5s ease;
   opacity: 0;
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   text-align: center;
 }
 
-.bookdisplay:hover img {
+.BookCard__card___39keR:hover img {
   opacity: 0.3;
 }
 
-.bookdisplay:hover .middle {
+.BookCard__card___39keR:hover .BookCard__center___y_6R7 {
   opacity: 1;
 }
-
-.container{
-  padding-top:80px;
+.container {
+    padding-top:80px;
 }
 
-.dropdown{
-    float:right;
+.nav-item{
+    cursor:pointer
 }
-.dropdown-menu-right {
-    right: 0;
-    left: auto;
+
+img{
+  margin-right:5px;
+  float:left;
 }
-.spinner-wrap{
-  margin: 0 auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-}
-.footer{
+
+.footer {
   position:fixed;
   bottom:0;
   right:0;
@@ -130,58 +120,52 @@ img{
   position:relative;
   display:block
 }
-.fas,.fab{
+
+.fas, .fab{
   margin-top:5px
-}.connect{
+}
+
+.Main__wrap___18kqX{
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.Connect__card___s3Sq1{
     width:80%;
 }
 
 @media (min-width: 600px) {
-  .connect {
+  .Connect__card___s3Sq1 {
       width: 60%;
   }
 }
 
 @media (min-width: 1100px) {
-  .connect {
+  .Connect__card___s3Sq1 {
       width: 60%;
   }
 }
 
 @media (min-width: 2200px) {
-  .connect {
+  .Connect__card___s3Sq1 {
       width: 50%;
   }
 }
 
-.nav-item{
-    cursor:pointer
-}
-
-.wrapper{
-    display:-webkit-box;
-    display:-ms-flexbox;
+.Connect__outer___1WVhD{
     display:flex;
-    -webkit-box-orient:horizontal;
-    -webkit-box-direction:normal;
-        -ms-flex-direction:row;
-            flex-direction:row;
+    flex-direction:row;
 }
 
-.inner {
+.Connect__inner___jpP7c {
     min-height: calc(100vh - 100px);
     width:100%;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    display:-webkit-box;
-    display:-ms-flexbox;
+    align-items: center;
     display:flex;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    justify-content: center;
+    flex-direction: column;
 }
+
+/*# sourceMappingURL=main.css.map*/

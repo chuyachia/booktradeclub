@@ -24,14 +24,11 @@ const browserConfig = {
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
+         fallback: 'style-loader',
           use: [
             {
               loader: "css-loader",
-              options: { importLoaders: 1 }
-            },
-            {
-              loader: "postcss-loader",
-              options: { plugins: [autoprefixer()] }
+              options: { importLoaders: 1, modules:true, localIdentName: '[name]__[local]___[hash:base64:5]' }
             }
           ]
         })
@@ -102,7 +99,8 @@ const serverConfig = {
         test: /\.css$/,
         use: [
           {
-            loader: "css-loader/locals"
+            loader: "css-loader/locals",
+            options: { importLoaders: 1, modules:true, localIdentName: '[name]__[local]___[hash:base64:5]' }
           }
         ]
       },

@@ -26,7 +26,7 @@ class Modal extends React.Component{
         this.props.dispatch(addRequest(this.props.username,receiver,this.props.info.bookId,this.props.info.title,this.props.email));
     }
     componentWillReceiveProps(nextProps){
-        if (nextProps.btnuse=="addrequest"&&nextProps.info.ownBy&&nextProps.info!=this.props.info){
+        if (nextProps.btnuse=="addrequest"&&nextProps.info.ownBy&&nextProps.info!==this.props.info){
             this.props.dispatch(getUsersLocation(nextProps.info.ownBy));
         }
     }
@@ -69,7 +69,7 @@ class Modal extends React.Component{
                     <dd>{this.props.info.description}</dd>
                </dl>
                
-               {this.props.btnuse=="addrequest"&&this.props.ownerslocation&&
+               {this.props.btnuse=="addrequest"&&
                <div>
                <table class="table">
                   <thead>
@@ -80,7 +80,7 @@ class Modal extends React.Component{
                     </tr>
                   </thead>
                   <tbody>
-                    {this.props.info.ownBy.map((user,i)=>(
+                    {this.props.ownerslocation.length>0&&this.props.info.ownBy.map((user,i)=>(
                     <tr key={i}>
                       <td>{user}</td>
                       <td>{this.props.ownerslocation[i]}</td>

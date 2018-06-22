@@ -1,9 +1,19 @@
 export default function reducer(state={
     open:false,
     tologin:false,
-    ownerslocation:null,
+    ownerslocation:[],
     btnuse:null,
-    info:{}
+    info:{
+        authors:[],
+        bookId:"",
+        categories:[],
+        description:"",
+        imageUrl:"",
+        ownBy:[],
+        publishedDate:"",
+        publisher:"",
+        title:""
+    }
 },action){
     switch(action.type) {
         case "VIEW_ADD_BOOK":

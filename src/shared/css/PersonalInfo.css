@@ -1,0 +1,9 @@
+.largeLineHeight{
+ line-height: 40px; 
+}
+
+.button {
+  border: 0;
+  background: none;
+  cursor:pointer;
+}

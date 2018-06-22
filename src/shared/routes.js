@@ -1,9 +1,9 @@
-import About from "./pages/About/About"
-import Connect from "./pages/Connect/Connect";
-import Notfound from "./pages/Notfound/Notfound";
-import Main from "./pages/Main/Main";
-import Profile from "./pages/Profile/Profile";
-import Request from "./components/Request";
+import About from "./pages/About"
+import Connect from "./pages/Connect";
+import Notfound from "./pages/Notfound";
+import Main from "./pages/Main";
+import Profile from "./pages/Profile";
+import Request from "./pages/Request";
 
 const routes = [
     {
