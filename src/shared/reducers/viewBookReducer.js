@@ -43,7 +43,8 @@ export default function reducer(state={
         case "CLOSE_BOOK":{
             return {
                 ...state,
-                open:false
+                open:false,
+                ownerslocation:[]
             };
         }
         case "LOG_IN_REQUIRED":{

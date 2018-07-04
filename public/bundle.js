@@ -56635,7 +56635,8 @@ function reducer() {
         case "CLOSE_BOOK":
             {
                 return _extends({}, state, {
-                    open: false
+                    open: false,
+                    ownerslocation: []
                 });
             }
         case "LOG_IN_REQUIRED":
