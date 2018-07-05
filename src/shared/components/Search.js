@@ -5,6 +5,7 @@ import Modal from "./Modal";
 import React from "react";
 import {searchBooks} from "../actions/bookAction";
 import { SyncLoader } from 'react-spinners';
+import styles from "../css/Main.css";
 
 class Search extends React.Component {
     constructor(){
@@ -32,7 +33,7 @@ class Search extends React.Component {
                   </span>
                 </div>
             </form>
-            <div class="spinner-wrap">
+            <div class={`${styles.wrap}`}>
                 <SyncLoader
                   color={'#424242'} 
                   loading={this.props.loading} 

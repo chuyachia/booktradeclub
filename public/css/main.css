@@ -41,7 +41,43 @@
 
 .Request__dialogue___ThtKy strong {
   cursor:pointer;
-}.PersonalInfo__largeLineHeight___1JrS5{
+}.container {
+    padding-top:80px;
+}
+
+.nav-item{
+    cursor:pointer
+}
+
+img{
+  margin-right:5px;
+  float:left;
+}
+
+.footer {
+  position:fixed;
+  bottom:0;
+  right:0;
+  text-align: right;
+  padding:15px
+}
+.footer span {
+  position:relative;
+  display:block
+}
+
+.fas, .fab{
+  margin-top:5px
+}
+
+.Main__wrap___18kqX{
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.PersonalInfo__largeLineHeight___1JrS5{
  line-height: 40px; 
 }
 
@@ -96,42 +132,6 @@
 .BookCard__card___39keR:hover .BookCard__center___y_6R7 {
   opacity: 1;
 }
-.container {
-    padding-top:80px;
-}
-
-.nav-item{
-    cursor:pointer
-}
-
-img{
-  margin-right:5px;
-  float:left;
-}
-
-.footer {
-  position:fixed;
-  bottom:0;
-  right:0;
-  text-align: right;
-  padding:15px
-}
-.footer span {
-  position:relative;
-  display:block
-}
-
-.fas, .fab{
-  margin-top:5px
-}
-
-.Main__wrap___18kqX{
-  margin: 0 auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-}
-
 .Connect__card___s3Sq1{
     width:80%;
 }
@@ -167,5 +167,3 @@ img{
     justify-content: center;
     flex-direction: column;
 }
-
-/*# sourceMappingURL=main.css.map*/
