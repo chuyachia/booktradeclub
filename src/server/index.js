@@ -18,7 +18,9 @@ import serialize from "serialize-javascript";
 import session from 'express-session';
 import {StaticRouter, matchPath} from "react-router-dom";
 import users from "./routes/users"; 
+import memoryStoreModule from 'memorystore';
 
+var memoryStore = memoryStoreModule(session);
 dotenv.config();
 const app = express();
 app.use(express.static("public"));
@@ -40,9 +42,13 @@ mongoose.connect('mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+'@'+pr
 configPassport(passport);
 
 app.use(session({
-	secret: 'secretBookTrade',
-	resave: false,
-	saveUninitialized: true
+    store: new memoryStore({
+      checkPeriod: 86400000
+    }),
+    secret: 'secretBookTrade',
+    resave: false,
+    saveUninitialized: false,
+    cookie:{sameSite:'strict'}
 }));
 
 
