@@ -20,8 +20,8 @@ class Main extends React.Component {
     addSearchTerm(event){
         this.setState({term: event.target.value});
     }
-    componentWillMount(){
-            this.props.dispatch(getAllBooks());
+    componentDidMount(){
+        this.props.dispatch(getAllBooks());
     }
     render(){
         var books = filter(this.props.books,(book)=>book.title.toLowerCase().indexOf(this.state.term)>-1);
