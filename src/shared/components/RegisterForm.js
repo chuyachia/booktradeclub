@@ -3,7 +3,7 @@ import {addUser} from "../actions/userAction";
 import axios from "axios";
 import {cancelLogin} from "../actions/connectAction";
 import {connect} from "react-redux";
-import React from "react"
+import React from "react";
 import {Redirect,Link } from "react-router-dom";
 
 

@@ -1,8 +1,3 @@
-//issues with react-test-renderer https://github.com/reactjs/react-modal/issues/553
-// https://github.com/airbnb/enzyme/issues/1284
-//https://medium.com/netscape/testing-a-react-redux-app-using-jest-and-enzyme-b349324803a9
-//https://www.sitepoint.com/test-react-components-jest/
-// https://medium.com/@7ynk3r/react-testing-done-right-24fdb4ef43d8
 import * as enzyme from 'enzyme';
 import ReactSixteenAdapter  from 'enzyme-adapter-react-16';
 import Modal from '../../src/shared/components/Modal';

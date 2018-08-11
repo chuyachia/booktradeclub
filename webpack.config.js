@@ -1,7 +1,6 @@
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const autoprefixer = require("autoprefixer");
-const debug = process.env.NODE_ENV!=="production"
+const debug = process.env.NODE_ENV!=="production";
 
 
 const browserConfig = {
@@ -13,14 +12,6 @@ const browserConfig = {
   devtool: debug?"cheap-module-source-map":false,
   module: {
     rules: [
-      {
-        test: [/\.svg$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        loader: "file-loader",
-        options: {
-          name: "public/media/[name].[ext]",
-          publicPath: url => url.replace(/public/, "")
-        }
-      },
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
@@ -87,15 +78,6 @@ const serverConfig = {
   module: {
     rules: [
       {
-        test: [/\.svg$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        loader: "file-loader",
-        options: {
-          name: "public/media/[name].[ext]",
-          publicPath: url => url.replace(/public/, ""),
-          emit: false
-        }
-      },
-      {
         test: /\.css$/,
         use: [
           {
@@ -112,11 +94,14 @@ const serverConfig = {
       }
     ]
   },
-  plugins: [
+  plugins:[
     new webpack.BannerPlugin({
-      banner: "__isBrowser__ = false;",
+      banner: "__isBrowser__ = true;",
       raw: true,
       include: /\.js$/
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV':JSON.stringify(process.env.NODE_ENV)
     })
   ]
 };

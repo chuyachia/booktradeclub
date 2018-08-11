@@ -4,7 +4,7 @@ import BookCard from "../components/BookCard";
 import {changePage} from "../actions/userAction";
 import { connect } from "react-redux";
 import Footer from "../components/Footer";
-import NavBar from "../components/NavBar"
+import NavBar from "../components/NavBar";
 import Modal from "../components/Modal";
 import PersonalInfo from "../components/PersonalInfo";
 import React from "react";

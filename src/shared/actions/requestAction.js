@@ -1,4 +1,3 @@
-require('es6-promise').polyfill();
 import axios from 'axios';
 import {showAlert} from "./alertAction";
 
