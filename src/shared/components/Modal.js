@@ -45,7 +45,7 @@ class Modal extends React.Component{
                isOpen={this.props.open}
                ariaHideApp={false}
                contentLabel="Review Modal">
-              <a class="text-dark" style={{float:"right",cursor:"pointer"}}><i class="fas fa-times" onClick={this.closeBook.bind(this)}/></a>
+               <i class="fas fa-times" style={{float:"right",cursor:"pointer"}} onClick={this.closeBook.bind(this)}/>
                <Alert/>
                <h3>{this.props.info.title}</h3>
                <dl>
@@ -55,9 +55,9 @@ class Modal extends React.Component{
                     <dt>Author</dt>
                     <dd>{this.props.info.authors.map((author,i)=> {
                     if (i<this.props.info.authors.length-1) {
-                        return (<span key={i}>{author}, </span>)
+                        return (<span key={i}>{author}, </span>);
                     } else {
-                        return (<span key={i}>{author}</span>)
+                        return (<span key={i}>{author}</span>);
                     }
                     })}</dd>
                 </div>)}

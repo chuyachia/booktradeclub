@@ -5,7 +5,7 @@ export default function reducer(state={
     psunmatch:false,
     changedsucess:false,
     page:"mybooks",
-
+    redirect:false
 },action){
     switch(action.type) {
         case "CHANGE_PAGE":{
@@ -69,6 +69,12 @@ export default function reducer(state={
             return{
                 ...state,
                 psunmatch:true
+            }
+        }
+        case "REDIRECT":{
+            return{
+                ...state,
+                redirect:true
             }
         }
     }

@@ -142,7 +142,7 @@ class PersonalInfo extends React.Component{
                 <button class={`${styles.button}`}  onClick={this.changeEmail.bind(this)}><i class="fas fa-edit"></i></button>
                 </span>)
                 }</div>
-            </div>)
+            </div>);
     }
 }
 

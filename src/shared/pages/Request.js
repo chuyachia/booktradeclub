@@ -44,19 +44,19 @@ class Request extends React.Component{
     }
     render(){
         function requestInit(book,id,func){
-            return (<p>I'm interested in the book <strong onClick={()=>func(id)}>"{book}"</strong> in your collection. Have a look at the books that I have for exchange!</p>);
+            return (<p>I'm interested in the book <strong style={{cursor:'pointer'}} onClick={()=>func(id)}>"{book}"</strong> in your collection. Have a look at the books that I have for exchange!</p>);
         }
         function requestRes(book,id,func){
-            return (<p>I would accept to exchange my book with your <strong onClick={()=>func(id)}>" {book} "</strong>.</p>);
+            return (<p>I would accept to exchange my book with your <strong style={{cursor:'pointer'}} onClick={()=>func(id)}>" {book} "</strong>.</p>);
         }
         function requestConfirm(){
             return (<p>OK! That's call it a deal.</p>);
         }
         function instructWaint(name){
-            return (<p>Waiting for {name}'s response.</p>)
+            return (<p>Waiting for {name}'s response.</p>);
         }
         function reqeustDecline(){
-            return(<p>Sorry, I'm not interested.</p>)
+            return(<p>Sorry, I'm not interested.</p>);
         }
 
         if (this.props.info.sender&&this.props.info.receiver){

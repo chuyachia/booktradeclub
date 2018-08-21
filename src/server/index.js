@@ -19,6 +19,7 @@ import session from 'express-session';
 import {StaticRouter, matchPath} from "react-router-dom";
 import users from "./routes/users"; 
 import memoryStoreModule from 'memorystore';
+import querystring from 'querystring';
 
 var memoryStore = memoryStoreModule(session);
 dotenv.config();
@@ -73,15 +74,19 @@ app.get("*",(req,res) => {
               email:req.user.email,
               location:req.user.location,
             }
-        })
+        });
     }
     if ((req.url=="/profile"||req.url=="/request")&&!req.isAuthenticated()){
-      res.redirect('/connect');
+      let query = querystring.stringify({redirect:'profile'});
+      res.redirect('/connect?'+query);
+      return;
     }
+
     if (req.url=="/connect"&&req.isAuthenticated()){
       res.redirect('/');
+      return;
     }
-    const context = {}
+    const context = {};
     const markup = renderToString(
       <Provider store={store}>
         <StaticRouter location={req.url} context={context}>
@@ -89,8 +94,7 @@ app.get("*",(req,res) => {
         </StaticRouter>
       </Provider>
         );
-    if (matchPath(req.url,routes).path!=req.url)
-      res.status(404)
+
     const initialData = store.getState();
     res.send(`
     <!DOCTYPE html>
@@ -110,14 +114,14 @@ app.get("*",(req,res) => {
           <div id="root">${markup}</div>
         </body>
       </html>
-      `)
-})
+      `);
+});
 
 app.use(function(err,req,res,next){
   console.log(err.stack);
-  res.status(500).send({success:false,status:'servererror'})
-})
+  res.status(500).send({success:false,status:'servererror'});
+});
 
 app.listen(process.env.PORT || 3000,()=>
-console.log("Server is listening")
-)
+  console.log("Server is listening")
+);

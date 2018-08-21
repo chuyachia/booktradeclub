@@ -4,7 +4,7 @@ import axios from "axios";
 import {cancelLogin} from "../actions/connectAction";
 import {connect} from "react-redux";
 import React from "react";
-import {Redirect,Link } from "react-router-dom";
+import {Link } from "react-router-dom";
 
 
 const getlocapi = "https://cors-anywhere.herokuapp.com/http://gd.geobytes.com/AutoCompleteCity?q=";
@@ -31,11 +31,7 @@ class RegisterForm extends React.Component{
      this.props.dispatch(cancelLogin());
     }
     render(){
-        if (this.props.redirect){
-         return(<Redirect to={{
-            pathname: this.props.redirect
-          }}/>)
-        } else if (!this.props.registered){
+        if (!this.props.registered){
             return(<form onSubmit={this.submitRegister.bind(this)}>
                         <div class="form-group">
                             <label for="username">Username</label>
@@ -92,17 +88,17 @@ class RegisterForm extends React.Component{
                         <button type="submit" class="btn btn-raised bg-dark text-light">Sign up</button>
                         <Link class="btn btn-secondary" onClick = {this.cancelLogin.bind(this)} to="/">Cancel</Link>
                     </form>
-            )
+            );
         } else {
                 switch(this.props.result){
                     case "success":{
-                        return <div>Registered with success. Redirecting to the main page...</div>
+                        return <div>Registered with success. Redirecting to the main page...</div>;
                     }
                     case "duplicated":{
-                        return <div>Username already existed. Please try again. Redirecting back...</div>
+                        return <div>Username already existed. Please try again. Redirecting back...</div>;
                     }
                     default :{
-                        return <div>Something went wrong. Please try again. Redirecting back...</div>
+                        return <div>Something went wrong. Please try again. Redirecting back...</div>;
                     }
                 }
         }
@@ -112,8 +108,7 @@ class RegisterForm extends React.Component{
 var propsMap = (store)=>{
     return {
         registered:store.register.registered,
-        result : store.register.result,
-        redirect:store.register.redirect
+        result : store.register.result
     };
 };
 

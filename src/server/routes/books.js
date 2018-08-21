@@ -3,31 +3,36 @@ import Books from '../models/books';
 
 const books = express.Router();
 
-books.post('/add',function(req,res,next){
+function checkAuthentication(req,res,next){
     if (req.isAuthenticated()){
-        var {username, ...bookinfo} =req.body;
-        Books.findOneAndUpdate(
-            {'bookId':bookinfo.bookId},
-            {$push:{ownBy:username}},
-            {new:true}
-        ).exec((err,result) => {
-            if (err) return next(err);
-            if (result) {
-                return res.send({success:true,message:"Added a new owner to an existing book."});
-            }
-            bookinfo.ownBy = [username];
-            var newBook = new Books(bookinfo);
-            newBook.save((err,result)=>{
-                if (err) return next(err);
-                return res.send({success:true,message:"Added a new book."});
-            });
-        });
+        next();
     } else {
-        res.send({success:false,message:"Please log in or sign up first"});
+        res.status(401).send({success:false,status:'notloggedin'});
     }
+}
+
+
+books.post('/add',checkAuthentication,function(req,res,next){
+    var {username, ...bookinfo} =req.body;
+    Books.findOneAndUpdate(
+        {'bookId':bookinfo.bookId},
+        {$push:{ownBy:username}},
+        {new:true}
+    ).exec((err,result) => {
+        if (err) return next(err);
+        if (result) {
+            return res.send({success:true,message:"Added a new owner to an existing book."});
+        }
+        bookinfo.ownBy = [username];
+        var newBook = new Books(bookinfo);
+        newBook.save((err,result)=>{
+            if (err) return next(err);
+            return res.send({success:true,message:"Added a new book."});
+        });
+    });
 });
 
-books.delete('/remove/:bookid/:username',function(req,res,next){
+books.delete('/remove/:bookid/:username',checkAuthentication,function(req,res,next){
     Books.findOneAndUpdate(
         {'bookId':req.params.bookid},
         {$pull:{ownBy:req.params.username}},

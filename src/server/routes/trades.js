@@ -3,7 +3,15 @@ import Trades from '../models/trades';
 
 const trades = express.Router();
 
-trades.get('/:username',function(req,res,next){
+function checkAuthentication(req,res,next){
+    if (req.isAuthenticated()){
+        next();
+    } else {
+        res.status(401).send({success:false,status:'notloggedin'});
+    }
+}
+
+trades.get('/:username',checkAuthentication,function(req,res,next){
     Trades.find({
         $or:[{'sender.username':req.params.username},{'receiver.username':req.params.username}]
     }).exec((err,result)=>{
@@ -12,7 +20,14 @@ trades.get('/:username',function(req,res,next){
     });
 });
 
-trades.post('/handle',function(req,res,next){
+trades.delete('/:id',checkAuthentication,function(req,res,next){
+    Trades.deleteOne({_id:req.params.id}).exec((err)=>{
+        if (err) return next(err);
+        res.json('success');
+    });
+});
+
+trades.post('/handle',checkAuthentication,function(req,res,next){
     switch(req.body.action){
         case "add":
             var newTrade = new Trades();

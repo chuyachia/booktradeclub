@@ -3,6 +3,15 @@ import Users from "../models/users";
 
 const users = express.Router();
 
+function checkAuthentication(req,res,next){
+    if (req.isAuthenticated()){
+        next();
+    } else {
+        res.status(401).send({success:false,status:'notloggedin'});
+    }
+}
+
+
 users.post('/new',function(req,res,next){
     Users.findOne({'username':req.body.username})
         .exec((err,result)=>{
@@ -32,7 +41,7 @@ users.get('/location',function(req,res,next){
     });
 });
 
-users.put('/changepw', function(req,res,next){
+users.put('/changepw', checkAuthentication, function(req,res,next){
     Users.findOne({
         username: req.body.username
     }).exec((err,user)=>{
@@ -53,9 +62,9 @@ users.put('/changepw', function(req,res,next){
             });
         }
     });
-})
+});
 
-users.put('/changeinfo', function(req,res,next){
+users.put('/changeinfo', checkAuthentication,function(req,res,next){
     switch(req.body.action){
         case "email":
             Users.findOneAndUpdate({'username':req.body.username},{email:req.body.data},{new:true})

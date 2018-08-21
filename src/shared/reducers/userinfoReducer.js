@@ -5,13 +5,13 @@ export default function reducer(state={
     location:null,
     ownedbooks:[],
     inrequests:[],
-    outrequests:[],
-    redirect:null
+    outrequests:[]
 },action){
     switch(action.type) {
         case "LOGGED_IN":{
             var inrequests = action.payload.requests.filter(request=>request.receiver.username == action.payload.username);
             var outrequests = action.payload.requests.filter(request=>request.sender.username == action.payload.username);
+   
             return {
                 ...state,
                 username:action.payload.username,
@@ -31,6 +31,13 @@ export default function reducer(state={
                 inrequests : inreqs,
                 outrequests : outreqs
             }
+        }
+        case "DELETE_REQUEST" :{
+            return {
+                ...state,
+                inrequests : state.inrequests.filter(request=>request._id !== action.payload),
+                outrequests : state.outrequests.filter(request=>request._id !== action.payload)
+            }            
         }
         case "SEND_LOG_IN":{
            return{
@@ -76,12 +83,7 @@ export default function reducer(state={
                 location:action.payload.location
             }
         }
-        case "REDIRECT":{
-            return{
-                ...state,
-                redirect:action.payload
-            }
-        }
+
     }
     return state;
 }

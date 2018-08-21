@@ -1,5 +1,3 @@
-// unnecessary modify unread here
-// all requests will be refetch when back to request list
 export default function reducer(state={
     open:false,
     info:{},
@@ -10,7 +8,7 @@ export default function reducer(state={
             return{
                 ...state,
                 info:{},
-            }
+            };
         }
         case "VIEW_REQUEST":{
             return {
@@ -22,7 +20,7 @@ export default function reducer(state={
             return{
                 ...state,
                 senderbooks:action.payload
-            }
+            };
         }
         case "NEW_EXCHANGE_ADDED" :{
             return {
@@ -34,7 +32,7 @@ export default function reducer(state={
                         bookName:action.payload.bookname,
                     }
                 }
-            }
+            };
         }
         case "TRADE_CONFIRMED":{
             return{
@@ -46,7 +44,7 @@ export default function reducer(state={
                         ...state.info.receiver,
                     }
                 }
-            }
+            };
         }
         case "TRADE_DECLINED":{
             return{
@@ -58,7 +56,7 @@ export default function reducer(state={
                         ...state.info.receiver,
                     }
                 }
-            }
+            };
         }
 
 

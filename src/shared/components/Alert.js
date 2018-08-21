@@ -12,7 +12,7 @@ class Alert extends React.Component {
     render(){
         return(
             <div>{this.props.open&&<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                  <strong>Oops! Something went wrong with the server!</strong> The action just failed. Please try again later.
+                  <strong>Oops! Something went wrong!</strong> The action just failed. Please try again later.
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close" onClick={this.closeAlert.bind(this)}>
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -23,8 +23,7 @@ class Alert extends React.Component {
 
 var propsMap = (store)=>{
     return{
-        open: store.alerts.open,
-        message:store.alerts.message
+        open: store.alerts.open
     };
 };
 

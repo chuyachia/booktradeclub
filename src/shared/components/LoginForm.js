@@ -2,7 +2,7 @@ import Alert from "./Alert";
 import {connect} from "react-redux";
 import {logIn,cancelLogin} from "../actions/connectAction";
 import React from "react";
-import {Redirect, Link } from "react-router-dom";
+import {Link } from "react-router-dom";
 
 class LoginForm extends React.Component{
     constructor(props){
@@ -31,16 +31,11 @@ class LoginForm extends React.Component{
      this.props.dispatch(cancelLogin());
     }
     render(){
-            if (this.props.redirect){
-             return(<Redirect to={{
-                pathname: this.props.redirect
-              }}/>)
-            } else if (!this.props.username){
+    if (!this.props.username){
                 return(
                 <div>
                 <Alert/>
                 <form onSubmit={this.submitLogin.bind(this)}>
-                {this.props.username&&<Redirect to={{pathname:'/'}}/>}
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" class="form-control" id="username" name="username" placeholder="Username" required autoFocus
@@ -64,14 +59,13 @@ class LoginForm extends React.Component{
                 </div>
                 )
         } else {
-            return <div>Successfully logged in. Redirecting to the main page...</div>
+            return <div>Successfully logged in. Redirecting...</div>
         }
     }
 }
 
 var propsMap = (store)=>{
     return {
-        redirect:store.userinfo.redirect,
         wrongcredential:store.userinfo.wrongcredential,
         username : store.userinfo.username
     };

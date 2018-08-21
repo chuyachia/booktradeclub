@@ -41,52 +41,43 @@ export function searchBooks(bookname){
 }
 
 export function viewBook(bookinfo,type){
-    return function(dispatch){
         switch(type){
             case "addbook":
                 bookinfo.btnuse = "addbook";
-                dispatch({
+                return {
                     type:"VIEW_ADD_BOOK",
                     payload:bookinfo
-                });
-                break;
+                };
             case "addrequest":
                 bookinfo.btnuse = "addrequest";
-                dispatch({
+                return {
                     type:"VIEW_REQUEST_BOOK",
                     payload:bookinfo
-                });
-                break;
+                };
             case "answersender":
                 bookinfo.btnuse = "answersender";
-               dispatch({
+                return {
                     type:"VIEW_EXCHANGE_BOOK",
                     payload:bookinfo
-                });
-                break;
+                };
             case "removebook":
                 bookinfo.btnuse = "removebook";
-                dispatch({
+                return {
                     type:"VIEW_REMOVE_BOOK",
                     payload:bookinfo
-                });
-                break;
+                };
             default:
                 bookinfo.btnuse = "info";
-                dispatch({
+                return {
                     type:"VIEW_BOOK",
                     payload:bookinfo
-                });
-                break;
+                };
         }
-    };
 }
 
 export function closeBook(bookinfo){
-    return function(dispatch){
-        dispatch({
-            type:"CLOSE_BOOK"
-        });
+    return {
+        type:"CLOSE_BOOK"
     };
 }
 

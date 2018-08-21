@@ -21,8 +21,7 @@ export function logIn(userinfo){
                 });
                 setTimeout(function() { 
                 dispatch({
-                    type:"REDIRECT",
-                    payload:'/'
+                    type:"REDIRECT"
                 }); 
                 }, 1000);
             } else {
@@ -40,10 +39,8 @@ export function logIn(userinfo){
     };
 }
 export function cancelLogin(){
-    return function(dispatch){
-        dispatch({
-            type:"CANCEL_LOGIN"
-        });
+    return {
+        type:"CANCEL_LOGIN"
     };
 }
 export function logOut(){

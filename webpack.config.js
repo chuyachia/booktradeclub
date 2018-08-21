@@ -1,7 +1,7 @@
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const debug = process.env.NODE_ENV!=="production";
-
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const browserConfig = {
   entry: "./src/browser/index.js",
@@ -60,9 +60,7 @@ const browserConfig = {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
       }
     }),
-     new webpack.optimize.UglifyJsPlugin({
-      minimize: true
-    })
+     new UglifyJsPlugin()
   ]
 };
 
@@ -94,7 +92,7 @@ const serverConfig = {
       }
     ]
   },
-  plugins:[
+  plugins:debug?[
     new webpack.BannerPlugin({
       banner: "__isBrowser__ = true;",
       raw: true,
@@ -103,6 +101,16 @@ const serverConfig = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV':JSON.stringify(process.env.NODE_ENV)
     })
+  ]:[
+    new webpack.BannerPlugin({
+      banner: "__isBrowser__ = true;",
+      raw: true,
+      include: /\.js$/
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV':JSON.stringify(process.env.NODE_ENV)
+    }),
+    new UglifyJsPlugin()
   ]
 };
 

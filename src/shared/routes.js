@@ -1,4 +1,4 @@
-import About from "./pages/About"
+import About from "./pages/About";
 import Connect from "./pages/Connect";
 import Notfound from "./pages/Notfound";
 import Main from "./pages/Main";

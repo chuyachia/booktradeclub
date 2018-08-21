@@ -6,11 +6,11 @@ export function addRequest(sender,receiver,bookid,bookname,email){
         if(!sender){
             dispatch({
                 type:"LOG_IN_REQUIRED"
-            })
+            });
         } else if (receiver==sender) {
             dispatch({
                 type:"REQUEST_TO_SELF"
-            })
+            });
         } else {
             var param = {
                 action:"add",
@@ -19,20 +19,20 @@ export function addRequest(sender,receiver,bookid,bookname,email){
                 bookid:bookid,
                 bookname:bookname,
                 email:email
-            }
+            };
             axios.post('/trades/handle',param)
             .then(response=>{
                 dispatch({
                     type:"NEW_REQUEST_ADDED",
                     payload:response.data.data
-                })
+                });
             })
             .catch(error=>{
-                console.log(error)
-                dispatch(showAlert())
-            })
+                console.log(error);
+                dispatch(showAlert());
+            });
         }
-    }
+    };
 }
 
 export function getSenderBooks(username){
@@ -42,13 +42,13 @@ export function getSenderBooks(username){
             dispatch({
                 type:"SENDER_BOOKS",
                 payload:response.data
-            })
+            });
         })
         .catch(error=>{
-            console.log(error)
-            dispatch(showAlert())
-        })  
-    }
+            console.log(error);
+            dispatch(showAlert());
+        });
+    };
 }
 
 export function addExchange(bookid,bookname,tradeid,email){
@@ -59,19 +59,19 @@ export function addExchange(bookid,bookname,tradeid,email){
                 bookid:bookid,
                 bookname:bookname,
                 email:email
-            }
+            };
             axios.post('/trades/handle',param)
             .then(response=>{
                 dispatch({
                     type:"NEW_EXCHANGE_ADDED",
                     payload:{bookid,bookname}
-                })
+                });
             })
             .catch(error=>{
-                console.log(error)
-                dispatch(showAlert())
-            })  
-    }
+                console.log(error);
+                dispatch(showAlert());
+            });
+    };
 }
 
 export function confirmTrade(tradeid){
@@ -83,13 +83,13 @@ export function confirmTrade(tradeid){
         .then(response=>{
             dispatch({
                 type:"TRADE_CONFIRMED"
-            })
+            });
         })
         .catch(error=>{
-            console.log(error)
-            dispatch(showAlert())
-        })  
-    }
+            console.log(error);
+            dispatch(showAlert());
+        });
+    };
 }
 
 export function declineTrade(tradeid,to){
@@ -103,13 +103,13 @@ export function declineTrade(tradeid,to){
             dispatch({
                 type:"TRADE_DECLINED",
                 payload:to
-            })
+            });
         })
         .catch(error=>{
-            console.log(error)
-            dispatch(showAlert())
-        })  
-    }
+            console.log(error);
+            dispatch(showAlert());
+        });  
+    };
 }
 
 export function getAllRequests(username){
@@ -119,10 +119,13 @@ export function getAllRequests(username){
             dispatch({
                 type:"ALL_REQUESTS",
                 payload:response.data
-            })
+            });
         })
-        .catch(error=>console.log(error))
-    }
+        .catch(error=>{
+            console.log(error);
+            dispatch(showAlert());
+        });
+    };
 }
 
 export function viewRequest(requestinfo,role,unread){
@@ -141,9 +144,28 @@ export function viewRequest(requestinfo,role,unread){
                 dispatch({
                     type:"READ_REQUEST",
                     payload:role
-                })
+                });
             })
-            .catch(error=>console.log(error))  
+            .catch(error=>{
+                console.log(error);
+                dispatch(showAlert());
+            });  
         }
+    };
+}
+
+export function deleteRequest(id){
+    return function(dispatch){
+        axios.delete('/trades/'+id)
+        .then(response=>{
+            dispatch({
+                type:"DELETE_REQUEST",
+                payload:id
+            });            
+        })
+        .catch(error=>{
+            console.log(error);
+            dispatch(showAlert());
+        })
     }
 }
