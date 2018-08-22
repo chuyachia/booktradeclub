@@ -1,22 +1,31 @@
-import {AsyncTypeahead} from "react-bootstrap-typeahead";
 import {addUser} from "../actions/userAction";
-import axios from "axios";
 import {cancelLogin} from "../actions/connectAction";
 import {connect} from "react-redux";
 import React from "react";
 import {Link } from "react-router-dom";
+import { GoogleApiWrapper} from 'google-maps-react';
 
 
-const getlocapi = "https://cors-anywhere.herokuapp.com/http://gd.geobytes.com/AutoCompleteCity?q=";
+//const getlocapi = "https://cors-anywhere.herokuapp.com/http://gd.geobytes.com/AutoCompleteCity?q=";
 
 
 class RegisterForm extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            location:'',
-            isLoading:false
+            username:null,
+            email:null,
+            password:null,
+            location:null
         };
+    }
+    componentDidMount(){
+        const { google } = this.props;
+        var input = document.getElementById('location');
+        const autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.addListener('place_changed', ()=> {
+            this.setState({location:autocomplete.getPlace().formatted_address});
+        });
     }
     submitRegister(event){
         event.preventDefault();
@@ -64,25 +73,10 @@ class RegisterForm extends React.Component{
                         </div>
                         <div class="form-group">
                          <label for="location">Location</label>
-                          <AsyncTypeahead
-                            isLoading={this.state.isLoading}
-                            minLength={3}
-                            onSearch={query => {
-                              this.setState({isLoading: true});
-                              axios(getlocapi+query)
-                                .then(response => response.data)
-                                .then(data => this.setState({
-                                  isLoading: false,
-                                  options: data,
-                                }));
-                            }}
-                            onChange={(location) => {
-                              this.setState({location:location[0]});
-                            }}
-                            options={this.state.options}
-                            placeholder="Enter your city"
-                            inputProps= {{name:"location",id:"location",required:true}}
-                          />
+                          <input type="text" class="form-control" placeholder="Enter your city"  id="location" required
+                          onChange={(event) => {
+                              this.setState({location:event.target.value});
+                            }}/>
                           <small class="form-text text-muted">It's important to indicate your real location so that people near you will make a request to you.</small>
                           </div>
                         <button type="submit" class="btn btn-raised bg-dark text-light">Sign up</button>
@@ -112,4 +106,7 @@ var propsMap = (store)=>{
     };
 };
 
-export default connect(propsMap)(RegisterForm);
+export default connect(propsMap)(GoogleApiWrapper({
+  apiKey: ('AIzaSyCpnZV3MwYpso0pT3Bb8Nr9TqVh1EGR5Jc'),
+  libraries:['places']
+})(RegisterForm));

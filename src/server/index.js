@@ -13,13 +13,12 @@ import { Provider } from "react-redux";
 import React from "react";
 import {renderToString} from "react-dom/server";
 import trades from "./routes/trades"; 
-import routes from "../shared/routes";
 import serialize from "serialize-javascript";
 import session from 'express-session';
-import {StaticRouter, matchPath} from "react-router-dom";
+import {StaticRouter} from "react-router-dom";
 import users from "./routes/users"; 
 import memoryStoreModule from 'memorystore';
-import querystring from 'querystring';
+
 
 var memoryStore = memoryStoreModule(session);
 dotenv.config();
@@ -77,8 +76,7 @@ app.get("*",(req,res) => {
         });
     }
     if ((req.url=="/profile"||req.url=="/request")&&!req.isAuthenticated()){
-      let query = querystring.stringify({redirect:'profile'});
-      res.redirect('/connect?'+query);
+      res.redirect('/connect?redirect=profile');
       return;
     }
 

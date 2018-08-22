@@ -1,21 +1,27 @@
-import {AsyncTypeahead} from "react-bootstrap-typeahead";
-import axios from "axios";
 import {changeEmail,changeLocation,changePassword,cancelChange,submitChange} from "../actions/userAction";
 import {connect} from "react-redux";
 import React from 'react';
 import styles from '../css/PersonalInfo.css';
-
-const getlocapi = "https://cors-anywhere.herokuapp.com/http://gd.geobytes.com/AutoCompleteCity?q=";
+import { GoogleApiWrapper} from 'google-maps-react';
 
 class PersonalInfo extends React.Component{
     constructor(){
         super();
         this.state={
-            email:'',
-            location:'',
-            oldpassword:'',
-            newpassword:'',
-            isLoading:false
+            email:null,
+            location:null,
+            oldpassword:null,
+            newpassword:null
+        };
+    }
+    componentDidUpdate(prevProps){
+        if (!prevProps.editlocation&&this.props.editlocation){
+            const { google } = this.props;
+            var input = document.getElementById('location');
+            const autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.addListener('place_changed', ()=> {
+                this.setState({location:autocomplete.getPlace().formatted_address});
+            });
         }
     }
     changeEmail(){
@@ -92,25 +98,10 @@ class PersonalInfo extends React.Component{
                     event.preventDefault();
                     this.submitChange("location");
                     }}>
-                     <AsyncTypeahead
-                            isLoading={this.state.isLoading}
-                            minLength={3}
-                            onSearch={query => {
-                              this.setState({isLoading: true});
-                              axios(getlocapi+query)
-                                .then(response => response.data)
-                                .then(data => this.setState({
-                                  isLoading: false,
-                                  options: data,
-                                }));
-                            }}
-                            onChange={(location) => {
-                              this.setState({location:location[0]});
-                            }}
-                            options={this.state.options}
-                            placeholder="Enter your city"
-                            inputProps= {{name:"location",id:"location",required:true,className:null}}
-                          />
+                   <input type="text" class="form-control" placeholder={this.props.location}  id="location" required
+                      onChange={(event) => {
+                          this.setState({location:event.target.value});
+                    }}/>
                      <button type="submit" class={`${styles.button}`}><i class="fas fa-check"></i></button>
                      <button type="button" class={`${styles.button}`} onClick={this.cancelChange.bind(this)}><i class="fas fa-times"></i></button>
                      </form>
@@ -127,9 +118,8 @@ class PersonalInfo extends React.Component{
                     <form style={{'display':'inline'}} class="form-inline" onSubmit={(event)=>{
                     event.preventDefault();
                     this.submitChange("email");
-                        
                     }}>
-                     <input type="email" placeholder="Email" id="email" name ="email" class="form-control" required
+                     <input type="email" placeholder={this.props.email} id="email" name ="email" class="form-control" required
                      onChange={(event) => {
                               this.setState({email:event.target.value});
                             }}/>
@@ -161,4 +151,7 @@ var propsMap = (store)=>{
     };
 };
 
-export default connect(propsMap)(PersonalInfo);
+export default connect(propsMap)(GoogleApiWrapper({
+  apiKey: ('AIzaSyCpnZV3MwYpso0pT3Bb8Nr9TqVh1EGR5Jc'),
+  libraries:['places']
+})(PersonalInfo));
