@@ -40,8 +40,8 @@ class RequestList extends React.Component{
                   <ul class="list-unstyled">
                   <li><strong>Requests received</strong></li>
                   {this.props.inrequests.length==0&&<li>Nothing to show...</li>}
-                  {this.props.inrequests.map((request,i)=>(
-                  <li key={i}>
+                  {this.props.inrequests.map(request=>(
+                  <li key={request._id}>
                       <Link to="/request" onClick={()=> {
                         this.viewRequest(request,"receiver",request.receiver.unread);
                         this.getSenderBooks(request.sender.username);
@@ -57,8 +57,8 @@ class RequestList extends React.Component{
                   <ul class="list-unstyled">
                   <li><strong>Requests sent</strong></li>
                   {this.props.outrequests.length==0&&<li>Nothing to show...</li>}
-                  {this.props.outrequests.map((request,i)=>(
-                  <li key={i}>
+                  {this.props.outrequests.map(request=>(
+                  <li key={request._id}>
                       <Link to="/request" 
                         onClick={()=> this.viewRequest(request,"sender",request.sender.unread)}>
                         You requested {request.receiver.username}'s <em>{request.receiver.bookName}</em></Link>

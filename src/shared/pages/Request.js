@@ -129,8 +129,8 @@ class Request extends React.Component{
                 (<div class={`${styles.box} bg-light text-dark`}>
                     {!this.props.info.sender.bookName&&this.props.info.status=="pending"&&(
                     <div class={`${styles.wrap} bg-light text-dark`}>Here's what {this.props.info.sender.username} has to offer, choose a book to trade
-                        <ul class={`${styles.scroll} list-unstyled`}>{this.props.senderbooks.map((book,i)=>(
-                            <li key={i} style={{cursor:"pointer"}} onClick={()=> this.viewBooksExchange(book)}>
+                        <ul class={`${styles.scroll} list-unstyled`}>{this.props.senderbooks.map(book=>(
+                            <li key={book._id} style={{cursor:"pointer"}} onClick={()=> this.viewBooksExchange(book)}>
                             <strong>{book.title}</strong></li>
                         ))}</ul>
                     <div>

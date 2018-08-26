@@ -37,6 +37,7 @@ class Modal extends React.Component{
             pathname: "/connect"
           }}/>);
         } else {
+            console.log(this.props.info);
             var ownedbooks = this.props.ownedbooks.map(book=>book.bookId);
             var outrequests = this.props.outrequests.filter(request=>request.receiver.bookId==this.props.info.bookId&&request.status!="declined");
             var outrequser = outrequests.map(request=>request.receiver.username);

@@ -40,8 +40,8 @@ class Search extends React.Component {
                 />
             </div>
             {this.props.error&&<div>Oops, something went wrong. Please try with another search term.</div>}
-            {!this.props.error&&this.props.books.map((book,i)=> (
-            <BookCard key={i} info={book} modaluse="addbook"/>
+            {!this.props.error&&this.props.books.map(book=> (
+            <BookCard key={book.bookId} info={book} modaluse="addbook"/>
             ))}
         </div>
         )

@@ -45,6 +45,7 @@
     "redux-promise-middleware": "^3.2.0",
     "redux-thunk": "^2.1.0",
     "serialize-javascript": "^1.4.0",
+    "shortid": "^2.2.13",
     "source-map-support": "^0.4.15"
   },
   "devDependencies": {

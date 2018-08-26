@@ -38,8 +38,8 @@ class Main extends React.Component {
                 />
             </div>
             {this.props.error&&<p>Oops, something went wrong. Please come back later.</p>}
-            {books.map((book,i)=> (
-                <BookCard key={i} info={book} modaluse="addrequest"/>
+            {books.map(book=> (
+                <BookCard key={book._id} info={book} modaluse="addrequest"/>
                 ))}
             <Modal/>
             <Footer/>

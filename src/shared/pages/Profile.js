@@ -26,8 +26,8 @@ class Profile extends React.Component {
            case "requests":
                return <RequestList/>;
            case "mybooks":
-               return (<div>{this.props.ownedbooks.map((book,i)=> (
-                <BookCard key={i} info={book} modaluse="removebook"/>
+               return (<div>{this.props.ownedbooks.map(book=> (
+                <BookCard key={book._id} info={book} modaluse="removebook"/>
                 ))}</div>);
         }
     }
