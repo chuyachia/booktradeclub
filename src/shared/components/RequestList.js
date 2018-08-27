@@ -42,10 +42,7 @@ class RequestList extends React.Component{
                   {this.props.inrequests.length==0&&<li>Nothing to show...</li>}
                   {this.props.inrequests.map(request=>(
                   <li key={request._id}>
-                      <Link to="/request" onClick={()=> {
-                        this.viewRequest(request,"receiver",request.receiver.unread);
-                        this.getSenderBooks(request.sender.username);
-                      }}>{request.sender.username} requested your <em>{request.receiver.bookName}</em></Link>
+                      <Link to={"/request/"+request._id}>{request.sender.username} requested your <em>{request.receiver.bookName}</em></Link>
                       &nbsp;{this.tradeStatus(request.status)}&nbsp;
                       {request.receiver.unread&&<span class="badge badge-pill badge-warning">New</span>}
                       &nbsp;<i class="fas fa-trash" style={{cursor:"pointer"}} onClick={()=>this.deleteRequest(request._id)}/>&nbsp;
@@ -59,8 +56,7 @@ class RequestList extends React.Component{
                   {this.props.outrequests.length==0&&<li>Nothing to show...</li>}
                   {this.props.outrequests.map(request=>(
                   <li key={request._id}>
-                      <Link to="/request" 
-                        onClick={()=> this.viewRequest(request,"sender",request.sender.unread)}>
+                      <Link to={"/request/"+request._id}>
                         You requested {request.receiver.username}'s <em>{request.receiver.bookName}</em></Link>
                       &nbsp;{this.tradeStatus(request.status)}&nbsp;
                       {request.sender.unread&&<span class="badge badge-pill badge-warning">New</span>}

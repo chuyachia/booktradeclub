@@ -75,11 +75,14 @@ app.get("*",(req,res) => {
             }
         });
     }
-    if ((req.url=="/profile"||req.url=="/request")&&!req.isAuthenticated()){
+    if (req.url=="/profile"&&!req.isAuthenticated()){
       res.redirect('/connect?redirect=profile');
       return;
     }
-
+    if (/\/request\/\w+/.test(req.url)&&!req.isAuthenticated()){
+      res.redirect('/connect?redirect='+encodeURIComponent(req.url.slice(1)));
+      return;
+    }
     if (req.url=="/connect"&&req.isAuthenticated()){
       res.redirect('/');
       return;

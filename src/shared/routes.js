@@ -20,7 +20,7 @@ const routes = [
         component:Connect
     },
     {
-        path:"/request",
+        path:"/request/:id",
         component:Request
     },
     {

@@ -6,14 +6,30 @@ import { Link } from 'react-router-dom';
 import Modal from "../components/Modal";
 import React from 'react';
 import {viewBook} from "../actions/bookAction";
-import {addExchange,confirmTrade,declineTrade} from "../actions/requestAction";
+import {addExchange,confirmTrade,declineTrade,viewRequest,getSenderBooks} from "../actions/requestAction";
 import styles from "../css/Request.css";
 
 class Request extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            alertopen:true
+            alertopen:true,
+            unauthorized:false
+        };
+    }
+    componentDidMount(){
+        var request = this.props.inrequests.concat(this.props.outrequests).filter(request=>
+           request._id==this.props.match.params.id);
+        if (request.length==1) {
+            request = request[0];
+            var role = request.receiver.username==this.props.username?'receiver':'sender';
+            var unread = role =='receiver'?request.receiver.unread:request.sender.unread;
+            this.props.dispatch(viewRequest(request,role,unread));
+            if (role=="receiver") {
+                this.props.dispatch(getSenderBooks(request.sender.username));
+            }
+        } else {
+            this.setState({unauthorized:true});
         }
     }
     viewBooksExchange(bookinfo){
@@ -59,7 +75,7 @@ class Request extends React.Component{
             return(<p>Sorry, I'm not interested.</p>);
         }
 
-        if (this.props.info.sender&&this.props.info.receiver){
+        if (this.props.info.sender&&this.props.info.receiver&&!this.state.unauthorized){
             var sender = this.props.info.sender.username==this.props.username?"You":this.props.info.sender.username;
             var receiver = sender=="You"?this.props.info.receiver.username:"You";
 
@@ -167,6 +183,8 @@ var propsMap = (store)=>{
         info:store.viewreq.info,
         senderbooks : store.viewreq.senderbooks,
         username : store.userinfo.username,
+        inrequests : store.userinfo.inrequests,
+        outrequests :store.userinfo.outrequests,
         email:store.userinfo.email
     };
 };

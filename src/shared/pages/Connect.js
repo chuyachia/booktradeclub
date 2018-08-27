@@ -21,7 +21,7 @@ class Connect extends React.Component{
         if (this.props.redirect){
          var loc = querystring.parse(this.props.location.search).redirect;
          return(<Redirect to={{
-            pathname: loc?'/'+loc:'/'
+            pathname: loc?'/'+decodeURIComponent(loc):'/'
           }}/>);
         } else {
             return(
