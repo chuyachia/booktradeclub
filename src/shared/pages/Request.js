@@ -10,12 +10,19 @@ import {addExchange,confirmTrade,declineTrade,viewRequest,getSenderBooks} from "
 import styles from "../css/Request.css";
 
 class Request extends React.Component{
-    constructor(props){
-        super(props);
+    constructor(){
+        super();
         this.state={
             alertopen:true,
             unauthorized:false
         };
+        this.viewBooksInfo = this.viewBooksInfo.bind(this);
+        this.confirmTrade = this.confirmTrade.bind(this);
+        this.declineExchange = this.declineExchange.bind(this);
+        this.declineTrade = this.declineTrade.bind(this);
+        this.viewBooksExchange = this.viewBooksExchange.bind(this);
+        this.addExchange = this.addExchange.bind(this);
+        
     }
     componentDidMount(){
         var request = this.props.inrequests.concat(this.props.outrequests).filter(request=>
@@ -88,7 +95,7 @@ class Request extends React.Component{
                 <div class={sender=="You"?"card col-md-5 offset-md-7":"card col-md-5"}>
                     <div class="card-body">
                         <h4 class="card-title">{sender}</h4>
-                        {requestInit(this.props.info.receiver.bookName,this.props.info.receiver.bookId,this.viewBooksInfo.bind(this))}
+                        {requestInit(this.props.info.receiver.bookName,this.props.info.receiver.bookId,this.viewBooksInfo)}
                     </div>
                 </div>
                 
@@ -102,7 +109,7 @@ class Request extends React.Component{
                 {this.props.info.sender.bookName&&(<div class={receiver=="You"?"card col-md-5 offset-md-7":"card col-md-5"}>
                     <div class="card-body">
                         <h4 class="card-title">{receiver}</h4>
-                        {requestRes(this.props.info.sender.bookName,this.props.info.sender.bookId,this.viewBooksInfo.bind(this))}
+                        {requestRes(this.props.info.sender.bookName,this.props.info.sender.bookId,this.viewBooksInfo)}
                     </div>
                 </div>)}
                 
@@ -127,8 +134,8 @@ class Request extends React.Component{
                     {this.props.info.sender.bookName&&this.props.info.status=="pending"&&(
                     <div>Do you want to accept this exchange?
                     <div>
-                        <button class="btn btn-raised" onClick={this.confirmTrade.bind(this)}>Accept request</button>
-                        <button class="btn btn-raised" onClick={this.declineExchange.bind(this)}>Decline request</button>
+                        <button class="btn btn-raised" onClick={this.confirmTrade}>Accept request</button>
+                        <button class="btn btn-raised" onClick={this.declineExchange}>Decline request</button>
                         <Link class="btn btn-raised" to="/profile">Decide later</Link>
                     </div>
                     </div>)}
@@ -150,7 +157,7 @@ class Request extends React.Component{
                             <strong>{book.title}</strong></li>
                         ))}</ul>
                     <div>
-                        <button class="btn btn-raised" onClick={this.declineTrade.bind(this)}>Decline request</button>
+                        <button class="btn btn-raised" onClick={this.declineTrade}>Decline request</button>
                         <Link class="btn btn-raised" to="/profile">Decide later</Link>
                     </div>
                     </div>)}
@@ -168,7 +175,7 @@ class Request extends React.Component{
                     </div>)}
                 </div>)
                 }
-                <Modal addexchange={this.addExchange.bind(this)}/>
+                <Modal addexchange={this.addExchange}/>
                 <Footer/>
             </div>)
         } else {

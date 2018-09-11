@@ -1,25 +1,21 @@
 import {connect} from "react-redux";
 import React from 'react';
 import {closeAlert} from "../actions/alertAction";
+import { bindActionCreators } from 'redux';
 
-class Alert extends React.Component {
-    constructor(){
-        super();
-    }
-    closeAlert(){
-        this.props.dispatch(closeAlert());
-    }
-    render(){
-        return(
-            <div>{this.props.open&&<div class="alert alert-warning alert-dismissible fade show" role="alert">
+var Alert = ({open,closeAlert}) =>(
+        <div>
+            {open&&<div class="alert alert-warning alert-dismissible fade show" role="alert">
                   <strong>Oops! Something went wrong!</strong> The action just failed. Please try again later.
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close" onClick={this.closeAlert.bind(this)}>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close" onClick={closeAlert}>
                     <span aria-hidden="true">&times;</span>
                   </button>
-            </div>}</div>
-        );
-    }
-}
+            </div>}
+        </div>    
+    );
+    
+
+var dispathMap = (dispatch)=>bindActionCreators({closeAlert},dispatch);
 
 var propsMap = (store)=>{
     return{
@@ -27,4 +23,4 @@ var propsMap = (store)=>{
     };
 };
 
-export default connect(propsMap)(Alert);
+export default connect(propsMap,dispathMap)(Alert);

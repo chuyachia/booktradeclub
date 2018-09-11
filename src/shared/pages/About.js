@@ -3,12 +3,7 @@ import { Link } from 'react-router-dom';
 import NavBar from "../components/NavBar";
 import React from 'react';
 
-class About extends React.Component{
-    constructor(){
-        super()
-    }
-    render(){
-        return(
+var About = () => (
          <div class="container">
             <NavBar/>
             <h1 class="display-4">Book Trading Club</h1>
@@ -63,9 +58,7 @@ class About extends React.Component{
             </div>
             </div>
             <Footer/>
-        </div>
-            )
-    }
-}
+        </div>    
+    );
 
 export default About;

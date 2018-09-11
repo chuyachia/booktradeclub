@@ -1,14 +1,10 @@
 import React from 'react';
 
-class Footer extends React.Component {
-    render(){
-        return(
+var Footer = ()=>(
             <div class="footer">
                 <span><a href="https://github.com/chuyachia/" target="_blank"><i class="fab fa-github fa-2x text-dark"></i></a></span> 
                 <span><a href="mailto:chuyachia@gmail.com"><i class="fas fa-at fa-2x text-dark"></i></a></span>
-            </div>
-        );
-    }
-}
-
+            </div>    
+    );
+    
 export default Footer;

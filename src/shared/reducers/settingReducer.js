@@ -4,14 +4,21 @@ export default function reducer(state={
     editpassword:false,
     psunmatch:false,
     changedsucess:false,
-    page:"mybooks",
+    profiletab:"mybooks",
+    connecttab:"login",
     redirect:false
 },action){
     switch(action.type) {
-        case "CHANGE_PAGE":{
+        case "PROFILE_CHANGE_TAB":{
             return{
                 ...state,
-                page:action.payload
+                profiletab:action.payload
+            }
+        }
+        case "CONNECT_CHANGE_TAB":{
+            return{
+                ...state,
+                connecttab:action.payload
             }
         }
         case "CHANGE_EMAIL":{

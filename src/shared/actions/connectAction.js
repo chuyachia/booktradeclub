@@ -55,3 +55,10 @@ export function logOut(){
     });
     };
 }
+
+export function changePage(target){
+    return {
+            type:"CONNECT_CHANGE_TAB",
+            payload :target
+    };
+}

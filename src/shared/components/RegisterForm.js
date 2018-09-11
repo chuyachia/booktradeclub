@@ -5,13 +5,9 @@ import React from "react";
 import {Link } from "react-router-dom";
 import { GoogleApiWrapper} from 'google-maps-react';
 
-
-//const getlocapi = "https://cors-anywhere.herokuapp.com/http://gd.geobytes.com/AutoCompleteCity?q=";
-
-
 class RegisterForm extends React.Component{
-    constructor(props){
-        super(props);
+    constructor(){
+        super();
         this.state={
             username:null,
             email:null,

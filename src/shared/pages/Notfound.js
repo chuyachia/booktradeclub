@@ -2,12 +2,7 @@ import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import React from "react";
 
-class Notfound extends React.Component{
-    constructor(){
-        super();
-    }
-    render(){
-        return(
+var Notfound = ()=>(
         <div class="container">
             <NavBar/>
             <div class="row">
@@ -19,8 +14,7 @@ class Notfound extends React.Component{
                 </div>
             </div>
             <Footer/>
-        </div>);
-    }
-}
-
+        </div>    
+    );
+    
 export default Notfound;

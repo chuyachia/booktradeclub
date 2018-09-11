@@ -4,9 +4,6 @@ import React from "react";
 import {viewRequest,getAllRequests,getSenderBooks,deleteRequest} from "../actions/requestAction";
 
 class RequestList extends React.Component{
-    constructor(){
-      super();
-    }
     viewRequest(request,role,unread){
         this.props.dispatch(viewRequest(request,role,unread));
     }

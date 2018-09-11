@@ -62,7 +62,7 @@ export function getUsersLocation(users){
 
 export function changePage(target){
     return {
-            type:"CHANGE_PAGE",
+            type:"PROFILE_CHANGE_TAB",
             payload :target
     };
 }

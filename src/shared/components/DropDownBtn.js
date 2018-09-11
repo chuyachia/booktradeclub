@@ -1,29 +1,29 @@
 import {connect} from "react-redux";
 import { Link } from 'react-router-dom';
 import React from "react";
-import styles from "../css/DropDownBtn.css"
+import styles from "../css/DropDownBtn.css";
 
 class DropDownBtn extends React.Component{
-    constructor(props){
-        super(props)
+    constructor(){
+        super();
         this.state={
             collapse:false
         };
+        this.changeCollapse = this.changeCollapse.bind(this);
     }
     changeCollapse(){
-        const newState = this.state.collapse ? false : true;
         this.setState({
-            collapse: newState
+            collapse: this.state.collapse?false : true
         });
     }
     render(){
         return(
         <div class={`show ${styles.floatRight}`}>
-          <a class="btn bg-dark text-light" role="button" id="dropdownMenuLink" onClick={this.changeCollapse.bind(this)}>
+          <a class="btn bg-dark text-light" role="button" id="dropdownMenuLink" onClick={this.changeCollapse}>
             <i class="fas fa-bars"></i>
           </a>
           <div class={`dropdown-menu ${this.state.collapse?'show':''} ${styles.right}`}
-          aria-labelledby="dropdownMenuLink" onClick={this.changeCollapse.bind(this)}>
+          aria-labelledby="dropdownMenuLink" onClick={this.changeCollapse}>
             <Link class="dropdown-item" to="/">Home</Link>
             {this.props.username&&<Link class="dropdown-item" to="/profile">Profile</Link>}
             {this.props.username?<a class="dropdown-item" href="/auth/logout">Logout</a>

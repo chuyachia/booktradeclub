@@ -9,9 +9,6 @@ import {Redirect } from "react-router-dom";
 
 
 class Modal extends React.Component{
-    constructor(props){
-        super(props);
-    }
     closeBook(){
         this.props.dispatch(closeBook());
     }
