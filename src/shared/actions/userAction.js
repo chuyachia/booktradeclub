@@ -67,19 +67,19 @@ export function changePage(target){
     };
 }
 
-export function changeEmail(){
+export function startChangeEmail(){
     return {
             type:"CHANGE_EMAIL"
     };
 }
 
-export function changeLocation(){
+export function startChangeLocation(){
     return {
             type:"CHANGE_LOCATION"
     };
 }
 
-export function changePassword(){
+export function startChangePassword(){
     return {
             type:"CHANGE_PASSWORD"
     };

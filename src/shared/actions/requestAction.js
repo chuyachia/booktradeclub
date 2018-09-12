@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {showAlert} from "./alertAction";
+import {viewBook} from "./bookAction";
 
 export function addRequest(sender,receiver,bookid,bookname,email){
     return function(dispatch){
@@ -52,13 +53,13 @@ export function getSenderBooks(username){
 }
 
 export function addExchange(bookid,bookname,tradeid,email){
-    return function(dispatch){
+    return function(dispatch,getState){
             var param = {
                 action:"exchange",
-                tradeid:tradeid,
-                bookid:bookid,
-                bookname:bookname,
-                email:email
+                tradeid,
+                bookid,
+                bookname,
+                email
             };
             axios.post('/trades/handle',param)
             .then(response=>{
@@ -92,7 +93,7 @@ export function confirmTrade(tradeid){
     };
 }
 
-export function declineTrade(tradeid,to){
+export function declineTrade(to,tradeid){
     return function(dispatch){
         axios.post('/trades/handle',{
             tradeid:tradeid,
@@ -167,5 +168,19 @@ export function deleteRequest(id){
             console.log(error);
             dispatch(showAlert());
         })
+    }
+}
+
+export function viewBooksInfo(bookid){
+    return function(dispatch){
+        axios.get('/books/info/'+bookid)
+        .then(response=>{
+            if(response.data)
+                dispatch(viewBook(response.data,"info"));
+        })
+        .catch(err=>{
+            dispatch(showAlert());
+            console.log(err);
+        });        
     }
 }

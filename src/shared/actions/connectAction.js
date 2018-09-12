@@ -1,8 +1,9 @@
 import axios from 'axios';
 import {showAlert} from "./alertAction";
 
-export function logIn(userinfo){
+export function logIn(username,password){
     return function(dispatch){
+        var userinfo = {username,password};
         dispatch({
             type:"SEND_LOG_IN"
         });

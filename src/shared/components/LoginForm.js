@@ -17,44 +17,41 @@ class LoginForm extends React.Component{
             this.refs.password.value = '';
             this.setState({
                 password:''
-            })
+            });
         }
     }
-    submitLogin(event){
+    logIn = (event) => {
         event.preventDefault();
-        this.props.dispatch(logIn({
-            username:this.state.username,
-            password:this.state.password
-        }))
+        this.props.logIn(this.state.username,this.state.password);
     }
-    cancelLogin(){
-     this.props.dispatch(cancelLogin());
+    changeUsername = (event)=>{
+        
+        this.setState({username:event.target.value});
     }
+    changePassword = (event)=>{
+        this.setState({password:event.target.value});
+    }
+
     render(){
     if (!this.props.username){
                 return(
                 <div>
                 <Alert/>
-                <form onSubmit={this.submitLogin.bind(this)}>
+                <form onSubmit={this.logIn}>
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" class="form-control" id="username" name="username" placeholder="Username" required autoFocus
-                        onChange={(event) => {
-                          this.setState({username:event.target.value});
-                        }}/>
+                        onChange={this.changeUsername}/>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" name="password" placeholder="Password" required
                         ref="password" autoComplete="off"
-                        onChange={(event) => {
-                          this.setState({
-                          password:event.target.value});
-                        }}/>
+                        onChange={this.changePassword}/>
                     </div>
                     {(this.props.wrongcredential&&this.state.password.length==0)&&<div>Wrong username or password! Try again</div>}
                     <button type="submit" class="btn btn-raised bg-dark text-light">Log in</button>
-                    <Link class="btn btn-secondary" onClick = {this.cancelLogin.bind(this)} to="/">Cancel</Link>
+                    <Link class="btn btn-secondary" onClick = {this.props.cancelLogin} to="/">Cancel</Link>
                 </form>
                 </div>
                 )
@@ -64,6 +61,8 @@ class LoginForm extends React.Component{
     }
 }
 
+var dispatchMap = {logIn,cancelLogin};
+
 var propsMap = (store)=>{
     return {
         wrongcredential:store.userinfo.wrongcredential,
@@ -71,5 +70,5 @@ var propsMap = (store)=>{
     };
 };
 
-export default connect(propsMap)(LoginForm);
+export default connect(propsMap,dispatchMap)(LoginForm);
 

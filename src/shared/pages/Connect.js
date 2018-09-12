@@ -6,10 +6,11 @@ import querystring from "query-string";
 import {connect} from "react-redux";
 import {Redirect } from "react-router-dom";
 import {changePage} from "../actions/connectAction";
-import { bindActionCreators } from 'redux';
 
 
 var Connect = ({redirect,location,connecttab,changePage})=>{
+        var toLogin = ()=>changePage("login");
+        var toSignup = ()=>changePage("signup");
         if (redirect){
          var loc = querystring.parse(location.search).redirect;
          return(<Redirect to={{
@@ -23,12 +24,12 @@ var Connect = ({redirect,location,connecttab,changePage})=>{
                       <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs nav-fill">
                           <li class="nav-item">
-                          <a class={connecttab=="login"?"nav-link active":"nav-link"} onClick={()=>changePage("login")}>
+                          <a class={connecttab=="login"?"nav-link active":"nav-link"} onClick={toLogin}>
                           {connecttab=="login"?(<strong>Log in</strong>):"Log in"}
                           </a>
                           </li>
                           <li class="nav-item">
-                          <a class={connecttab=="signup"?"nav-link active":"nav-link"} onClick={()=>changePage("signup")}>
+                          <a class={connecttab=="signup"?"nav-link active":"nav-link"} onClick={toSignup}>
                           {connecttab=="signup"?(<strong>Sign up</strong>):"Sign up"}
                           </a>
                           </li>
@@ -43,7 +44,7 @@ var Connect = ({redirect,location,connecttab,changePage})=>{
             }
     }
 
-var dispathMap = (dispatch)=>bindActionCreators({changePage},dispatch);
+var dispathMap = {changePage};
 
 var propsMap = (store)=>({
         redirect:store.setting.redirect,

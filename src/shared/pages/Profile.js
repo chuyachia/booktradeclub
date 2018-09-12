@@ -9,7 +9,6 @@ import PersonalInfo from "../components/PersonalInfo";
 import React from "react";
 import RequestList from "../components/RequestList";
 import Search from "../components/Search";
-import { bindActionCreators } from 'redux';
 
 var switchReturn = function(page,ownedbooks){
     switch(page){
@@ -24,7 +23,11 @@ var switchReturn = function(page,ownedbooks){
     }    
 }
 
-var Profile = ({profiletab,unread,ownedbooks,changePage})=> (
+var Profile = ({profiletab,unread,ownedbooks,changePage})=> {
+    var toMybooks = ()=>changePage("mybooks");
+    var toSearch = ()=>changePage("search");
+    var toRequests = ()=>changePage("requests");
+    return (
         <div class="container">
             <NavBar/>
             <Alert/>
@@ -35,15 +38,15 @@ var Profile = ({profiletab,unread,ownedbooks,changePage})=> (
                 <div class="col-md-12">
                 <ul class="nav nav-tabs nav-fill">
                  <li class="nav-item">
-                    <a class={profiletab=="mybooks"?"nav-link active":"nav-link"} onClick={()=>changePage("mybooks")}>
+                    <a class={profiletab=="mybooks"?"nav-link active":"nav-link"} onClick={toMybooks}>
                     {profiletab=="mybooks"?(<strong>My books</strong>):"My books"}</a>
                   </li>
                   <li class="nav-item">
-                    <a class={profiletab=="search"?"nav-link active":"nav-link"} onClick={()=>changePage("search")}>
+                    <a class={profiletab=="search"?"nav-link active":"nav-link"} onClick={toSearch}>
                     {profiletab=="search"?(<strong>Add new books</strong>):"Add new books"}</a>
                   </li>
                    <li class="nav-item">
-                    <a class={profiletab=="requests"?"nav-link active":"nav-link"} onClick={()=>changePage("requests")}>
+                    <a class={profiletab=="requests"?"nav-link active":"nav-link"} onClick={toRequests}>
                     {profiletab=="requests"?(<strong>View requests</strong>):"View requests"}&nbsp;
                     {unread>0&&<span class="badge badge-pill badge-warning">{unread} new</span>}
                     </a>
@@ -57,9 +60,10 @@ var Profile = ({profiletab,unread,ownedbooks,changePage})=> (
             </div>
             <Footer/>
         </div>    
-    );
+        );
+    }
 
-var dispathMap = (dispatch)=>bindActionCreators({changePage},dispatch);
+var dispathMap = {changePage};
 
 var propsMap = (store)=>{
     var unreadin= store.userinfo.inrequests.filter(request=>request.receiver.unread==true);

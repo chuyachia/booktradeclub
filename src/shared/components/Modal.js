@@ -1,7 +1,8 @@
 import Alert from "./Alert";
+import RequestItem from "./RequestItem";
 import {addBook,closeBook,removeBook} from "../actions/bookAction";
 import {connect} from "react-redux";
-import {addRequest} from "../actions/requestAction";
+import {addRequest,addExchange} from "../actions/requestAction";
 import {getUsersLocation} from "../actions/userAction";
 import React from 'react';
 import ReactModal from 'react-modal';
@@ -9,40 +10,29 @@ import {Redirect } from "react-router-dom";
 
 
 class Modal extends React.Component{
-    closeBook(){
-        this.props.dispatch(closeBook());
-    }
-    addBook(){
-        this.props.dispatch(addBook(this.props.info,this.props.username));
-    }
-    removeBook(){
-        this.props.dispatch(removeBook(this.props.info.bookId,this.props.username));
-    }
-    addRequest(indx){
-        var receiver = this.props.info.ownBy[indx];
-        this.props.dispatch(addRequest(this.props.username,receiver,this.props.info.bookId,this.props.info.title,this.props.email));
-    }
     componentWillReceiveProps(nextProps){
         if (nextProps.btnuse=="addrequest"&&nextProps.info.ownBy&&nextProps.info!==this.props.info){
-            this.props.dispatch(getUsersLocation(nextProps.info.ownBy));
+            this.props.getUsersLocation(nextProps.info.ownBy);
         }
     }
+    addBook = ()=>this.props.addBook(this.props.info,this.props.username)
+    addExchange = ()=>this.props.addExchange(this.props.info.bookId,this.props.info.title,this.props.tradeid,this.props.email)
+    removeBook = ()=>this.props.removeBook(this.props.info.bookId,this.props.username)
+    renderRequestItem = (user,i)=><RequestItem key={i} owner={user} location={this.props.ownerslocation[i]} 
+        demander={this.props.username} existrequests = {this.props.outrequests} bookid={this.props.info.bookId} 
+        booktitle={this.props.info.title} email={this.props.email} onClick={this.props.addRequest}/>
     render(){
-        var modalStyles = {overlay: {zIndex: 10}};
         if (this.props.tologin){
             return(<Redirect to={{
             pathname: "/connect"
           }}/>);
         } else {
-            var ownedbooks = this.props.ownedbooks.map(book=>book.bookId);
-            var outrequests = this.props.outrequests.filter(request=>request.receiver.bookId==this.props.info.bookId&&request.status!="declined");
-            var outrequser = outrequests.map(request=>request.receiver.username);
             return(
-            <ReactModal style={modalStyles}
+            <ReactModal style={{overlay: {zIndex: 10}}}
                isOpen={this.props.open}
                ariaHideApp={false}
                contentLabel="Review Modal">
-               <i class="fas fa-times" style={{float:"right",cursor:"pointer"}} onClick={this.closeBook.bind(this)}/>
+               <i class="fas fa-times" style={{float:"right",cursor:"pointer"}} onClick={this.props.closeBook}/>
                <Alert/>
                <h3>{this.props.info.title}</h3>
                <dl>
@@ -77,38 +67,29 @@ class Modal extends React.Component{
                     </tr>
                   </thead>
                   <tbody>
-                    {this.props.ownerslocation.length>0&&this.props.info.ownBy.map((user,i)=>(
-                    <tr key={i}>
-                      <td>{user}</td>
-                      <td>{this.props.ownerslocation[i]}</td>
-                      <td>
-                      {user!==this.props.username
-                        ?outrequser.indexOf(user)==-1?
-                          (<button class="btn btn-raised bg-dark text-light" onClick={()=>{this.addRequest(i)}}>Request</button>):
-                          (<button class="btn" disabled>Already requested</button>)
-                          :null
-                      }</td>
-                    </tr>
-                    ))}
+                    {this.props.ownerslocation.length>0&&this.props.info.ownBy.map(this.renderRequestItem)}
                   </tbody>
                 </table></div>}
                 
-               {this.props.btnuse=="addbook"&&(ownedbooks.indexOf(this.props.info.bookId)==-1
-                    ?<button class="btn btn-raised bg-dark text-light" onClick={this.addBook.bind(this)}>Add to my books</button>
+               {this.props.btnuse=="addbook"&&(this.props.ownedbooks.indexOf(this.props.info.bookId)==-1
+                    ?<button class="btn btn-raised bg-dark text-light" onClick={this.addBook}>Add to my books</button>
                     :<button class="btn" disabled>Already added</button>)
                }
                
                {this.props.btnuse =="answersender"&&
-               (<button class="btn btn-raised bg-dark text-light" onClick={()=>this.props.addexchange(this.props.info.bookId,this.props.info.title)}>Exchange</button>)}
+               (<button class="btn btn-raised bg-dark text-light" onClick={this.addExchange}>Exchange</button>)}
                 
                 {this.props.btnuse =="removebook"&&
-               (<button class="btn btn-raised bg-dark text-light" onClick={this.removeBook.bind(this)}>Remove from my books</button>)}
+               (<button class="btn btn-raised bg-dark text-light" onClick={this.removeBook}>Remove from my books</button>)}
                 
                 </ReactModal>
             );
         }
     }
 }
+
+var dispatchMap = {addBook,closeBook,removeBook,addRequest,addExchange,getUsersLocation};
+
 var propsMap = (store)=>{
     return{
         btnuse: store.viewbook.btnuse,
@@ -117,10 +98,10 @@ var propsMap = (store)=>{
         info:store.viewbook.info,
         username : store.userinfo.username,
         email:store.userinfo.email,
-        ownedbooks:store.userinfo.ownedbooks,
-        outrequests:store.userinfo.outrequests,
+        ownedbooks:store.userinfo.ownedbooks.map(book=>book.bookId),
+        outrequests:store.userinfo.outrequests.filter(request=>request.receiver.bookId==store.viewbook.info.bookId&&request.status!="declined").map(request=>request.receiver.username),
         ownerslocation:store.viewbook.ownerslocation
     };
 };
 
-export default connect(propsMap)(Modal);
+export default connect(propsMap,dispatchMap)(Modal);

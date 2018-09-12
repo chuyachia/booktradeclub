@@ -1,7 +1,6 @@
 import {connect} from "react-redux";
 import React from 'react';
 import {closeAlert} from "../actions/alertAction";
-import { bindActionCreators } from 'redux';
 
 var Alert = ({open,closeAlert}) =>(
         <div>
@@ -15,7 +14,7 @@ var Alert = ({open,closeAlert}) =>(
     );
     
 
-var dispathMap = (dispatch)=>bindActionCreators({closeAlert},dispatch);
+var dispathMap = {closeAlert};
 
 var propsMap = (store)=>{
     return{

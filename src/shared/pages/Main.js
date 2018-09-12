@@ -16,12 +16,13 @@ class Main extends React.Component {
     constructor(){
         super();
         this.state={term:''};
+        this.addSearchTerm = this.addSearchTerm.bind(this);
     }
     addSearchTerm(event){
         this.setState({term: event.target.value});
     }
     componentDidMount(){
-        this.props.dispatch(getAllBooks());
+        this.props.getAllBooks();
     }
     render(){
         var books = filter(this.props.books,(book)=>book.title.toLowerCase().indexOf(this.state.term)>-1);
@@ -29,7 +30,7 @@ class Main extends React.Component {
          <div class="container">
             <NavBar/>
             <h1 class="display-4">Books for exchange</h1>
-            <input class="searchbook" onChange={this.addSearchTerm.bind(this)} type="search" class="form-control" autoFocus
+            <input class="searchbook" onChange={this.addSearchTerm} type="search" class="form-control" autoFocus
             placeholder="Enter a book name"/>
             <div class={`${styles.wrap}`}>
                 <SyncLoader
@@ -47,6 +48,7 @@ class Main extends React.Component {
     }
 }
 
+var dispatchMap = {getAllBooks};
 
 var propsMap = (store)=>{
     return {
@@ -57,4 +59,4 @@ var propsMap = (store)=>{
     };
 };
 
-export default connect(propsMap)(Main);
+export default connect(propsMap,dispatchMap)(Main);

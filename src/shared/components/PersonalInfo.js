@@ -1,4 +1,4 @@
-import {changeEmail,changeLocation,changePassword,cancelChange,submitChange} from "../actions/userAction";
+import {startChangeEmail,startChangeLocation,startChangePassword,cancelChange,submitChange} from "../actions/userAction";
 import {connect} from "react-redux";
 import React from 'react';
 import styles from '../css/PersonalInfo.css';
@@ -24,33 +24,30 @@ class PersonalInfo extends React.Component{
             });
         }
     }
-    changeEmail(){
-        this.props.dispatch(changeEmail());
+    changePassword = (event)=>{
+        event.preventDefault();
+        var pwpair ={oldpassword:this.state.oldpassword,newpassword:this.state.newpassword};
+        this.props.submitChange(this.props.username,"password",pwpair);        
     }
-    changeLocation(){
-        this.props.dispatch(changeLocation());
+    changeEmail = (event)=>{
+        event.preventDefault();
+        this.props.submitChange(this.props.username,"email",this.state.email);
     }
-    changePassword(){
-        this.props.dispatch(changePassword());
+    changeLocation = (event)=>{
+        event.preventDefault();
+        this.props.submitChange(this.props.username,"location",this.state.location);
     }
-    cancelChange(){
-        this.props.dispatch(cancelChange());
+    handleOldPasswordChange = (event)=>{
+        this.setState({oldpassword:event.target.value});
     }
-    submitChange(target){
-        switch(target){
-        case "email":
-            this.props.dispatch(submitChange(this.props.username,target,this.state.email));
-            break;
-        case "location":
-            this.props.dispatch(submitChange(this.props.username,target,this.state.location));
-            break;
-        case "password":
-            var pwpair ={oldpassword:this.state.oldpassword,newpassword:this.state.newpassword};
-            this.props.dispatch(submitChange(this.props.username,target,pwpair));
-            break;
-        default:
-            break;
-        }
+    handleNewPasswordChange = (event)=>{
+        this.setState({newpassword:event.target.value});
+    }
+    handleLocationChange = (event)=>{
+        this.setState({location:event.target.value});
+    }
+    handleEmailChange = (event)=>{
+        this.setState({email:event.target.value});
     }
     render(){
         return(
@@ -59,24 +56,17 @@ class PersonalInfo extends React.Component{
                 <div>
                 <label for="passwordold"><strong>Password&nbsp;</strong></label>
                 <span>
-                <button class={`${styles.button}`} onClick={this.changePassword.bind(this)}><i class="fas fa-edit"></i></button>
+                <button class={`${styles.button}`} onClick={this.props.startChangePassword}><i class="fas fa-edit"></i></button>
                 {this.props.changedsucess&&(<p><i>Successfully changed</i></p>)}
                 </span>
                 {this.props.editpassword
                 ?(
-                    <form onSubmit={(event)=>{
-                    event.preventDefault();
-                    this.submitChange("password");
-                    }}>
+                    <form onSubmit={this.changePassword}>
                      <input type="password" placeholder="Old password" id="oldpassword" name ="oldpassword" class="form-control" required
-                     onChange={(event) => {
-                              this.setState({oldpassword:event.target.value});
-                            }}/>
+                     onChange={this.handleOldPasswordChange}/>
                      <input type="password" placeholder="New password" id="newpassword" name ="newpassword" class="form-control" required
                      pattern=".{6,}" 
-                     onChange={(event) => {
-                              this.setState({newpassword:event.target.value});
-                            }}/>
+                     onChange={this.handleNewPasswordChange}/>
                     {this.state.newpassword&&this.state.newpassword.length<6&&(
                         <div style={{color:"red"}}>Password needs to have at least 6 characters</div>
                     )}
@@ -84,7 +74,7 @@ class PersonalInfo extends React.Component{
                         <div style={{color:"red"}}>Old password does not match</div>
                     )}
                      <button type="submit" class={`${styles.button}`}><i class="fas fa-check"></i></button>
-                     <button type="button" class={`${styles.button}`} onClick={this.cancelChange.bind(this)}><i class="fas fa-times"></i></button>
+                     <button type="button" class={`${styles.button}`} onClick={this.props.cancelChange}><i class="fas fa-times"></i></button>
                      </form>
                 )
                 :null
@@ -94,20 +84,15 @@ class PersonalInfo extends React.Component{
                 <label for="location"><strong>Location&nbsp;</strong></label>
                 {this.props.editlocation
                 ?(
-                    <form style={{'display':'inline'}} onSubmit={(event)=>{
-                    event.preventDefault();
-                    this.submitChange("location");
-                    }}>
+                    <form style={{'display':'inline'}} onSubmit={this.changeLocation}>
                    <input type="text" class="form-control" placeholder={this.props.location}  id="location" required
-                      onChange={(event) => {
-                          this.setState({location:event.target.value});
-                    }}/>
+                      onChange={this.handleLocationChange}/>
                      <button type="submit" class={`${styles.button}`}><i class="fas fa-check"></i></button>
-                     <button type="button" class={`${styles.button}`} onClick={this.cancelChange.bind(this)}><i class="fas fa-times"></i></button>
+                     <button type="button" class={`${styles.button}`} onClick={this.props.cancelChange}><i class="fas fa-times"></i></button>
                      </form>
                 )
                 :(<span>{this.props.location}
-                <button class={`${styles.button}`} onClick={this.changeLocation.bind(this)}><i class="fas fa-edit"></i></button>
+                <button class={`${styles.button}`} onClick={this.props.startChangeLocation}><i class="fas fa-edit"></i></button>
                 </span>)
                 }
                 </div>
@@ -115,27 +100,23 @@ class PersonalInfo extends React.Component{
                 <label for="email"><strong>Email&nbsp;</strong></label>
                 {this.props.editemail
                 ?(
-                    <form style={{'display':'inline'}} class="form-inline" onSubmit={(event)=>{
-                    event.preventDefault();
-                    this.submitChange("email");
-                    }}>
+                    <form style={{'display':'inline'}} class="form-inline" onSubmit={this.changeEmail}>
                      <input type="email" placeholder={this.props.email} id="email" name ="email" class="form-control" required
-                     onChange={(event) => {
-                              this.setState({email:event.target.value});
-                            }}/>
+                     onChange={this.handleEmailChange}/>
                      <button type="submit" class={`${styles.button}`}><i class="fas fa-check"></i></button>
-                     <button type="button" class={`${styles.button}`} onClick={this.cancelChange.bind(this)}><i class="fas fa-times"></i></button>
+                     <button type="button" class={`${styles.button}`} onClick={this.props.cancelChange}><i class="fas fa-times"></i></button>
                      </form>
                     
                 )
                 :(<span>{this.props.email}
-                <button class={`${styles.button}`}  onClick={this.changeEmail.bind(this)}><i class="fas fa-edit"></i></button>
+                <button class={`${styles.button}`}  onClick={this.props.startChangeEmail}><i class="fas fa-edit"></i></button>
                 </span>)
                 }</div>
             </div>);
     }
 }
 
+var dispatchMap = {startChangeEmail,startChangeLocation,startChangePassword,cancelChange,submitChange};
 
 var propsMap = (store)=>{
     return{
@@ -151,7 +132,7 @@ var propsMap = (store)=>{
     };
 };
 
-export default connect(propsMap)(GoogleApiWrapper({
+export default connect(propsMap,dispatchMap)(GoogleApiWrapper({
   apiKey: ('AIzaSyCpnZV3MwYpso0pT3Bb8Nr9TqVh1EGR5Jc'),
   libraries:['places']
 })(PersonalInfo));
