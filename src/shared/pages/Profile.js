@@ -10,23 +10,23 @@ import React from "react";
 import RequestList from "../components/RequestList";
 import Search from "../components/Search";
 
-var switchReturn = function(page,ownedbooks){
-    switch(page){
-       case "search":
-           return <Search/>;
-       case "requests":
-           return <RequestList/>;
-       case "mybooks":
-           return (<div>{ownedbooks.map(book=> (
-            <BookCard key={book._id} info={book} modaluse="removebook"/>
-            ))}</div>);
-    }    
-}
 
 var Profile = ({profiletab,unread,ownedbooks,changePage})=> {
+    var switchReturn = (page,ownedbooks)=>{
+        switch(page){
+            case "search":
+               return <Search/>;
+            case "requests":
+               return <RequestList/>;
+            case "mybooks":
+               return (<div>{ownedbooks.map(book=> (
+                <BookCard key={book._id} info={book} modaluse="removebook"/>
+                ))}</div>);
+        }
+    };
     var toMybooks = ()=>changePage("mybooks");
     var toSearch = ()=>changePage("search");
-    var toRequests = ()=>changePage("requests");
+    var toRequests = ()=> changePage("requests");
     return (
         <div class="container">
             <NavBar/>

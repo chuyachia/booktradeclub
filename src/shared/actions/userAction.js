@@ -10,23 +10,20 @@ export function addUser(userinfo){
                 dispatch({
                     type:"NEW_USER_ADDED"
                 });
-                dispatch(logIn({
-                    username:userinfo.username,
-                    password:userinfo.password
-                }));
+                dispatch(logIn(userinfo.username,userinfo.password));
                 setTimeout(function() { 
-                dispatch({
-                    type:"REDIRECT"
-                });
+                    dispatch({
+                        type:"REDIRECT"
+                    });
                 }, 2000);
             } else {
                 dispatch({
                     type:"USERNAME_DUPLICATED"
                 });
                 setTimeout(function() { 
-                dispatch({
-                    type:"REFRESH"
-                });
+                    dispatch({
+                        type:"REFRESH"
+                    });
                 }, 2000);
             }
         })

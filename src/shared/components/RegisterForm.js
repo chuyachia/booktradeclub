@@ -9,10 +9,10 @@ class RegisterForm extends React.Component{
     constructor(){
         super();
         this.state={
-            username:null,
-            email:null,
-            password:null,
-            location:null
+            username:'',
+            email:'',
+            password:'',
+            location:''
         };
     }
     componentDidMount(){
@@ -21,48 +21,61 @@ class RegisterForm extends React.Component{
         const autocomplete = new google.maps.places.Autocomplete(input);
         autocomplete.addListener('place_changed', ()=> {
             this.setState({location:autocomplete.getPlace().formatted_address});
-        });
+        });        
     }
-    submitRegister(event){
+    componentDidUpdate(prevProps){
+        if(prevProps.registered&&!this.props.registered) {
+            const { google } = this.props;
+            var input = document.getElementById('location');
+            const autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.addListener('place_changed', ()=> {
+                this.setState({location:autocomplete.getPlace().formatted_address});
+            });
+        }
+    }
+    submitRegister = (event)=>{
         event.preventDefault();
-        this.props.dispatch(addUser({
+        this.props.addUser({
             username:this.state.username,
             password:this.state.password,
             email:this.state.email,
             location:this.state.location
-        }));
+        });
     }
-    cancelLogin(){
-     this.props.dispatch(cancelLogin());
+    changeUsername = (event)=>{
+        this.setState({username:event.target.value});
+    }
+    changePassword = (event)=>{
+        this.setState({password:event.target.value});
+    }
+    changeEmail = (event)=>{
+        this.setState({email:event.target.value});
+    }
+    changeLocation = (event)=>{
+        this.setState({location:event.target.value});
     }
     render(){
         if (!this.props.registered){
-            return(<form onSubmit={this.submitRegister.bind(this)}>
+            return(<form onSubmit={this.submitRegister}>
                         <div class="form-group">
                             <label for="username">Username</label>
                             <input type="text" class="form-control" id="username" name="username" placeholder="Username"
-                            autoComplete="off" required autoFocus
-                            onChange={(event) => {
-                              this.setState({username:event.target.value});
-                            }}/>
+                            autoComplete="off" required autoFocus value = {this.state.username}
+                            onChange={this.changeUsername}/>
                         </div>
                         <div class="form-group">
                             <label for="email">Email address</label>
                             <input type="email" class="form-control" id="email" name ="email" placeholder="Email" 
-                            autoComplete="off" required
-                            onChange={(event) => {
-                              this.setState({email:event.target.value});
-                            }}/>
+                            autoComplete="off" required value = {this.state.email}
+                            onChange={this.changeEmail}/>
                             <small class="form-text text-muted">We will only share it with people with whom you have concluded a book exchange.</small>
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Password"
-                            autoComplete="off"  required
+                            autoComplete="off"  required value = {this.state.password}
                             pattern=".{6,}" 
-                            onChange={(event) => {
-                              this.setState({password:event.target.value});
-                            }}/>
+                            onChange={this.changePassword}/>
                             {this.state.password&&this.state.password.length<6&&(
                             <div style={{color:"red"}}>Password needs to have at least 6 characters</div>
                             )}
@@ -70,13 +83,12 @@ class RegisterForm extends React.Component{
                         <div class="form-group">
                          <label for="location">Location</label>
                           <input type="text" class="form-control" placeholder="Enter your city"  id="location" required
-                          onChange={(event) => {
-                              this.setState({location:event.target.value});
-                            }}/>
+                          value = {this.state.location}
+                          onChange={this.changeLocation}/>
                           <small class="form-text text-muted">It's important to indicate your real location so that people near you will make a request to you.</small>
                           </div>
                         <button type="submit" class="btn btn-raised bg-dark text-light">Sign up</button>
-                        <Link class="btn btn-secondary" onClick = {this.cancelLogin.bind(this)} to="/">Cancel</Link>
+                        <Link class="btn btn-secondary" onClick = {this.props.cancelLogin} to="/">Cancel</Link>
                     </form>
             );
         } else {
@@ -95,6 +107,8 @@ class RegisterForm extends React.Component{
     }
 }
 
+var dispatchMap = {cancelLogin,addUser};
+
 var propsMap = (store)=>{
     return {
         registered:store.register.registered,
@@ -102,7 +116,7 @@ var propsMap = (store)=>{
     };
 };
 
-export default connect(propsMap)(GoogleApiWrapper({
+export default connect(propsMap,dispatchMap)(GoogleApiWrapper({
   apiKey: ('AIzaSyCpnZV3MwYpso0pT3Bb8Nr9TqVh1EGR5Jc'),
   libraries:['places']
 })(RegisterForm));

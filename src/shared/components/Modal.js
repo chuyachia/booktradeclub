@@ -1,5 +1,5 @@
 import Alert from "./Alert";
-import RequestItem from "./RequestItem";
+import OwnerItem from "./OwnerItem";
 import {addBook,closeBook,removeBook} from "../actions/bookAction";
 import {connect} from "react-redux";
 import {addRequest,addExchange} from "../actions/requestAction";
@@ -18,7 +18,7 @@ class Modal extends React.Component{
     addBook = ()=>this.props.addBook(this.props.info,this.props.username)
     addExchange = ()=>this.props.addExchange(this.props.info.bookId,this.props.info.title,this.props.tradeid,this.props.email)
     removeBook = ()=>this.props.removeBook(this.props.info.bookId,this.props.username)
-    renderRequestItem = (user,i)=><RequestItem key={i} owner={user} location={this.props.ownerslocation[i]} 
+    renderOwnerItem = (user,i)=><OwnerItem key={i} owner={user} location={this.props.ownerslocation[i]} 
         demander={this.props.username} existrequests = {this.props.outrequests} bookid={this.props.info.bookId} 
         booktitle={this.props.info.title} email={this.props.email} onClick={this.props.addRequest}/>
     render(){
@@ -67,7 +67,7 @@ class Modal extends React.Component{
                     </tr>
                   </thead>
                   <tbody>
-                    {this.props.ownerslocation.length>0&&this.props.info.ownBy.map(this.renderRequestItem)}
+                    {this.props.ownerslocation.length>0&&this.props.info.ownBy.map(this.renderOwnerItem)}
                   </tbody>
                 </table></div>}
                 
