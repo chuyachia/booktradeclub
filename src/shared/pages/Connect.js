@@ -8,9 +8,7 @@ import {Redirect } from "react-router-dom";
 import {changePage} from "../actions/connectAction";
 
 
-var Connect = ({redirect,location,connecttab,changePage})=>{
-        var toLogin = ()=>changePage("login");
-        var toSignup = ()=>changePage("signup");
+var Connect = ({redirect,location,connecttab,toLogin,toSignup})=>{
         if (redirect){
          var loc = querystring.parse(location.search).redirect;
          return(<Redirect to={{
@@ -40,11 +38,14 @@ var Connect = ({redirect,location,connecttab,changePage})=>{
                       </div>
                     </div>
                 </div>
-            </div>)    
+            </div>);    
             }
-    }
+    };
 
-var dispathMap = {changePage};
+var dispathMap = (dispatch)=>({
+    toLogin:()=>dispatch(changePage("login")),
+    toSignup:()=>dispatch(changePage("signup"))
+});
 
 var propsMap = (store)=>({
         redirect:store.setting.redirect,

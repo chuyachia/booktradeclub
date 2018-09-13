@@ -11,7 +11,7 @@ import RequestList from "../components/RequestList";
 import Search from "../components/Search";
 
 
-var Profile = ({profiletab,unread,ownedbooks,changePage})=> {
+var Profile = ({profiletab,unread,ownedbooks,changePage,toMybooks,toSearch,toRequests})=> {
     var switchReturn = (page,ownedbooks)=>{
         switch(page){
             case "search":
@@ -24,9 +24,7 @@ var Profile = ({profiletab,unread,ownedbooks,changePage})=> {
                 ))}</div>);
         }
     };
-    var toMybooks = ()=>changePage("mybooks");
-    var toSearch = ()=>changePage("search");
-    var toRequests = ()=> changePage("requests");
+
     return (
         <div class="container">
             <NavBar/>
@@ -61,9 +59,14 @@ var Profile = ({profiletab,unread,ownedbooks,changePage})=> {
             <Footer/>
         </div>    
         );
-    }
+    };
 
-var dispathMap = {changePage};
+var dispathMap = (dispatch)=>({
+    toMybooks:()=>dispatch(changePage("mybooks")),
+    toSearch:()=>dispatch(changePage("search")),
+    toRequests:()=> dispatch(changePage("requests"))
+});
+
 
 var propsMap = (store)=>{
     var unreadin= store.userinfo.inrequests.filter(request=>request.receiver.unread==true);

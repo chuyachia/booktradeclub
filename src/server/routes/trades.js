@@ -53,6 +53,7 @@ trades.post('/handle',checkAuthentication,function(req,res,next){
                 "receiver.email":req.body.email
             }})
             .exec((err,result)=>{
+                console.log(result);
                 if (err) return next(err);
                 return res.json({success:true,message:"New exchange added"});
             });

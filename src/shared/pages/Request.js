@@ -50,10 +50,11 @@ class Request extends React.Component{
                 <strong style={{cursor:'pointer'}} onClick={this.viewSenderBooksInfo}>&nbsp;"{this.props.info.sender.bookName}"&nbsp;</strong>.
             </p>
         )
-        
-    reqeustDecline = ()=>(<p>Sorry, I'm not interested.</p>)
+
+    reqeustDecline = ()=>{return (<p>Sorry, I'm not interested.</p>)}
     requestConfirm = ()=>(<p>OK! That's call it a deal.</p>)
     instructWaint = (name)=> (<p>Waiting for {name}'s response.</p>)
+    
     render(){
         if (this.props.info.sender&&this.props.info.receiver&&!this.state.unauthorized){
             var sender = this.props.info.sender.username==this.props.username?"You":this.props.info.sender.username;
@@ -147,7 +148,7 @@ class Request extends React.Component{
                     </div>)}
                 </div>)
                 }
-                <Modal tradeif={this.props.info._id}/>
+                <Modal tradeid={this.props.info._id}/>
                 <Footer/>
             </div>);
         } else {

@@ -1,20 +1,23 @@
 import React from 'react';
 
-var OwnerItem = ({owner,location,demander,existrequests,bookid,booktitle,email,onClick})=> {
-    var clickHandle = ()=>onClick(demander,owner,bookid,booktitle,email);
-    return (
+class OwnerItem extends React.Component {
+  clickHandle = ()=>this.props.onClick(this.props.demander,this.props.owner,this.props.bookid,this.props.booktitle,this.props.email);
+  render(){
+    return(
         <tr>
-          <td>{owner}</td>
-          <td>{location}</td>
+          <td>{this.props.owner}</td>
+          <td>{this.props.location}</td>
           <td>
-          {owner!==demander?
-            existrequests.indexOf(owner)==-1?
-              (<button class="btn btn-raised bg-dark text-light" onClick={clickHandle}>Request</button>):
+          {this.props.owner!==this.props.demander?
+            this.props.existrequests.indexOf(this.props.owner)==-1?
+              (<button class="btn btn-raised bg-dark text-light" onClick={this.clickHandle}>Request</button>):
               (<button class="btn" disabled>Already requested</button>)
               :null
           }</td>
-        </tr>    
-    );
-};
+        </tr>      
+      );
+  }
+}
+
 
 export default OwnerItem;
