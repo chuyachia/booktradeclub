@@ -1,20 +1,24 @@
 import axios from 'axios';
 import {showAlert} from "./alertAction";
+import {START_GET_ALL_BOOKS, SUCCESS_GET_ALL_BOOKS, ERROR_GET_ALL_BOOKS, 
+START_SEARCH_BOOK, SUCCESS_SEARCH_BOOK, ERROR_SEARCH_BOOK, VIEW_ADD_BOOK, VIEW_REQUEST_BOOK,
+VIEW_EXCHANGE_BOOK,VIEW_REMOVE_BOOK,VIEW_BOOK,CLOSE_BOOK,ADD_BOOK,REQUIRE_LOGIN,
+DELETE_BOOK} from "../constants/actionTypes";
 
 export function getAllBooks(){
     return function(dispatch){
-        dispatch({type: "START_QUERY"});
+        dispatch({type: START_GET_ALL_BOOKS});
         axios.get('/books/all')
         .then((response)=>{
             dispatch({
-                type:"NEW_QUERY",
+                type:SUCCESS_GET_ALL_BOOKS,
                 payload:response.data
             });
         })        
         .catch(error=> {
             console.log(error);
             dispatch({
-                type:"QUERY_ERROR"
+                type:ERROR_GET_ALL_BOOKS
             });
         });
     };
@@ -22,17 +26,17 @@ export function getAllBooks(){
 
 export function searchBooks(bookname){
     return function(dispatch){
-        dispatch({type: "START_SEARCH"});
+        dispatch({type: START_SEARCH_BOOK});
         axios.get('/search/'+bookname)
         .then((response)=> {
             dispatch({
-                type:"NEW_SEARCH",
+                type:SUCCESS_SEARCH_BOOK,
                 payload:response.data
             });
         })
         .catch(error=> {
             dispatch({
-                type:"SEARCH_ERROR",
+                type:ERROR_SEARCH_BOOK,
                 payload:error
             });
         });
@@ -45,31 +49,31 @@ export function viewBook(bookinfo,type){
             case "addbook":
                 bookinfo.btnuse = "addbook";
                 return {
-                    type:"VIEW_ADD_BOOK",
+                    type:VIEW_ADD_BOOK,
                     payload:bookinfo
                 };
             case "addrequest":
                 bookinfo.btnuse = "addrequest";
                 return {
-                    type:"VIEW_REQUEST_BOOK",
+                    type:VIEW_REQUEST_BOOK,
                     payload:bookinfo
                 };
             case "answersender":
                 bookinfo.btnuse = "answersender";
                 return {
-                    type:"VIEW_EXCHANGE_BOOK",
+                    type:VIEW_EXCHANGE_BOOK,
                     payload:bookinfo
                 };
             case "removebook":
                 bookinfo.btnuse = "removebook";
                 return {
-                    type:"VIEW_REMOVE_BOOK",
+                    type:VIEW_REMOVE_BOOK,
                     payload:bookinfo
                 };
             default:
                 bookinfo.btnuse = "info";
                 return {
-                    type:"VIEW_BOOK",
+                    type:VIEW_BOOK,
                     payload:bookinfo
                 };
         }
@@ -77,7 +81,7 @@ export function viewBook(bookinfo,type){
 
 export function closeBook(bookinfo){
     return {
-        type:"CLOSE_BOOK"
+        type:CLOSE_BOOK
     };
 }
 
@@ -88,12 +92,12 @@ export function addBook(bookinfo,username){
         .then(response=>{
             if (response.data.success){
                 dispatch({
-                    type:"NEW_BOOK_ADDED",
+                    type:ADD_BOOK,
                     payload:bookinfo
                 }); 
             } else{
                dispatch({
-                    type:"LOG_IN_REQUIRED"
+                    type:REQUIRE_LOGIN
                 });  
             }
         })
@@ -109,7 +113,7 @@ export function removeBook(bookid,username){
         axios.delete('/books/remove/'+bookid+"/"+username)
         .then(response=>{
             dispatch({
-                type:"BOOK_DELETED",
+                type:DELETE_BOOK,
                 payload:bookid
             }); 
         })

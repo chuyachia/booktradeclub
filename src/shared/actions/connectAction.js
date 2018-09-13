@@ -1,17 +1,18 @@
 import axios from 'axios';
 import {showAlert} from "./alertAction";
+import {START_LOGIN, SUCCESS_LOGIN, REDIRECT,WRONG_CREDENTIAL,CANCEL_LOGIN,LOGOUT,CONNECT_CHANGE_TAB} from "../constants/actionTypes";
 
 export function logIn(username,password){
     return function(dispatch){
         var userinfo = {username,password};
         dispatch({
-            type:"SEND_LOG_IN"
+            type:START_LOGIN
         });
         axios.post('/auth/login',userinfo)
         .then(response=> {
             if(response.data.success){
                 dispatch({
-                    type:"LOGGED_IN",
+                    type:SUCCESS_LOGIN,
                     payload:{
                         username:response.data.username,
                         email:response.data.email,
@@ -22,12 +23,12 @@ export function logIn(username,password){
                 });
                 setTimeout(function() { 
                 dispatch({
-                    type:"REDIRECT"
+                    type:REDIRECT
                 }); 
                 }, 1000);
             } else {
                 dispatch({
-                    type:"WRONG_CREDENTIAL",
+                    type:WRONG_CREDENTIAL,
                     payload:response.data.message
                 });
             }
@@ -41,14 +42,14 @@ export function logIn(username,password){
 }
 export function cancelLogin(){
     return {
-        type:"CANCEL_LOGIN"
+        type:CANCEL_LOGIN
     };
 }
 export function logOut(){
     return function(dispatch){
     axios.get('/auth/logout')
     .then(response=>dispatch({
-        type:"LOGGED_OUT"
+        type:LOGOUT
     }))
     .catch(error=>{
         console.log(error);
@@ -59,7 +60,7 @@ export function logOut(){
 
 export function changePage(target){
     return {
-            type:"CONNECT_CHANGE_TAB",
+            type:CONNECT_CHANGE_TAB,
             payload :target
     };
 }

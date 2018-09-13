@@ -1,6 +1,11 @@
 import axios from 'axios';
 import {logIn} from "./connectAction";
 import {showAlert} from "./alertAction";
+import {ADD_USER,REDIRECT,DUPLICATED_USERNAME,REFRESH,GET_USERS_LOCATION,PROFILE_CHANGE_TAB,
+    START_CHANGE_EMAIL,START_CHANGE_LOCATION,START_CHANGE_PASSWORD,CANCEL_CHANGE,SUCCESS_CHANGE_PASSWORD,
+    REMOVE_SUCCESS_MESSAGE,FAIL_CHANGE_PASSWORD,SUCCESS_CHANGE_USERINFO
+} from "../constants/actionTypes";
+
 
 export function addUser(userinfo){
     return function(dispatch){
@@ -8,21 +13,21 @@ export function addUser(userinfo){
         .then(response=> {
             if(response.data.success) {
                 dispatch({
-                    type:"NEW_USER_ADDED"
+                    type:ADD_USER
                 });
                 dispatch(logIn(userinfo.username,userinfo.password));
                 setTimeout(function() { 
                     dispatch({
-                        type:"REDIRECT"
+                        type:REDIRECT
                     });
                 }, 2000);
             } else {
                 dispatch({
-                    type:"USERNAME_DUPLICATED"
+                    type:DUPLICATED_USERNAME
                 });
                 setTimeout(function() { 
                     dispatch({
-                        type:"REFRESH"
+                        type:REFRESH
                     });
                 }, 2000);
             }
@@ -46,7 +51,7 @@ export function getUsersLocation(users){
         axios.get('/users/location?'+query)
         .then(response=>{
             dispatch({
-                type:"GET_USERS_LOCATION",
+                type:GET_USERS_LOCATION,
                 payload:response.data
             });
         })
@@ -59,33 +64,33 @@ export function getUsersLocation(users){
 
 export function changePage(target){
     return {
-            type:"PROFILE_CHANGE_TAB",
+            type:PROFILE_CHANGE_TAB,
             payload :target
     };
 }
 
 export function startChangeEmail(){
     return {
-            type:"CHANGE_EMAIL"
+            type:START_CHANGE_EMAIL
     };
 }
 
 export function startChangeLocation(){
     return {
-            type:"CHANGE_LOCATION"
+            type:START_CHANGE_LOCATION
     };
 }
 
 export function startChangePassword(){
     return {
-            type:"CHANGE_PASSWORD"
+            type:START_CHANGE_PASSWORD
     };
 }
 
 
 export function cancelChange(){
     return {
-            type:"CANCEL_CHANGE"
+            type:CANCEL_CHANGE
     };
 }
 
@@ -97,17 +102,17 @@ export function submitChange(username,action,data){
             .then(response=>{
                 if (response.data.success){
                    dispatch({
-                       type:"PASSWORD_CHANGED"
+                       type:SUCCESS_CHANGE_PASSWORD
                    });
                    setTimeout(function() { 
                     dispatch({
-                        type:"SUCCESS_OFF"
+                        type:REMOVE_SUCCESS_MESSAGE
                     }); 
                     }, 2000);
                 } else {
                     if(response.data.status=="wrongpassword"){
                        dispatch({
-                           type:"PASSWORD_MATCH_FAIL"
+                           type:FAIL_CHANGE_PASSWORD
                        });
                     } else {
                         dispatch(showAlert());
@@ -126,7 +131,7 @@ export function submitChange(username,action,data){
             })
             .then(response=>{
                 dispatch({
-                    type:"USER_INFO_CHANGED",
+                    type:SUCCESS_CHANGE_USERINFO,
                     payload:response.data.result
                 });
             })

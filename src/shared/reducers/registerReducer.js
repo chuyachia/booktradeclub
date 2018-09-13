@@ -1,37 +1,32 @@
+import {ADD_USER,DUPLICATED_USERNAME,REDIRECT,REFRESH} from "../constants/actionTypes";
+
 export default function reducer(state={
     registered:false,
     result:null,
     redirect:null,
 },action){
     switch(action.type) {
-        case "NEW_USER_ADDED":{
+        case ADD_USER:{
             return {
                 ...state,
                 registered:true,
                 result:'success'
             }
         }
-        case "USERNAME_DUPLICATED": {
+        case DUPLICATED_USERNAME: {
             return{
                 ...state,
                 registered:true,
                 result:'duplicated'
             }
         }
-        case "ADD_USER_ERROR":{
-            return {
-                ...state,
-                registered:true,
-                result:'error'
-            }
-        }
-        case "REDIRECT":{
+        case REDIRECT:{
             return {
                 ...state,
                 redirect:action.payload
             }
         }
-        case "REFRESH":{
+        case REFRESH:{
             return {
                 ...state,
                 registered:false

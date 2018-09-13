@@ -81,8 +81,7 @@ class Modal extends React.Component{
                 
                 {this.props.btnuse =="removebook"&&
                (<button class="btn btn-raised bg-dark text-light" onClick={this.removeBook}>Remove from my books</button>)}
-                
-                </ReactModal>
+            </ReactModal>
             );
         }
     }

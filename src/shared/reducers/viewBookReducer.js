@@ -1,3 +1,6 @@
+import {VIEW_ADD_BOOK, VIEW_REQUEST_BOOK,VIEW_EXCHANGE_BOOK,VIEW_REMOVE_BOOK,GET_USERS_LOCATION,
+VIEW_BOOK,CLOSE_BOOK,DELETE_BOOK,REQUIRE_LOGIN,SUCCESS_LOGIN,CANCEL_LOGIN,ADD_EXCHANGE} from "../constants/actionTypes";
+
 export default function reducer(state={
     open:false,
     tologin:false,
@@ -16,10 +19,10 @@ export default function reducer(state={
     }
 },action){
     switch(action.type) {
-        case "VIEW_ADD_BOOK":
-        case "VIEW_EXCHANGE_BOOK":
-        case "VIEW_REMOVE_BOOK":
-        case "VIEW_BOOK":{
+        case VIEW_ADD_BOOK:
+        case VIEW_EXCHANGE_BOOK:
+        case VIEW_REMOVE_BOOK:
+        case VIEW_BOOK:{
             var {btnuse, ...info} = action.payload;
             return {
                 ...state,
@@ -28,7 +31,7 @@ export default function reducer(state={
                 btnuse:btnuse
             };
         }
-        case "VIEW_REQUEST_BOOK":{
+        case VIEW_REQUEST_BOOK:{
             var {btnuse,ownBy, ...info} = action.payload;
             ownBy.sort();
             info.ownBy =ownBy;
@@ -39,34 +42,34 @@ export default function reducer(state={
                 btnuse:btnuse
             };
         }
-        case "BOOK_DELETED":
-        case "CLOSE_BOOK":{
+        case DELETE_BOOK:
+        case CLOSE_BOOK:{
             return {
                 ...state,
                 open:false,
                 ownerslocation:[]
             };
         }
-        case "LOG_IN_REQUIRED":{
+        case REQUIRE_LOGIN:{
             return {
                 ...state,
                 tologin:true
             }
         }
-        case "CANCEL_LOGIN":
-        case "LOGGED_IN":{
+        case CANCEL_LOGIN:
+        case SUCCESS_LOGIN:{
             return {
                 ...state,
                 tologin:false
             }
         }
-        case "GET_USERS_LOCATION":{
+        case GET_USERS_LOCATION:{
             return{
                 ...state,
                 ownerslocation :action.payload
             }
         }
-        case "NEW_EXCHANGE_ADDED":{
+        case ADD_EXCHANGE:{
             return{
                 ...state,
                 open:false

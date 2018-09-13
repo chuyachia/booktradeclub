@@ -1,28 +1,25 @@
+import {VIEW_REQUEST,GET_SENDER_BOOKS,ADD_EXCHANGE,CONFIRM_TRADE,DECLINE_TRADE} from "../constants/actionTypes";
+
+
 export default function reducer(state={
     open:false,
     info:{},
     senderbooks:[]
 },action){
     switch(action.type) {
-        case "OPEN_REQUEST":{
-            return{
-                ...state,
-                info:{},
-            };
-        }
-        case "VIEW_REQUEST":{
+        case VIEW_REQUEST:{
             return {
                 ...state,
                 info:action.payload,
             };
         }
-        case "SENDER_BOOKS":{
+        case GET_SENDER_BOOKS:{
             return{
                 ...state,
                 senderbooks:action.payload
             };
         }
-        case "NEW_EXCHANGE_ADDED" :{
+        case ADD_EXCHANGE:{
             return {
                 ...state,
                 info:{
@@ -34,7 +31,7 @@ export default function reducer(state={
                 }
             };
         }
-        case "TRADE_CONFIRMED":{
+        case CONFIRM_TRADE:{
             return{
                 ...state,
                 info:{
@@ -46,7 +43,7 @@ export default function reducer(state={
                 }
             };
         }
-        case "TRADE_DECLINED":{
+        case DECLINE_TRADE:{
             return{
                 ...state,
                info:{

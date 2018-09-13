@@ -1,3 +1,8 @@
+import {CONNECT_CHANGE_TAB,REDIRECT,PROFILE_CHANGE_TAB,START_CHANGE_EMAIL,START_CHANGE_LOCATION,
+    START_CHANGE_PASSWORD,SUCCESS_CHANGE_PASSWORD,CANCEL_CHANGE,SUCCESS_CHANGE_USERINFO,
+    REMOVE_SUCCESS_MESSAGE,FAIL_CHANGE_PASSWORD
+} from "../constants/actionTypes";
+
 export default function reducer(state={
     editemail:false,
     editlocation:false,
@@ -9,19 +14,19 @@ export default function reducer(state={
     redirect:false
 },action){
     switch(action.type) {
-        case "PROFILE_CHANGE_TAB":{
+        case PROFILE_CHANGE_TAB:{
             return{
                 ...state,
                 profiletab:action.payload
             }
         }
-        case "CONNECT_CHANGE_TAB":{
+        case CONNECT_CHANGE_TAB:{
             return{
                 ...state,
                 connecttab:action.payload
             }
         }
-        case "CHANGE_EMAIL":{
+        case START_CHANGE_EMAIL:{
             return{
                 ...state,
                 editemail:true,
@@ -29,7 +34,7 @@ export default function reducer(state={
                 editpassword:false
             }
         }
-        case "CHANGE_LOCATION":{
+        case START_CHANGE_LOCATION:{
             return{
                 ...state,
                 editlocation:true,
@@ -37,7 +42,7 @@ export default function reducer(state={
                 editpassword:false
             }
         }
-        case "CHANGE_PASSWORD":{
+        case START_CHANGE_PASSWORD:{
             return{
                 ...state,
                 editpassword:true,
@@ -46,7 +51,7 @@ export default function reducer(state={
                 
             }
         }
-        case "PASSWORD_CHANGED":{
+        case SUCCESS_CHANGE_PASSWORD:{
             return{
                 ...state,
                 changedsucess:true,
@@ -56,8 +61,8 @@ export default function reducer(state={
                 psunmatch:false
             }
         }
-        case "CANCEL_CHANGE":
-        case "USER_INFO_CHANGED":{
+        case CANCEL_CHANGE:
+        case SUCCESS_CHANGE_USERINFO:{
             return{
                 ...state,
                 editemail:false,
@@ -66,19 +71,19 @@ export default function reducer(state={
                 psunmatch:false
             }
         }
-        case "SUCCESS_OFF":{
+        case REMOVE_SUCCESS_MESSAGE:{
             return{
                 ...state,
                 changedsucess:false
             }
         }
-        case "PASSWORD_MATCH_FAIL":{
+        case FAIL_CHANGE_PASSWORD:{
             return{
                 ...state,
                 psunmatch:true
             }
         }
-        case "REDIRECT":{
+        case REDIRECT:{
             return{
                 ...state,
                 redirect:true

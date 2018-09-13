@@ -1,3 +1,7 @@
+import {ADD_BOOK, DELETE_BOOK,START_LOGIN,SUCCESS_LOGIN,WRONG_CREDENTIAL,CANCEL_LOGIN,GET_ALL_REQUESTS,
+    DELETE_REQUEST,ADD_REQUEST,SUCCESS_CHANGE_USERINFO
+} from "../constants/actionTypes";
+
 export default function reducer(state={
     wrongcredential:false,
     username:null,
@@ -8,7 +12,7 @@ export default function reducer(state={
     outrequests:[]
 },action){
     switch(action.type) {
-        case "LOGGED_IN":{
+        case SUCCESS_LOGIN:{
             var inrequests = action.payload.requests.filter(request=>request.receiver.username == action.payload.username);
             var outrequests = action.payload.requests.filter(request=>request.sender.username == action.payload.username);
    
@@ -23,7 +27,7 @@ export default function reducer(state={
                 outrequests : outrequests
             }
         }
-        case "ALL_REQUESTS":{
+        case GET_ALL_REQUESTS:{
             var inreqs = action.payload.filter(request=>request.receiver.username == state.username);
             var outreqs = action.payload.filter(request=>request.sender.username ==state.username);
             return {
@@ -32,51 +36,51 @@ export default function reducer(state={
                 outrequests : outreqs
             }
         }
-        case "DELETE_REQUEST" :{
+        case DELETE_REQUEST :{
             return {
                 ...state,
                 inrequests : state.inrequests.filter(request=>request._id !== action.payload),
                 outrequests : state.outrequests.filter(request=>request._id !== action.payload)
             }            
         }
-        case "SEND_LOG_IN":{
+        case START_LOGIN:{
            return{
                 ...state,
                 wrongcredential:false
             } 
         }
-        case "WRONG_CREDENTIAL": {
+        case WRONG_CREDENTIAL: {
             return{
                 ...state,
                 wrongcredential:true
             }
         }
-        case "CANCEL_LOGIN" :{
+        case CANCEL_LOGIN :{
             return {
                 ...state,
                 wrongcredential:false
             }
         }
-        case "NEW_BOOK_ADDED":{
+        case ADD_BOOK:{
             return{
                 ...state,
                 ownedbooks:[...state.ownedbooks, action.payload]
             }
         }
-        case "BOOK_DELETED":{
+        case DELETE_BOOK:{
             var newownedbooks= state.ownedbooks.filter(book=>book.bookId!=action.payload);
             return{
                 ...state,
                 ownedbooks:newownedbooks
             }
         }
-        case "NEW_REQUEST_ADDED":{
+        case ADD_REQUEST:{
             return{
             ...state,
             outrequests:[...state.outrequests,action.payload]
             }
         }
-        case "USER_INFO_CHANGED":{
+        case SUCCESS_CHANGE_USERINFO:{
             return{
                 ...state,
                 email:action.payload.email,

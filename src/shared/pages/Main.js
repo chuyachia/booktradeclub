@@ -52,9 +52,9 @@ var dispatchMap = {getAllBooks};
 
 var propsMap = (store)=>{
     return {
-        loading:store.queries.loading,
-        books : store.queries.books,
-        error : store.queries.error,
+        loading:store.allbooks.loading,
+        books : store.allbooks.books,
+        error : store.allbooks.error,
         username : store.userinfo.username
     };
 };

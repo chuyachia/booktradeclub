@@ -3,9 +3,9 @@ import alerts from "./alertReducer";
 import searches from "./searchReducer";
 import setting from "./settingReducer";
 import userinfo from "./userinfoReducer";
-import queries from "./queryReducer";
+import allbooks from "./allBooksReducer";
 import viewbook from "./viewBookReducer";
 import viewreq from "./viewReqReducer";
 import register from "./registerReducer";
 
-export default combineReducers({alerts,searches,viewbook,viewreq,queries,register,userinfo,setting});
+export default combineReducers({alerts,searches,viewbook,viewreq,allbooks,register,userinfo,setting});
