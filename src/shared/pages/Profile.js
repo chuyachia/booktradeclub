@@ -9,7 +9,7 @@ import PersonalInfo from "../components/PersonalInfo";
 import React from "react";
 import RequestList from "../components/RequestList";
 import Search from "../components/Search";
-
+import {getAllUnreadRequests} from "../selectors";
 
 var Profile = ({profiletab,unread,ownedbooks,changePage,toMybooks,toSearch,toRequests})=> {
     var switchReturn = (page,ownedbooks)=>{
@@ -69,12 +69,10 @@ var dispathMap = (dispatch)=>({
 
 
 var propsMap = (store)=>{
-    var unreadin= store.userinfo.inrequests.filter(request=>request.receiver.unread==true);
-    var unreadout = store.userinfo.outrequests.filter(request=>request.sender.unread==true);
     return {
         profiletab:store.setting.profiletab,
         ownedbooks:store.userinfo.ownedbooks,
-        unread: unreadin.length+unreadout.length
+        unread: getAllUnreadRequests(store)
     };
 };
 

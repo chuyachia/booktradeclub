@@ -123,7 +123,6 @@ var propsMap = (store)=>{
         username : store.userinfo.username,
         email:store.userinfo.email,
         location:store.userinfo.location,
-        ownedbooks:store.userinfo.ownedbooks,
         editemail:store.setting.editemail,
         editlocation:store.setting.editlocation,
         editpassword:store.setting.editpassword,

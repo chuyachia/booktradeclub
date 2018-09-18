@@ -7,7 +7,7 @@ import {getUsersLocation} from "../actions/userAction";
 import React from 'react';
 import ReactModal from 'react-modal';
 import {Redirect } from "react-router-dom";
-
+import {getBooksId,getExistingRequests} from "../selectors";
 
 class Modal extends React.Component{
     componentWillReceiveProps(nextProps){
@@ -97,8 +97,8 @@ var propsMap = (store)=>{
         info:store.viewbook.info,
         username : store.userinfo.username,
         email:store.userinfo.email,
-        ownedbooks:store.userinfo.ownedbooks.map(book=>book.bookId),
-        outrequests:store.userinfo.outrequests.filter(request=>request.receiver.bookId==store.viewbook.info.bookId&&request.status!="declined").map(request=>request.receiver.username),
+        ownedbooks:getBooksId(store),
+        outrequests:getExistingRequests(store),
         ownerslocation:store.viewbook.ownerslocation
     };
 };
