@@ -9,7 +9,8 @@ class LoginForm extends React.Component{
         super();
         this.state={
             username:'',
-            password:''
+            password:'',
+            disabled:false
         };
     }
     componentWillReceiveProps(nextProp){
@@ -22,6 +23,7 @@ class LoginForm extends React.Component{
     }
     logIn = (event) => {
         event.preventDefault();
+        this.setState({disabled:true});
         this.props.logIn(this.state.username,this.state.password);
     }
     changeUsername = (event)=>{
@@ -50,7 +52,7 @@ class LoginForm extends React.Component{
                         onChange={this.changePassword}/>
                     </div>
                     {(this.props.wrongcredential&&this.state.password.length==0)&&<div>Wrong username or password! Try again</div>}
-                    <button type="submit" class="btn btn-raised bg-dark text-light">Log in</button>
+                    <button type="submit" class="btn btn-raised bg-dark text-light" disabled={this.state.disabled}>Log in</button>
                     <Link class="btn btn-secondary" onClick = {this.props.cancelLogin} to="/">Cancel</Link>
                 </form>
                 </div>

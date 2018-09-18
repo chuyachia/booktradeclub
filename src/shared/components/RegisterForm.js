@@ -12,7 +12,8 @@ class RegisterForm extends React.Component{
             username:'',
             email:'',
             password:'',
-            location:''
+            location:'',
+            disabled:false
         };
     }
     componentDidMount(){
@@ -25,6 +26,7 @@ class RegisterForm extends React.Component{
     }
     componentDidUpdate(prevProps){
         if(prevProps.registered&&!this.props.registered) {
+            this.setState({disabled:false});
             const { google } = this.props;
             var input = document.getElementById('location');
             const autocomplete = new google.maps.places.Autocomplete(input);
@@ -35,6 +37,7 @@ class RegisterForm extends React.Component{
     }
     submitRegister = (event)=>{
         event.preventDefault();
+        this.setState({disabled:true});
         this.props.addUser({
             username:this.state.username,
             password:this.state.password,
@@ -87,7 +90,7 @@ class RegisterForm extends React.Component{
                           onChange={this.changeLocation}/>
                           <small class="form-text text-muted">It's important to indicate your real location so that people near you will make a request to you.</small>
                           </div>
-                        <button type="submit" class="btn btn-raised bg-dark text-light">Sign up</button>
+                        <button type="submit" class="btn btn-raised bg-dark text-light" disabled={this.state.disabled}>Sign up</button>
                         <Link class="btn btn-secondary" onClick = {this.props.cancelLogin} to="/">Cancel</Link>
                     </form>
             );
