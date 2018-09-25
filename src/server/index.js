@@ -104,9 +104,8 @@ app.get("*",(req,res) => {
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <title>Book Trading Club</title>
           <link rel="shortcut icon" href="">
-          <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css">
+          <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
           <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
-          <link rel="stylesheet" href="https://unpkg.com/react-bootstrap-typeahead/css/Typeahead.css">
           <link rel="stylesheet" href="/css/main.css">
           <script>window.__initialData__ = ${serialize(initialData)}</script>
           <script src="/bundle.js" defer></script>

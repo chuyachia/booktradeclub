@@ -15,6 +15,7 @@ class Modal extends React.Component{
         if (nextProps.btnuse=="addrequest"&&nextProps.info.ownBy&&nextProps.info!==this.props.info){
             this.props.getUsersLocation(nextProps.info.ownBy);
         }
+        nextProps.open?document.body.classList.add('modal-open'):document.body.classList.remove('modal-open');
     }
     addBook = ()=>this.props.addBook(this.props.info,this.props.username)
     addExchange = ()=>this.props.addExchange(this.props.info.bookId,this.props.info.title,this.props.tradeid,this.props.email)
@@ -30,58 +31,68 @@ class Modal extends React.Component{
         } else {
             return(
             <div>
-            <div class={`${styles.overlay} ${this.props.open?styles.open:''}`}/>
-            <div class={`modal-content ${styles.modal} ${this.props.open?styles.open:''}`}>
-               <i class="fas fa-times" onClick={this.props.closeBook}/>
-               <Alert/>
-               <h3>{this.props.info.title}</h3>
-               <dl>
-                    <dt><img src={this.props.info.imageUrl} alt={this.props.info.title} class="img-thumbnail"/></dt>
-               {this.props.info.authors&&
-               (<div>
-                    <dt>Author</dt>
-                    <dd>{this.props.info.authors.map((author,i)=> {
-                    if (i<this.props.info.authors.length-1) {
-                        return (<span key={i}>{author}, </span>);
-                    } else {
-                        return (<span key={i}>{author}</span>);
-                    }
-                    })}</dd>
-                </div>)}
-                    <dt>Publisher</dt>
-                    <dd>{this.props.info.publisher}</dd>
-                    <dt>Published</dt>
-                    <dd>{this.props.info.publishedDate}</dd>
-
-                    <dd>{this.props.info.description}</dd>
-               </dl>
-               
-               {this.props.btnuse=="addrequest"&&
-               <div>
-               <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Owner</th>
-                      <th scope="col">Location</th>
-                      <th scope="col"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.props.ownerslocation.length>0&&this.props.info.ownBy.map(this.renderOwnerItem)}
-                  </tbody>
-                </table></div>}
-                
-               {this.props.btnuse=="addbook"&&(this.props.ownedbooks.indexOf(this.props.info.bookId)==-1
-                    ?<button class="btn btn-raised bg-dark text-light" onClick={this.addBook}>Add to my books</button>
-                    :<button class="btn" disabled>Already added</button>)
-               }
-               
-               {this.props.btnuse =="answersender"&&
-               (<button class="btn btn-raised bg-dark text-light" onClick={this.addExchange}>Exchange</button>)}
-                
-                {this.props.btnuse =="removebook"&&
-               (<button class="btn btn-raised bg-dark text-light" onClick={this.removeBook}>Remove from my books</button>)}
-            </div>
+                <Alert/>
+                <div class={`${styles.overlay} ${this.props.open?styles.open:''}`}/>
+                <div class={`modal ${this.props.open?"show":""}`} style={{display:this.props.open?"block":"none",overflowY:"scroll"}}>
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{this.props.info.title}</h5>
+                                <button type="button" class="close" onClick={this.props.closeBook}>
+                                <span>&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <dl>
+                                <dt><img src={this.props.info.imageUrl} alt={this.props.info.title} class="img-thumbnail"/></dt>
+                                {this.props.info.authors&&
+                                (<div>
+                                <dt>Author</dt>
+                                <dd>{this.props.info.authors.map((author,i)=> {
+                                if (i<this.props.info.authors.length-1) {
+                                return (<span key={i}>{author}, </span>);
+                                } else {
+                                return (<span key={i}>{author}</span>);
+                                }
+                                })}</dd>
+                                </div>)}
+                                <dt>Publisher</dt>
+                                <dd>{this.props.info.publisher}</dd>
+                                <dt>Published</dt>
+                                <dd>{this.props.info.publishedDate}</dd>
+                                
+                                <dd>{this.props.info.description}</dd>
+                                </dl>
+                                
+                                {this.props.btnuse=="addrequest"&&
+                                <div>
+                                <table class="table">
+                                <thead>
+                                <tr>
+                                <th scope="col">Owner</th>
+                                <th scope="col">Location</th>
+                                <th scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {this.props.ownerslocation.length>0&&this.props.info.ownBy.map(this.renderOwnerItem)}
+                                </tbody>
+                                </table></div>}
+                                
+                                {this.props.btnuse=="addbook"&&(this.props.ownedbooks.indexOf(this.props.info.bookId)==-1
+                                ?<button class="btn btn-raised bg-dark text-light" onClick={this.addBook}>Add to my books</button>
+                                :<button class="btn" disabled>Already added</button>)
+                                }
+                                
+                                {this.props.btnuse =="answersender"&&
+                                (<button class="btn btn-raised bg-dark text-light" onClick={this.addExchange}>Exchange</button>)}
+                                
+                                {this.props.btnuse =="removebook"&&
+                                (<button class="btn btn-raised bg-dark text-light" onClick={this.removeBook}>Remove from my books</button>)}
+                            </div>
+                        </div>
+                </div>
+                </div>
             </div>
             );
         }

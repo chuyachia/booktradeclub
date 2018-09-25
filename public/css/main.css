@@ -41,45 +41,11 @@
 
 .Request__dialogue___ThtKy strong {
   cursor:pointer;
-}.Modal__modal___3U_U8 {
-    position:fixed;
-    width:100%;
-    max-height:85%;
-    overflow-y:scroll;
-    top:50%;
-    left:50%;
-    transform: translate(-50%, -50%);
-    z-index:15;
-    visibility:hidden;
-    opacity:0;
-    transition:opacity 0.3s linear;
-    background-color:white;
-    padding: 10px;   
-}
-
-
-.Modal__modal___3U_U8.Modal__open___1JACe, .Modal__overlay___1eTj5.Modal__open___1JACe {
+}.Modal__overlay___1eTj5.Modal__open___1JACe {
     visibility:visible;
     opacity:1;   
 }
-@media (min-width: 768px) {
-    .Modal__modal___3U_U8 {
-        width:80%;
-    }
-}
-@media (min-width: 992px) {
-     .Modal__modal___3U_U8 {
-        width:60%;
-    }   
-}
 
-.Modal__modal___3U_U8>i {
-   float:right;
-   cursor:pointer; 
-   position:sticky;
-   top:0px;
-   text-align:right;
-}
 .Modal__overlay___1eTj5 {
     background-color:rgb(204,204,204);
     background-color:rgba(204,204,204,0.3);
@@ -218,5 +184,3 @@ img{
     justify-content: center;
     flex-direction: column;
 }
-
-/*# sourceMappingURL=main.css.map*/
