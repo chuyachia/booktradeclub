@@ -1,5 +1,3 @@
-//https://redux.js.org/recipes/writing-tests#async-action-creators
-//https://stackoverflow.com/questions/48306319/getting-then-of-undefined-when-trying-to-test-a-dispatch-action-function-in-rea
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as actions from '../../src/shared/actions/bookAction';

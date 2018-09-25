@@ -1,6 +1,4 @@
-//https://medium.freecodecamp.org/real-integration-tests-with-react-redux-and-react-router-417125212638
-import * as enzyme from 'enzyme';
-import ReactSixteenAdapter  from 'enzyme-adapter-react-16';
+import '../enzymeSetup';
 import React from 'react';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -8,8 +6,6 @@ import { mount } from 'enzyme';
 import reducer from "../../src/shared/reducers";
 import thunk from "redux-thunk";
 import BookCard from '../../src/shared/components/BookCard';
-
-enzyme.configure({ adapter: new ReactSixteenAdapter() });
 
 function setupIntegrationTest(reducers) {
   const dispatchSpy = jest.fn(() => ({})); 

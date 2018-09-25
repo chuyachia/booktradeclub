@@ -15,9 +15,13 @@ exports[`Modal Snapshot Snapshot of Modal for add book use 1`] = `
 >
   <Connect(Modal)>
     <Modal
+      addBook={[Function]}
+      addExchange={[Function]}
+      addRequest={[Function]}
       btnuse="addbook"
-      dispatch={[Function]}
+      closeBook={[Function]}
       email={null}
+      getUsersLocation={[Function]}
       info={
         Object {
           "authors": Array [],
@@ -35,6 +39,7 @@ exports[`Modal Snapshot Snapshot of Modal for add book use 1`] = `
       outrequests={Array []}
       ownedbooks={Array []}
       ownerslocation={Array []}
+      removeBook={[Function]}
       tologin={false}
       username={null}
     >
@@ -109,7 +114,6 @@ exports[`Modal Snapshot Snapshot of Modal for add book use 1`] = `
             className="ReactModal__Overlay ReactModal__Overlay--after-open"
             onClick={[Function]}
             onMouseDown={[Function]}
-            onMouseUp={[Function]}
             style={
               Object {
                 "backgroundColor": "rgba(255, 255, 255, 0.75)",
@@ -147,24 +151,19 @@ exports[`Modal Snapshot Snapshot of Modal for add book use 1`] = `
               }
               tabIndex="-1"
             >
-              <a
-                className="text-dark"
+              <i
+                className="fas fa-times"
+                onClick={[Function]}
                 style={
                   Object {
                     "cursor": "pointer",
                     "float": "right",
                   }
                 }
-              >
-                <i
-                  className="fas fa-times"
-                  onClick={[Function]}
-                />
-              </a>
+              />
               <Connect(Alert)>
                 <Alert
-                  dispatch={[Function]}
-                  message="test"
+                  closeAlert={[Function]}
                   open={true}
                 >
                   <div>
@@ -173,7 +172,7 @@ exports[`Modal Snapshot Snapshot of Modal for add book use 1`] = `
                       role="alert"
                     >
                       <strong>
-                        Oops! Something went wrong with the server!
+                        Oops! Something went wrong!
                       </strong>
                        The action just failed. Please try again later.
                       <button
@@ -248,9 +247,13 @@ exports[`Modal Snapshot Snapshot of Modal for add request use 1`] = `
 >
   <Connect(Modal)>
     <Modal
+      addBook={[Function]}
+      addExchange={[Function]}
+      addRequest={[Function]}
       btnuse="addrequest"
-      dispatch={[Function]}
+      closeBook={[Function]}
       email={null}
+      getUsersLocation={[Function]}
       info={
         Object {
           "authors": Array [],
@@ -268,6 +271,7 @@ exports[`Modal Snapshot Snapshot of Modal for add request use 1`] = `
       outrequests={Array []}
       ownedbooks={Array []}
       ownerslocation={Array []}
+      removeBook={[Function]}
       tologin={false}
       username={null}
     >
@@ -342,7 +346,6 @@ exports[`Modal Snapshot Snapshot of Modal for add request use 1`] = `
             className="ReactModal__Overlay ReactModal__Overlay--after-open"
             onClick={[Function]}
             onMouseDown={[Function]}
-            onMouseUp={[Function]}
             style={
               Object {
                 "backgroundColor": "rgba(255, 255, 255, 0.75)",
@@ -380,24 +383,19 @@ exports[`Modal Snapshot Snapshot of Modal for add request use 1`] = `
               }
               tabIndex="-1"
             >
-              <a
-                className="text-dark"
+              <i
+                className="fas fa-times"
+                onClick={[Function]}
                 style={
                   Object {
                     "cursor": "pointer",
                     "float": "right",
                   }
                 }
-              >
-                <i
-                  className="fas fa-times"
-                  onClick={[Function]}
-                />
-              </a>
+              />
               <Connect(Alert)>
                 <Alert
-                  dispatch={[Function]}
-                  message="test"
+                  closeAlert={[Function]}
                   open={true}
                 >
                   <div>
@@ -406,7 +404,7 @@ exports[`Modal Snapshot Snapshot of Modal for add request use 1`] = `
                       role="alert"
                     >
                       <strong>
-                        Oops! Something went wrong with the server!
+                        Oops! Something went wrong!
                       </strong>
                        The action just failed. Please try again later.
                       <button
@@ -499,9 +497,13 @@ exports[`Modal Snapshot Snapshot of Modal for answer sender use 1`] = `
 >
   <Connect(Modal)>
     <Modal
+      addBook={[Function]}
+      addExchange={[Function]}
+      addRequest={[Function]}
       btnuse="answersender"
-      dispatch={[Function]}
+      closeBook={[Function]}
       email={null}
+      getUsersLocation={[Function]}
       info={
         Object {
           "authors": Array [],
@@ -519,6 +521,7 @@ exports[`Modal Snapshot Snapshot of Modal for answer sender use 1`] = `
       outrequests={Array []}
       ownedbooks={Array []}
       ownerslocation={Array []}
+      removeBook={[Function]}
       tologin={false}
       username={null}
     >
@@ -593,7 +596,6 @@ exports[`Modal Snapshot Snapshot of Modal for answer sender use 1`] = `
             className="ReactModal__Overlay ReactModal__Overlay--after-open"
             onClick={[Function]}
             onMouseDown={[Function]}
-            onMouseUp={[Function]}
             style={
               Object {
                 "backgroundColor": "rgba(255, 255, 255, 0.75)",
@@ -631,24 +633,19 @@ exports[`Modal Snapshot Snapshot of Modal for answer sender use 1`] = `
               }
               tabIndex="-1"
             >
-              <a
-                className="text-dark"
+              <i
+                className="fas fa-times"
+                onClick={[Function]}
                 style={
                   Object {
                     "cursor": "pointer",
                     "float": "right",
                   }
                 }
-              >
-                <i
-                  className="fas fa-times"
-                  onClick={[Function]}
-                />
-              </a>
+              />
               <Connect(Alert)>
                 <Alert
-                  dispatch={[Function]}
-                  message="test"
+                  closeAlert={[Function]}
                   open={true}
                 >
                   <div>
@@ -657,7 +654,7 @@ exports[`Modal Snapshot Snapshot of Modal for answer sender use 1`] = `
                       role="alert"
                     >
                       <strong>
-                        Oops! Something went wrong with the server!
+                        Oops! Something went wrong!
                       </strong>
                        The action just failed. Please try again later.
                       <button
@@ -732,9 +729,13 @@ exports[`Modal Snapshot Snapshot of Modal for remove book use 1`] = `
 >
   <Connect(Modal)>
     <Modal
+      addBook={[Function]}
+      addExchange={[Function]}
+      addRequest={[Function]}
       btnuse="removebook"
-      dispatch={[Function]}
+      closeBook={[Function]}
       email={null}
+      getUsersLocation={[Function]}
       info={
         Object {
           "authors": Array [],
@@ -752,6 +753,7 @@ exports[`Modal Snapshot Snapshot of Modal for remove book use 1`] = `
       outrequests={Array []}
       ownedbooks={Array []}
       ownerslocation={Array []}
+      removeBook={[Function]}
       tologin={false}
       username={null}
     >
@@ -826,7 +828,6 @@ exports[`Modal Snapshot Snapshot of Modal for remove book use 1`] = `
             className="ReactModal__Overlay ReactModal__Overlay--after-open"
             onClick={[Function]}
             onMouseDown={[Function]}
-            onMouseUp={[Function]}
             style={
               Object {
                 "backgroundColor": "rgba(255, 255, 255, 0.75)",
@@ -864,24 +865,19 @@ exports[`Modal Snapshot Snapshot of Modal for remove book use 1`] = `
               }
               tabIndex="-1"
             >
-              <a
-                className="text-dark"
+              <i
+                className="fas fa-times"
+                onClick={[Function]}
                 style={
                   Object {
                     "cursor": "pointer",
                     "float": "right",
                   }
                 }
-              >
-                <i
-                  className="fas fa-times"
-                  onClick={[Function]}
-                />
-              </a>
+              />
               <Connect(Alert)>
                 <Alert
-                  dispatch={[Function]}
-                  message="test"
+                  closeAlert={[Function]}
                   open={true}
                 >
                   <div>
@@ -890,7 +886,7 @@ exports[`Modal Snapshot Snapshot of Modal for remove book use 1`] = `
                       role="alert"
                     >
                       <strong>
-                        Oops! Something went wrong with the server!
+                        Oops! Something went wrong!
                       </strong>
                        The action just failed. Please try again later.
                       <button

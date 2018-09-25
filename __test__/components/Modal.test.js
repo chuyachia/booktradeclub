@@ -1,5 +1,4 @@
-import * as enzyme from 'enzyme';
-import ReactSixteenAdapter  from 'enzyme-adapter-react-16';
+import '../enzymeSetup';
 import Modal from '../../src/shared/components/Modal';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
@@ -7,7 +6,7 @@ import React from 'react';
 import EnzymeToJson from 'enzyme-to-json';
 import { mount } from 'enzyme';
 
-enzyme.configure({ adapter: new ReactSixteenAdapter() });
+
 
 const mockStore = configureStore();
 

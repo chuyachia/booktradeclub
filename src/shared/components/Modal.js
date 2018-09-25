@@ -5,9 +5,10 @@ import {connect} from "react-redux";
 import {addRequest,addExchange} from "../actions/requestAction";
 import {getUsersLocation} from "../actions/userAction";
 import React from 'react';
-import ReactModal from 'react-modal';
 import {Redirect } from "react-router-dom";
 import {getBooksId,getExistingRequests} from "../selectors";
+import styles from "../css/Modal.css";
+
 
 class Modal extends React.Component{
     componentWillReceiveProps(nextProps){
@@ -28,11 +29,10 @@ class Modal extends React.Component{
           }}/>);
         } else {
             return(
-            <ReactModal style={{overlay: {zIndex: 10}}}
-               isOpen={this.props.open}
-               ariaHideApp={false}
-               contentLabel="Review Modal">
-               <i class="fas fa-times" style={{float:"right",cursor:"pointer"}} onClick={this.props.closeBook}/>
+            <div>
+            <div class={`${styles.overlay} ${this.props.open?styles.open:''}`}/>
+            <div class={`modal-content ${styles.modal} ${this.props.open?styles.open:''}`}>
+               <i class="fas fa-times" onClick={this.props.closeBook}/>
                <Alert/>
                <h3>{this.props.info.title}</h3>
                <dl>
@@ -81,7 +81,8 @@ class Modal extends React.Component{
                 
                 {this.props.btnuse =="removebook"&&
                (<button class="btn btn-raised bg-dark text-light" onClick={this.removeBook}>Remove from my books</button>)}
-            </ReactModal>
+            </div>
+            </div>
             );
         }
     }
