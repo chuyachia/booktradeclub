@@ -40,7 +40,7 @@ describe('BookCard integration test', () => {
         publisher:"",
         title:""
     };
-    const sut = mount(
+    const component = mount(
     <Provider store={store}>
       <BookCard info={info} modaluse={modaluse}/>
     </Provider>
@@ -48,7 +48,7 @@ describe('BookCard integration test', () => {
     const modaluse = "info";
     const expected = {...info,btnuse:modaluse};
     
-    sut.find('.card').simulate('click');
+    component.find('.card').simulate('click');
     
     expect(dispatchSpy).toBeCalledWith({ type: 'VIEW_BOOK',payload:expected });
   

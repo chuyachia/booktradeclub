@@ -43,190 +43,110 @@ exports[`Modal Snapshot Snapshot of Modal for add book use 1`] = `
       tologin={false}
       username={null}
     >
-      <Modal
-        ariaHideApp={false}
-        bodyOpenClassName="ReactModal__Body--open"
-        closeTimeoutMS={0}
-        contentLabel="Review Modal"
-        isOpen={true}
-        parentSelector={[Function]}
-        portalClassName="ReactModalPortal"
-        shouldCloseOnEsc={true}
-        shouldCloseOnOverlayClick={true}
-        shouldFocusAfterRender={true}
-        shouldReturnFocusAfterClose={true}
-        style={
-          Object {
-            "overlay": Object {
-              "zIndex": 10,
-            },
-          }
-        }
-      >
-        <ModalPortal
-          ariaHideApp={false}
-          bodyOpenClassName="ReactModal__Body--open"
-          closeTimeoutMS={0}
-          contentLabel="Review Modal"
-          defaultStyles={
-            Object {
-              "content": Object {
-                "WebkitOverflowScrolling": "touch",
-                "background": "#fff",
-                "border": "1px solid #ccc",
-                "borderRadius": "4px",
-                "bottom": "40px",
-                "left": "40px",
-                "outline": "none",
-                "overflow": "auto",
-                "padding": "20px",
-                "position": "absolute",
-                "right": "40px",
-                "top": "40px",
-              },
-              "overlay": Object {
-                "backgroundColor": "rgba(255, 255, 255, 0.75)",
-                "bottom": 0,
-                "left": 0,
-                "position": "fixed",
-                "right": 0,
-                "top": 0,
-              },
-            }
-          }
-          isOpen={true}
-          parentSelector={[Function]}
-          portalClassName="ReactModalPortal"
-          shouldCloseOnEsc={true}
-          shouldCloseOnOverlayClick={true}
-          shouldFocusAfterRender={true}
-          shouldReturnFocusAfterClose={true}
+      <div>
+        <Connect(Alert)>
+          <Alert
+            closeAlert={[Function]}
+            open={true}
+          >
+            <div>
+              <div
+                className="alert alert-warning alert-dismissible fade show"
+                role="alert"
+              >
+                <strong>
+                  Oops! Something went wrong!
+                </strong>
+                 The action just failed. Please try again later.
+                <button
+                  aria-label="Close"
+                  className="close"
+                  data-dismiss="alert"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  <span
+                    aria-hidden="true"
+                  >
+                    ×
+                  </span>
+                </button>
+              </div>
+            </div>
+          </Alert>
+        </Connect(Alert)>
+        <div
+          className="overlay open"
+        />
+        <div
+          className="modal show"
           style={
             Object {
-              "overlay": Object {
-                "zIndex": 10,
-              },
+              "display": "block",
+              "overflowY": "scroll",
             }
           }
         >
           <div
-            aria-modal="true"
-            className="ReactModal__Overlay ReactModal__Overlay--after-open"
-            onClick={[Function]}
-            onMouseDown={[Function]}
-            style={
-              Object {
-                "backgroundColor": "rgba(255, 255, 255, 0.75)",
-                "bottom": 0,
-                "left": 0,
-                "position": "fixed",
-                "right": 0,
-                "top": 0,
-                "zIndex": 10,
-              }
-            }
+            className="modal-dialog"
           >
             <div
-              aria-label="Review Modal"
-              className="ReactModal__Content ReactModal__Content--after-open"
-              onClick={[Function]}
-              onKeyDown={[Function]}
-              onMouseDown={[Function]}
-              onMouseUp={[Function]}
-              style={
-                Object {
-                  "WebkitOverflowScrolling": "touch",
-                  "background": "#fff",
-                  "border": "1px solid #ccc",
-                  "borderRadius": "4px",
-                  "bottom": "40px",
-                  "left": "40px",
-                  "outline": "none",
-                  "overflow": "auto",
-                  "padding": "20px",
-                  "position": "absolute",
-                  "right": "40px",
-                  "top": "40px",
-                }
-              }
-              tabIndex="-1"
+              className="modal-content"
             >
-              <i
-                className="fas fa-times"
-                onClick={[Function]}
-                style={
-                  Object {
-                    "cursor": "pointer",
-                    "float": "right",
-                  }
-                }
-              />
-              <Connect(Alert)>
-                <Alert
-                  closeAlert={[Function]}
-                  open={true}
+              <div
+                className="modal-header"
+              >
+                <h5
+                  className="modal-title"
+                />
+                <button
+                  className="close"
+                  onClick={[Function]}
+                  type="button"
                 >
-                  <div>
-                    <div
-                      className="alert alert-warning alert-dismissible fade show"
-                      role="alert"
-                    >
-                      <strong>
-                        Oops! Something went wrong!
-                      </strong>
-                       The action just failed. Please try again later.
-                      <button
-                        aria-label="Close"
-                        className="close"
-                        data-dismiss="alert"
-                        onClick={[Function]}
-                        type="button"
-                      >
-                        <span
-                          aria-hidden="true"
-                        >
-                          ×
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                </Alert>
-              </Connect(Alert)>
-              <h3 />
-              <dl>
-                <dt>
-                  <img
-                    alt=""
-                    className="img-thumbnail"
-                    src=""
-                  />
-                </dt>
-                <div>
+                  <span>
+                    ×
+                  </span>
+                </button>
+              </div>
+              <div
+                className="modal-body"
+              >
+                <dl>
                   <dt>
-                    Author
+                    <img
+                      alt=""
+                      className="img-thumbnail"
+                      src=""
+                    />
+                  </dt>
+                  <div>
+                    <dt>
+                      Author
+                    </dt>
+                    <dd />
+                  </div>
+                  <dt>
+                    Publisher
                   </dt>
                   <dd />
-                </div>
-                <dt>
-                  Publisher
-                </dt>
-                <dd />
-                <dt>
-                  Published
-                </dt>
-                <dd />
-                <dd />
-              </dl>
-              <button
-                className="btn btn-raised bg-dark text-light"
-                onClick={[Function]}
-              >
-                Add to my books
-              </button>
+                  <dt>
+                    Published
+                  </dt>
+                  <dd />
+                  <dd />
+                </dl>
+                <button
+                  className="btn btn-raised bg-dark text-light"
+                  onClick={[Function]}
+                >
+                  Add to my books
+                </button>
+              </div>
             </div>
           </div>
-        </ModalPortal>
-      </Modal>
+        </div>
+      </div>
     </Modal>
   </Connect(Modal)>
 </Provider>
@@ -275,208 +195,128 @@ exports[`Modal Snapshot Snapshot of Modal for add request use 1`] = `
       tologin={false}
       username={null}
     >
-      <Modal
-        ariaHideApp={false}
-        bodyOpenClassName="ReactModal__Body--open"
-        closeTimeoutMS={0}
-        contentLabel="Review Modal"
-        isOpen={true}
-        parentSelector={[Function]}
-        portalClassName="ReactModalPortal"
-        shouldCloseOnEsc={true}
-        shouldCloseOnOverlayClick={true}
-        shouldFocusAfterRender={true}
-        shouldReturnFocusAfterClose={true}
-        style={
-          Object {
-            "overlay": Object {
-              "zIndex": 10,
-            },
-          }
-        }
-      >
-        <ModalPortal
-          ariaHideApp={false}
-          bodyOpenClassName="ReactModal__Body--open"
-          closeTimeoutMS={0}
-          contentLabel="Review Modal"
-          defaultStyles={
-            Object {
-              "content": Object {
-                "WebkitOverflowScrolling": "touch",
-                "background": "#fff",
-                "border": "1px solid #ccc",
-                "borderRadius": "4px",
-                "bottom": "40px",
-                "left": "40px",
-                "outline": "none",
-                "overflow": "auto",
-                "padding": "20px",
-                "position": "absolute",
-                "right": "40px",
-                "top": "40px",
-              },
-              "overlay": Object {
-                "backgroundColor": "rgba(255, 255, 255, 0.75)",
-                "bottom": 0,
-                "left": 0,
-                "position": "fixed",
-                "right": 0,
-                "top": 0,
-              },
-            }
-          }
-          isOpen={true}
-          parentSelector={[Function]}
-          portalClassName="ReactModalPortal"
-          shouldCloseOnEsc={true}
-          shouldCloseOnOverlayClick={true}
-          shouldFocusAfterRender={true}
-          shouldReturnFocusAfterClose={true}
+      <div>
+        <Connect(Alert)>
+          <Alert
+            closeAlert={[Function]}
+            open={true}
+          >
+            <div>
+              <div
+                className="alert alert-warning alert-dismissible fade show"
+                role="alert"
+              >
+                <strong>
+                  Oops! Something went wrong!
+                </strong>
+                 The action just failed. Please try again later.
+                <button
+                  aria-label="Close"
+                  className="close"
+                  data-dismiss="alert"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  <span
+                    aria-hidden="true"
+                  >
+                    ×
+                  </span>
+                </button>
+              </div>
+            </div>
+          </Alert>
+        </Connect(Alert)>
+        <div
+          className="overlay open"
+        />
+        <div
+          className="modal show"
           style={
             Object {
-              "overlay": Object {
-                "zIndex": 10,
-              },
+              "display": "block",
+              "overflowY": "scroll",
             }
           }
         >
           <div
-            aria-modal="true"
-            className="ReactModal__Overlay ReactModal__Overlay--after-open"
-            onClick={[Function]}
-            onMouseDown={[Function]}
-            style={
-              Object {
-                "backgroundColor": "rgba(255, 255, 255, 0.75)",
-                "bottom": 0,
-                "left": 0,
-                "position": "fixed",
-                "right": 0,
-                "top": 0,
-                "zIndex": 10,
-              }
-            }
+            className="modal-dialog"
           >
             <div
-              aria-label="Review Modal"
-              className="ReactModal__Content ReactModal__Content--after-open"
-              onClick={[Function]}
-              onKeyDown={[Function]}
-              onMouseDown={[Function]}
-              onMouseUp={[Function]}
-              style={
-                Object {
-                  "WebkitOverflowScrolling": "touch",
-                  "background": "#fff",
-                  "border": "1px solid #ccc",
-                  "borderRadius": "4px",
-                  "bottom": "40px",
-                  "left": "40px",
-                  "outline": "none",
-                  "overflow": "auto",
-                  "padding": "20px",
-                  "position": "absolute",
-                  "right": "40px",
-                  "top": "40px",
-                }
-              }
-              tabIndex="-1"
+              className="modal-content"
             >
-              <i
-                className="fas fa-times"
-                onClick={[Function]}
-                style={
-                  Object {
-                    "cursor": "pointer",
-                    "float": "right",
-                  }
-                }
-              />
-              <Connect(Alert)>
-                <Alert
-                  closeAlert={[Function]}
-                  open={true}
+              <div
+                className="modal-header"
+              >
+                <h5
+                  className="modal-title"
+                />
+                <button
+                  className="close"
+                  onClick={[Function]}
+                  type="button"
                 >
-                  <div>
-                    <div
-                      className="alert alert-warning alert-dismissible fade show"
-                      role="alert"
-                    >
-                      <strong>
-                        Oops! Something went wrong!
-                      </strong>
-                       The action just failed. Please try again later.
-                      <button
-                        aria-label="Close"
-                        className="close"
-                        data-dismiss="alert"
-                        onClick={[Function]}
-                        type="button"
-                      >
-                        <span
-                          aria-hidden="true"
-                        >
-                          ×
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                </Alert>
-              </Connect(Alert)>
-              <h3 />
-              <dl>
-                <dt>
-                  <img
-                    alt=""
-                    className="img-thumbnail"
-                    src=""
-                  />
-                </dt>
-                <div>
+                  <span>
+                    ×
+                  </span>
+                </button>
+              </div>
+              <div
+                className="modal-body"
+              >
+                <dl>
                   <dt>
-                    Author
+                    <img
+                      alt=""
+                      className="img-thumbnail"
+                      src=""
+                    />
+                  </dt>
+                  <div>
+                    <dt>
+                      Author
+                    </dt>
+                    <dd />
+                  </div>
+                  <dt>
+                    Publisher
                   </dt>
                   <dd />
+                  <dt>
+                    Published
+                  </dt>
+                  <dd />
+                  <dd />
+                </dl>
+                <div>
+                  <table
+                    className="table"
+                  >
+                    <thead>
+                      <tr>
+                        <th
+                          scope="col"
+                        >
+                          Owner
+                        </th>
+                        <th
+                          scope="col"
+                        >
+                          Location
+                        </th>
+                        <th
+                          scope="col"
+                        />
+                      </tr>
+                    </thead>
+                    <tbody />
+                  </table>
                 </div>
-                <dt>
-                  Publisher
-                </dt>
-                <dd />
-                <dt>
-                  Published
-                </dt>
-                <dd />
-                <dd />
-              </dl>
-              <div>
-                <table
-                  className="table"
-                >
-                  <thead>
-                    <tr>
-                      <th
-                        scope="col"
-                      >
-                        Owner
-                      </th>
-                      <th
-                        scope="col"
-                      >
-                        Location
-                      </th>
-                      <th
-                        scope="col"
-                      />
-                    </tr>
-                  </thead>
-                  <tbody />
-                </table>
               </div>
             </div>
           </div>
-        </ModalPortal>
-      </Modal>
+        </div>
+      </div>
     </Modal>
   </Connect(Modal)>
 </Provider>
@@ -525,190 +365,110 @@ exports[`Modal Snapshot Snapshot of Modal for answer sender use 1`] = `
       tologin={false}
       username={null}
     >
-      <Modal
-        ariaHideApp={false}
-        bodyOpenClassName="ReactModal__Body--open"
-        closeTimeoutMS={0}
-        contentLabel="Review Modal"
-        isOpen={true}
-        parentSelector={[Function]}
-        portalClassName="ReactModalPortal"
-        shouldCloseOnEsc={true}
-        shouldCloseOnOverlayClick={true}
-        shouldFocusAfterRender={true}
-        shouldReturnFocusAfterClose={true}
-        style={
-          Object {
-            "overlay": Object {
-              "zIndex": 10,
-            },
-          }
-        }
-      >
-        <ModalPortal
-          ariaHideApp={false}
-          bodyOpenClassName="ReactModal__Body--open"
-          closeTimeoutMS={0}
-          contentLabel="Review Modal"
-          defaultStyles={
-            Object {
-              "content": Object {
-                "WebkitOverflowScrolling": "touch",
-                "background": "#fff",
-                "border": "1px solid #ccc",
-                "borderRadius": "4px",
-                "bottom": "40px",
-                "left": "40px",
-                "outline": "none",
-                "overflow": "auto",
-                "padding": "20px",
-                "position": "absolute",
-                "right": "40px",
-                "top": "40px",
-              },
-              "overlay": Object {
-                "backgroundColor": "rgba(255, 255, 255, 0.75)",
-                "bottom": 0,
-                "left": 0,
-                "position": "fixed",
-                "right": 0,
-                "top": 0,
-              },
-            }
-          }
-          isOpen={true}
-          parentSelector={[Function]}
-          portalClassName="ReactModalPortal"
-          shouldCloseOnEsc={true}
-          shouldCloseOnOverlayClick={true}
-          shouldFocusAfterRender={true}
-          shouldReturnFocusAfterClose={true}
+      <div>
+        <Connect(Alert)>
+          <Alert
+            closeAlert={[Function]}
+            open={true}
+          >
+            <div>
+              <div
+                className="alert alert-warning alert-dismissible fade show"
+                role="alert"
+              >
+                <strong>
+                  Oops! Something went wrong!
+                </strong>
+                 The action just failed. Please try again later.
+                <button
+                  aria-label="Close"
+                  className="close"
+                  data-dismiss="alert"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  <span
+                    aria-hidden="true"
+                  >
+                    ×
+                  </span>
+                </button>
+              </div>
+            </div>
+          </Alert>
+        </Connect(Alert)>
+        <div
+          className="overlay open"
+        />
+        <div
+          className="modal show"
           style={
             Object {
-              "overlay": Object {
-                "zIndex": 10,
-              },
+              "display": "block",
+              "overflowY": "scroll",
             }
           }
         >
           <div
-            aria-modal="true"
-            className="ReactModal__Overlay ReactModal__Overlay--after-open"
-            onClick={[Function]}
-            onMouseDown={[Function]}
-            style={
-              Object {
-                "backgroundColor": "rgba(255, 255, 255, 0.75)",
-                "bottom": 0,
-                "left": 0,
-                "position": "fixed",
-                "right": 0,
-                "top": 0,
-                "zIndex": 10,
-              }
-            }
+            className="modal-dialog"
           >
             <div
-              aria-label="Review Modal"
-              className="ReactModal__Content ReactModal__Content--after-open"
-              onClick={[Function]}
-              onKeyDown={[Function]}
-              onMouseDown={[Function]}
-              onMouseUp={[Function]}
-              style={
-                Object {
-                  "WebkitOverflowScrolling": "touch",
-                  "background": "#fff",
-                  "border": "1px solid #ccc",
-                  "borderRadius": "4px",
-                  "bottom": "40px",
-                  "left": "40px",
-                  "outline": "none",
-                  "overflow": "auto",
-                  "padding": "20px",
-                  "position": "absolute",
-                  "right": "40px",
-                  "top": "40px",
-                }
-              }
-              tabIndex="-1"
+              className="modal-content"
             >
-              <i
-                className="fas fa-times"
-                onClick={[Function]}
-                style={
-                  Object {
-                    "cursor": "pointer",
-                    "float": "right",
-                  }
-                }
-              />
-              <Connect(Alert)>
-                <Alert
-                  closeAlert={[Function]}
-                  open={true}
+              <div
+                className="modal-header"
+              >
+                <h5
+                  className="modal-title"
+                />
+                <button
+                  className="close"
+                  onClick={[Function]}
+                  type="button"
                 >
-                  <div>
-                    <div
-                      className="alert alert-warning alert-dismissible fade show"
-                      role="alert"
-                    >
-                      <strong>
-                        Oops! Something went wrong!
-                      </strong>
-                       The action just failed. Please try again later.
-                      <button
-                        aria-label="Close"
-                        className="close"
-                        data-dismiss="alert"
-                        onClick={[Function]}
-                        type="button"
-                      >
-                        <span
-                          aria-hidden="true"
-                        >
-                          ×
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                </Alert>
-              </Connect(Alert)>
-              <h3 />
-              <dl>
-                <dt>
-                  <img
-                    alt=""
-                    className="img-thumbnail"
-                    src=""
-                  />
-                </dt>
-                <div>
+                  <span>
+                    ×
+                  </span>
+                </button>
+              </div>
+              <div
+                className="modal-body"
+              >
+                <dl>
                   <dt>
-                    Author
+                    <img
+                      alt=""
+                      className="img-thumbnail"
+                      src=""
+                    />
+                  </dt>
+                  <div>
+                    <dt>
+                      Author
+                    </dt>
+                    <dd />
+                  </div>
+                  <dt>
+                    Publisher
                   </dt>
                   <dd />
-                </div>
-                <dt>
-                  Publisher
-                </dt>
-                <dd />
-                <dt>
-                  Published
-                </dt>
-                <dd />
-                <dd />
-              </dl>
-              <button
-                className="btn btn-raised bg-dark text-light"
-                onClick={[Function]}
-              >
-                Exchange
-              </button>
+                  <dt>
+                    Published
+                  </dt>
+                  <dd />
+                  <dd />
+                </dl>
+                <button
+                  className="btn btn-raised bg-dark text-light"
+                  onClick={[Function]}
+                >
+                  Exchange
+                </button>
+              </div>
             </div>
           </div>
-        </ModalPortal>
-      </Modal>
+        </div>
+      </div>
     </Modal>
   </Connect(Modal)>
 </Provider>
@@ -757,190 +517,110 @@ exports[`Modal Snapshot Snapshot of Modal for remove book use 1`] = `
       tologin={false}
       username={null}
     >
-      <Modal
-        ariaHideApp={false}
-        bodyOpenClassName="ReactModal__Body--open"
-        closeTimeoutMS={0}
-        contentLabel="Review Modal"
-        isOpen={true}
-        parentSelector={[Function]}
-        portalClassName="ReactModalPortal"
-        shouldCloseOnEsc={true}
-        shouldCloseOnOverlayClick={true}
-        shouldFocusAfterRender={true}
-        shouldReturnFocusAfterClose={true}
-        style={
-          Object {
-            "overlay": Object {
-              "zIndex": 10,
-            },
-          }
-        }
-      >
-        <ModalPortal
-          ariaHideApp={false}
-          bodyOpenClassName="ReactModal__Body--open"
-          closeTimeoutMS={0}
-          contentLabel="Review Modal"
-          defaultStyles={
-            Object {
-              "content": Object {
-                "WebkitOverflowScrolling": "touch",
-                "background": "#fff",
-                "border": "1px solid #ccc",
-                "borderRadius": "4px",
-                "bottom": "40px",
-                "left": "40px",
-                "outline": "none",
-                "overflow": "auto",
-                "padding": "20px",
-                "position": "absolute",
-                "right": "40px",
-                "top": "40px",
-              },
-              "overlay": Object {
-                "backgroundColor": "rgba(255, 255, 255, 0.75)",
-                "bottom": 0,
-                "left": 0,
-                "position": "fixed",
-                "right": 0,
-                "top": 0,
-              },
-            }
-          }
-          isOpen={true}
-          parentSelector={[Function]}
-          portalClassName="ReactModalPortal"
-          shouldCloseOnEsc={true}
-          shouldCloseOnOverlayClick={true}
-          shouldFocusAfterRender={true}
-          shouldReturnFocusAfterClose={true}
+      <div>
+        <Connect(Alert)>
+          <Alert
+            closeAlert={[Function]}
+            open={true}
+          >
+            <div>
+              <div
+                className="alert alert-warning alert-dismissible fade show"
+                role="alert"
+              >
+                <strong>
+                  Oops! Something went wrong!
+                </strong>
+                 The action just failed. Please try again later.
+                <button
+                  aria-label="Close"
+                  className="close"
+                  data-dismiss="alert"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  <span
+                    aria-hidden="true"
+                  >
+                    ×
+                  </span>
+                </button>
+              </div>
+            </div>
+          </Alert>
+        </Connect(Alert)>
+        <div
+          className="overlay open"
+        />
+        <div
+          className="modal show"
           style={
             Object {
-              "overlay": Object {
-                "zIndex": 10,
-              },
+              "display": "block",
+              "overflowY": "scroll",
             }
           }
         >
           <div
-            aria-modal="true"
-            className="ReactModal__Overlay ReactModal__Overlay--after-open"
-            onClick={[Function]}
-            onMouseDown={[Function]}
-            style={
-              Object {
-                "backgroundColor": "rgba(255, 255, 255, 0.75)",
-                "bottom": 0,
-                "left": 0,
-                "position": "fixed",
-                "right": 0,
-                "top": 0,
-                "zIndex": 10,
-              }
-            }
+            className="modal-dialog"
           >
             <div
-              aria-label="Review Modal"
-              className="ReactModal__Content ReactModal__Content--after-open"
-              onClick={[Function]}
-              onKeyDown={[Function]}
-              onMouseDown={[Function]}
-              onMouseUp={[Function]}
-              style={
-                Object {
-                  "WebkitOverflowScrolling": "touch",
-                  "background": "#fff",
-                  "border": "1px solid #ccc",
-                  "borderRadius": "4px",
-                  "bottom": "40px",
-                  "left": "40px",
-                  "outline": "none",
-                  "overflow": "auto",
-                  "padding": "20px",
-                  "position": "absolute",
-                  "right": "40px",
-                  "top": "40px",
-                }
-              }
-              tabIndex="-1"
+              className="modal-content"
             >
-              <i
-                className="fas fa-times"
-                onClick={[Function]}
-                style={
-                  Object {
-                    "cursor": "pointer",
-                    "float": "right",
-                  }
-                }
-              />
-              <Connect(Alert)>
-                <Alert
-                  closeAlert={[Function]}
-                  open={true}
+              <div
+                className="modal-header"
+              >
+                <h5
+                  className="modal-title"
+                />
+                <button
+                  className="close"
+                  onClick={[Function]}
+                  type="button"
                 >
-                  <div>
-                    <div
-                      className="alert alert-warning alert-dismissible fade show"
-                      role="alert"
-                    >
-                      <strong>
-                        Oops! Something went wrong!
-                      </strong>
-                       The action just failed. Please try again later.
-                      <button
-                        aria-label="Close"
-                        className="close"
-                        data-dismiss="alert"
-                        onClick={[Function]}
-                        type="button"
-                      >
-                        <span
-                          aria-hidden="true"
-                        >
-                          ×
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                </Alert>
-              </Connect(Alert)>
-              <h3 />
-              <dl>
-                <dt>
-                  <img
-                    alt=""
-                    className="img-thumbnail"
-                    src=""
-                  />
-                </dt>
-                <div>
+                  <span>
+                    ×
+                  </span>
+                </button>
+              </div>
+              <div
+                className="modal-body"
+              >
+                <dl>
                   <dt>
-                    Author
+                    <img
+                      alt=""
+                      className="img-thumbnail"
+                      src=""
+                    />
+                  </dt>
+                  <div>
+                    <dt>
+                      Author
+                    </dt>
+                    <dd />
+                  </div>
+                  <dt>
+                    Publisher
                   </dt>
                   <dd />
-                </div>
-                <dt>
-                  Publisher
-                </dt>
-                <dd />
-                <dt>
-                  Published
-                </dt>
-                <dd />
-                <dd />
-              </dl>
-              <button
-                className="btn btn-raised bg-dark text-light"
-                onClick={[Function]}
-              >
-                Remove from my books
-              </button>
+                  <dt>
+                    Published
+                  </dt>
+                  <dd />
+                  <dd />
+                </dl>
+                <button
+                  className="btn btn-raised bg-dark text-light"
+                  onClick={[Function]}
+                >
+                  Remove from my books
+                </button>
+              </div>
             </div>
           </div>
-        </ModalPortal>
-      </Modal>
+        </div>
+      </div>
     </Modal>
   </Connect(Modal)>
 </Provider>

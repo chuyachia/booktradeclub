@@ -1,0 +1,483 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Main page test Main page snapshot 1`] = `
+<BrowserRouter>
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "blank",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <Provider
+      store={
+        Object {
+          "dispatch": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+          Symbol(observable): [Function],
+        }
+      }
+    >
+      <Connect(Main)>
+        <Main
+          books={
+            Array [
+              Object {
+                "__v": 0,
+                "_id": "5b8053fbdadc6d004e76eb4a",
+                "authors": Array [
+                  "Jean-Claude Marsan",
+                ],
+                "bookId": "fVEeYOKjvfcC",
+                "categories": Array [
+                  "Architecture",
+                ],
+                "description": "Montreal in Evolution presents the rich and complex history of Montreal's architectural and environmental development from the first fort of Ville-Marie to the skyscrapers of today. It also examines the forces which shaped the city during the past three hundred and fifty years.",
+                "imageUrl": "http://books.google.com/books/content?id=fVEeYOKjvfcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+                "ownBy": Array [
+                  "test1",
+                ],
+                "publishedDate": "1990-09-01",
+                "publisher": "McGill-Queen's Press - MQUP",
+                "title": "Montreal in Evolution",
+              },
+              Object {
+                "__v": 0,
+                "_id": "5b996ac617e191132e118ed9",
+                "authors": Array [
+                  "Jenny E. Tesar",
+                ],
+                "bookId": "9F20v4CzhDUC",
+                "categories": Array [
+                  "Juvenile Nonfiction",
+                ],
+                "description": "Describes the physical characteristics, lifestyle, habitat, reproductive process, and methods of survival of this kangaroo which is native to Australia.",
+                "imageUrl": "http://books.google.com/books/content?id=9F20v4CzhDUC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+                "ownBy": Array [
+                  "admin",
+                ],
+                "publishedDate": "1997",
+                "publisher": "Blackbirch PressInc",
+                "title": "What on Earth is a Quokka?",
+              },
+            ]
+          }
+          error={false}
+          getAllBooks={[Function]}
+          loading={false}
+          username={null}
+        >
+          <div
+            className="container"
+          >
+            <NavBar>
+              <nav
+                className="navbar navbar-dark bg-dark fixed-top"
+              >
+                <Link
+                  className="navbar-brand"
+                  replace={false}
+                  to="/"
+                >
+                  <a
+                    className="navbar-brand"
+                    href="/"
+                    onClick={[Function]}
+                  >
+                    Book Trading Club
+                  </a>
+                </Link>
+                <Connect(DropDownBtn)>
+                  <DropDownBtn
+                    dispatch={[Function]}
+                    username={null}
+                  >
+                    <div
+                      className="show floatRight"
+                    >
+                      <a
+                        className="btn bg-dark text-light"
+                        id="dropdownMenuLink"
+                        onClick={[Function]}
+                        role="button"
+                      >
+                        <i
+                          className="fas fa-bars"
+                        />
+                      </a>
+                      <div
+                        aria-labelledby="dropdownMenuLink"
+                        className="dropdown-menu  right"
+                        onClick={[Function]}
+                      >
+                        <Link
+                          className="dropdown-item"
+                          replace={false}
+                          to="/"
+                        >
+                          <a
+                            className="dropdown-item"
+                            href="/"
+                            onClick={[Function]}
+                          >
+                            Home
+                          </a>
+                        </Link>
+                        <Link
+                          className="dropdown-item"
+                          replace={false}
+                          to="/connect"
+                        >
+                          <a
+                            className="dropdown-item"
+                            href="/connect"
+                            onClick={[Function]}
+                          >
+                            Login
+                          </a>
+                        </Link>
+                        <div
+                          className="dropdown-divider"
+                        />
+                        <Link
+                          className="dropdown-item"
+                          replace={false}
+                          to="/about"
+                        >
+                          <a
+                            className="dropdown-item"
+                            href="/about"
+                            onClick={[Function]}
+                          >
+                            About
+                          </a>
+                        </Link>
+                      </div>
+                    </div>
+                  </DropDownBtn>
+                </Connect(DropDownBtn)>
+              </nav>
+            </NavBar>
+            <h1
+              className="display-4"
+            >
+              Books for exchange
+            </h1>
+            <input
+              autoFocus={true}
+              className="form-control"
+              onChange={[Function]}
+              placeholder="Enter a book name"
+              type="search"
+            />
+            <div
+              className="wrap"
+            >
+              <onlyUpdateForKeys(Loader)
+                color="#424242"
+                loading={false}
+                margin="2px"
+                size={15}
+              >
+                <Loader
+                  color="#424242"
+                  loading={false}
+                  margin="2px"
+                  size={15}
+                />
+              </onlyUpdateForKeys(Loader)>
+            </div>
+            <Connect(BookCard)
+              info={
+                Object {
+                  "__v": 0,
+                  "_id": "5b8053fbdadc6d004e76eb4a",
+                  "authors": Array [
+                    "Jean-Claude Marsan",
+                  ],
+                  "bookId": "fVEeYOKjvfcC",
+                  "categories": Array [
+                    "Architecture",
+                  ],
+                  "description": "Montreal in Evolution presents the rich and complex history of Montreal's architectural and environmental development from the first fort of Ville-Marie to the skyscrapers of today. It also examines the forces which shaped the city during the past three hundred and fifty years.",
+                  "imageUrl": "http://books.google.com/books/content?id=fVEeYOKjvfcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+                  "ownBy": Array [
+                    "test1",
+                  ],
+                  "publishedDate": "1990-09-01",
+                  "publisher": "McGill-Queen's Press - MQUP",
+                  "title": "Montreal in Evolution",
+                }
+              }
+              key="5b8053fbdadc6d004e76eb4a"
+              modaluse="addrequest"
+            >
+              <BookCard
+                handleClick={[Function]}
+                info={
+                  Object {
+                    "__v": 0,
+                    "_id": "5b8053fbdadc6d004e76eb4a",
+                    "authors": Array [
+                      "Jean-Claude Marsan",
+                    ],
+                    "bookId": "fVEeYOKjvfcC",
+                    "categories": Array [
+                      "Architecture",
+                    ],
+                    "description": "Montreal in Evolution presents the rich and complex history of Montreal's architectural and environmental development from the first fort of Ville-Marie to the skyscrapers of today. It also examines the forces which shaped the city during the past three hundred and fifty years.",
+                    "imageUrl": "http://books.google.com/books/content?id=fVEeYOKjvfcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+                    "ownBy": Array [
+                      "test1",
+                    ],
+                    "publishedDate": "1990-09-01",
+                    "publisher": "McGill-Queen's Press - MQUP",
+                    "title": "Montreal in Evolution",
+                  }
+                }
+                modaluse="addrequest"
+              >
+                <div
+                  className="card card"
+                  onClick={[Function]}
+                >
+                  <img
+                    alt="Montreal in Evolution"
+                    className="img-thumbnail"
+                    src="http://books.google.com/books/content?id=fVEeYOKjvfcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+                  />
+                  <div
+                    className="center"
+                  >
+                    <i
+                      className="fas fa-search fa-lg"
+                    />
+                  </div>
+                </div>
+              </BookCard>
+            </Connect(BookCard)>
+            <Connect(BookCard)
+              info={
+                Object {
+                  "__v": 0,
+                  "_id": "5b996ac617e191132e118ed9",
+                  "authors": Array [
+                    "Jenny E. Tesar",
+                  ],
+                  "bookId": "9F20v4CzhDUC",
+                  "categories": Array [
+                    "Juvenile Nonfiction",
+                  ],
+                  "description": "Describes the physical characteristics, lifestyle, habitat, reproductive process, and methods of survival of this kangaroo which is native to Australia.",
+                  "imageUrl": "http://books.google.com/books/content?id=9F20v4CzhDUC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+                  "ownBy": Array [
+                    "admin",
+                  ],
+                  "publishedDate": "1997",
+                  "publisher": "Blackbirch PressInc",
+                  "title": "What on Earth is a Quokka?",
+                }
+              }
+              key="5b996ac617e191132e118ed9"
+              modaluse="addrequest"
+            >
+              <BookCard
+                handleClick={[Function]}
+                info={
+                  Object {
+                    "__v": 0,
+                    "_id": "5b996ac617e191132e118ed9",
+                    "authors": Array [
+                      "Jenny E. Tesar",
+                    ],
+                    "bookId": "9F20v4CzhDUC",
+                    "categories": Array [
+                      "Juvenile Nonfiction",
+                    ],
+                    "description": "Describes the physical characteristics, lifestyle, habitat, reproductive process, and methods of survival of this kangaroo which is native to Australia.",
+                    "imageUrl": "http://books.google.com/books/content?id=9F20v4CzhDUC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+                    "ownBy": Array [
+                      "admin",
+                    ],
+                    "publishedDate": "1997",
+                    "publisher": "Blackbirch PressInc",
+                    "title": "What on Earth is a Quokka?",
+                  }
+                }
+                modaluse="addrequest"
+              >
+                <div
+                  className="card card"
+                  onClick={[Function]}
+                >
+                  <img
+                    alt="What on Earth is a Quokka?"
+                    className="img-thumbnail"
+                    src="http://books.google.com/books/content?id=9F20v4CzhDUC&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+                  />
+                  <div
+                    className="center"
+                  >
+                    <i
+                      className="fas fa-search fa-lg"
+                    />
+                  </div>
+                </div>
+              </BookCard>
+            </Connect(BookCard)>
+            <Connect(Modal)>
+              <Modal
+                addBook={[Function]}
+                addExchange={[Function]}
+                addRequest={[Function]}
+                btnuse={null}
+                closeBook={[Function]}
+                email={null}
+                getUsersLocation={[Function]}
+                info={
+                  Object {
+                    "authors": Array [],
+                    "bookId": "",
+                    "categories": Array [],
+                    "description": "",
+                    "imageUrl": "",
+                    "ownBy": Array [],
+                    "publishedDate": "",
+                    "publisher": "",
+                    "title": "",
+                  }
+                }
+                open={false}
+                outrequests={Array []}
+                ownedbooks={Array []}
+                ownerslocation={Array []}
+                removeBook={[Function]}
+                tologin={false}
+                username={null}
+              >
+                <div>
+                  <Connect(Alert)>
+                    <Alert
+                      closeAlert={[Function]}
+                      open={false}
+                    >
+                      <div />
+                    </Alert>
+                  </Connect(Alert)>
+                  <div
+                    className="overlay "
+                  />
+                  <div
+                    className="modal "
+                    style={
+                      Object {
+                        "display": "none",
+                        "overflowY": "scroll",
+                      }
+                    }
+                  >
+                    <div
+                      className="modal-dialog"
+                    >
+                      <div
+                        className="modal-content"
+                      >
+                        <div
+                          className="modal-header"
+                        >
+                          <h5
+                            className="modal-title"
+                          />
+                          <button
+                            className="close"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            <span>
+                              ×
+                            </span>
+                          </button>
+                        </div>
+                        <div
+                          className="modal-body"
+                        >
+                          <dl>
+                            <dt>
+                              <img
+                                alt=""
+                                className="img-thumbnail"
+                                src=""
+                              />
+                            </dt>
+                            <div>
+                              <dt>
+                                Author
+                              </dt>
+                              <dd />
+                            </div>
+                            <dt>
+                              Publisher
+                            </dt>
+                            <dd />
+                            <dt>
+                              Published
+                            </dt>
+                            <dd />
+                            <dd />
+                          </dl>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Modal>
+            </Connect(Modal)>
+            <Footer>
+              <div
+                className="footer"
+              >
+                <span>
+                  <a
+                    href="https://github.com/chuyachia/"
+                    target="_blank"
+                  >
+                    <i
+                      className="fab fa-github fa-2x text-dark"
+                    />
+                  </a>
+                </span>
+                <span>
+                  <a
+                    href="mailto:chuyachia@gmail.com"
+                  >
+                    <i
+                      className="fas fa-at fa-2x text-dark"
+                    />
+                  </a>
+                </span>
+              </div>
+            </Footer>
+          </div>
+        </Main>
+      </Connect(Main)>
+    </Provider>
+  </Router>
+</BrowserRouter>
+`;

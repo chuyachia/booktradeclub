@@ -1,0 +1,25 @@
+ [{
+    "authors": ["Jean-Claude Marsan"],
+    "bookId": "fVEeYOKjvfcC",
+    "categories": ["Architecture"],
+    "description": "Montreal in Evolution presents the rich and complex history of Montreal's architectural and environmental development from the first fort of Ville-Marie to the skyscrapers of today. It also examines the forces which shaped the city during the past three hundred and fifty years.",
+    "imageUrl": "http://books.google.com/books/content?id=fVEeYOKjvfcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "ownBy": ["test1"],
+    "publishedDate": "1990-09-01",
+    "publisher": "McGill-Queen's Press - MQUP",
+    "title": "Montreal in Evolution",
+    "__v": 0,
+    "_id": "5b8053fbdadc6d004e76eb4a"},
+ {
+    "authors": ["Jenny E. Tesar"],
+    "bookId": "9F20v4CzhDUC",
+    "categories": ["Juvenile Nonfiction"],
+    "description": "Describes the physical characteristics, lifestyle, habitat, reproductive process, and methods of survival of this kangaroo which is native to Australia.",
+    "imageUrl": "http://books.google.com/books/content?id=9F20v4CzhDUC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "ownBy": ["admin"],
+    "publishedDate": "1997",
+    "publisher": "Blackbirch PressInc",
+    "title": "What on Earth is a Quokka?",
+    "__v": 0,
+    "_id": "5b996ac617e191132e118ed9"     
+ }]
