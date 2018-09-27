@@ -19,7 +19,7 @@ class Main extends React.Component {
         this.addSearchTerm = this.addSearchTerm.bind(this);
     }
     addSearchTerm(event){
-        this.setState({term: event.target.value});
+        this.setState({term: event.target.value.toLowerCase()});
     }
     componentDidMount(){
         this.props.getAllBooks();
@@ -30,7 +30,7 @@ class Main extends React.Component {
          <div class="container">
             <NavBar/>
             <h1 class="display-4">Books for exchange</h1>
-            <input class="searchbook" onChange={this.addSearchTerm} type="search" class="form-control" autoFocus
+            <input class="searchbook form-control" onChange={this.addSearchTerm} type="search" autoFocus
             placeholder="Enter a book name"/>
             <div class={`${styles.wrap}`}>
                 <SyncLoader

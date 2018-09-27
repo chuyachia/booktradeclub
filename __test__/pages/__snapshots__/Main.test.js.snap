@@ -182,7 +182,7 @@ exports[`Main page test Main page snapshot 1`] = `
             </h1>
             <input
               autoFocus={true}
-              className="form-control"
+              className="searchbook form-control"
               onChange={[Function]}
               placeholder="Enter a book name"
               type="search"

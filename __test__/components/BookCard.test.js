@@ -20,7 +20,7 @@ function setupIntegrationTest(reducers) {
   return { store, dispatchSpy };
 }
 
-describe('BookCard integration test', () => {
+describe('BookCard test', () => {
   let store;
   let dispatchSpy;
 
@@ -28,7 +28,7 @@ describe('BookCard integration test', () => {
     ({ store, dispatchSpy } = setupIntegrationTest({ reducer }));
   });
   
-  it('test to be completed', () => {
+  it('BookCard click fire VIEW_BOOK action', () => {
     var info = {
         authors:[],
         bookId:"",
