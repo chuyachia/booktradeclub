@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 
-class RequestItem extends React.Component {
+// use pure component so all request items do not rerender when one deleted 
+class RequestItem extends React.PureComponent  {
     tradeStatus = (status)=>{
         switch(status){
             case "pending":

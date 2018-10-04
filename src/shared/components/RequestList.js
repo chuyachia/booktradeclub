@@ -4,7 +4,7 @@ import {getAllRequests,deleteRequest} from "../actions/requestAction";
 import RequestItem from "./RequestItem";
 
 class RequestList extends React.Component{
-    componentWillMount(){
+    componentDidMount(){
         if (this.props.username){
             this.props.getAllRequests(this.props.username);
         }

@@ -10,8 +10,6 @@ import { SyncLoader } from 'react-spinners';
 import styles from "../css/Main.css";
 
 
-
-
 class Main extends React.Component {
     constructor(){
         super();
@@ -24,6 +22,7 @@ class Main extends React.Component {
     componentDidMount(){
         this.props.getAllBooks();
     }
+    renderBookCard = (book)=><BookCard key={book._id} info={book} modaluse="addrequest"/>
     render(){
         var books = filter(this.props.books,(book)=>book.title.toLowerCase().indexOf(this.state.term)>-1);
         return (
@@ -39,9 +38,7 @@ class Main extends React.Component {
                 />
             </div>
             {this.props.error&&<p>Oops, something went wrong. Please come back later.</p>}
-            {books.map(book=> (
-                <BookCard key={book._id} info={book} modaluse="addrequest"/>
-                ))}
+            {books.map(this.renderBookCard)}
             <Modal/>
             <Footer/>
         </div>);
