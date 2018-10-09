@@ -20,8 +20,8 @@ class Modal extends React.Component{
     addBook = ()=>this.props.addBook(this.props.info,this.props.username)
     addExchange = ()=>this.props.addExchange(this.props.info.bookId,this.props.info.title,this.props.tradeid,this.props.email)
     removeBook = ()=>this.props.removeBook(this.props.info.bookId,this.props.username)
-    renderOwnerItem = (user,i)=><OwnerItem key={i} owner={user} location={this.props.ownerslocation[i]} 
-        demander={this.props.username} existrequests = {this.props.outrequests} bookid={this.props.info.bookId} 
+    renderOwnerItem = (user,i)=><OwnerItem key={user} owner={user} location={this.props.ownerslocation[i]} 
+        demander={this.props.username} added = {this.props.outrequests.indexOf(user)!==-1} bookid={this.props.info.bookId} 
         booktitle={this.props.info.title} email={this.props.email} onClick={this.props.addRequest}/>
     render(){
         if (this.props.tologin){

@@ -63,7 +63,8 @@ class RegisterForm extends React.Component{
                         <div class="form-group">
                             <label for="username">Username</label>
                             <input type="text" class="form-control" id="username" name="username" placeholder="Username"
-                            autoComplete="off" required autoFocus value = {this.state.username}
+                            autoComplete="off" required autoFocus value = {this.state.username} pattern="[A-Za-z0-9\-._]+"
+                            title="Can only contain English letters, numbers, dashes (-), periods (.), and underscores (_)"
                             onChange={this.changeUsername}/>
                         </div>
                         <div class="form-group">
@@ -77,7 +78,7 @@ class RegisterForm extends React.Component{
                             <label for="password">Password</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Password"
                             autoComplete="off"  required value = {this.state.password}
-                            pattern=".{6,}" 
+                            pattern=".{6,32}" 
                             onChange={this.changePassword}/>
                             {this.state.password&&this.state.password.length<6&&(
                             <div style={{color:"red"}}>Password needs to have at least 6 characters</div>
